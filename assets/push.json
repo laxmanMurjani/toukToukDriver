@@ -1,0 +1,12 @@
+{
+  "aps" : {
+    "alert" : "Notification with custom payload!",
+    "badge" : 10,
+    "content-available" : 15
+  },
+  "data" :{
+    "title" : "Game Request",
+    "body" : "Bob wants to play poker",
+    "action-loc-key" : "PLAY"
+  }
+}
