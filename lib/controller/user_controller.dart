@@ -204,6 +204,20 @@ class UserController extends BaseController {
     removeUnFocusManager();
 
     try {
+      if (phoneNumberController.text.isEmpty) {
+        Get.snackbar("Alert", "Please enter phone number",
+            backgroundColor: Colors.redAccent.withOpacity(0.8),
+            colorText: Colors.white);
+        // showError(msg: "Please enter your first name");
+        return;
+      }
+      if (passwordController.text.isEmpty) {
+        Get.snackbar("Alert", "Please enter password",
+            backgroundColor: Colors.redAccent.withOpacity(0.8),
+            colorText: Colors.white);
+        // showError(msg: "Please enter your first name");
+        return;
+      }
       showLoader();
       String? token = await FirebaseMessaging.instance.getToken();
 
@@ -215,7 +229,8 @@ class UserController extends BaseController {
       params["device_type"] = ApiUrl.deviceType;
       params["client_secret"] = ApiUrl.clientSecret;
       params["client_id"] = ApiUrl.clientId;
-      params["email"] = emailController.text;
+      //params["email"] = emailController.text;
+      params["mobile"] = phoneNumberController.text;
       params["userLiveLocation"] = userLiveLocation;
       params["device_name"] = deviceName;
       params["device_model"] = deviceModelNumber;
@@ -412,7 +427,7 @@ class UserController extends BaseController {
 
       params["mobile"] = phoneNumberController.text;
       params["country_code"] = countryCode;
-      params["email"] = emailController.text.trim();
+      //params["email"] = emailController.text.trim();
 
       await apiService.postRequest(
           url:ApiUrl.sendotpBoth,
@@ -420,7 +435,7 @@ class UserController extends BaseController {
           onSuccess: (Map<String, dynamic> data) {
             dismissLoader();
             params["otp"] = data["response"]["otp"];
-            params["email_otp"] = data["response"]["email_otp"];
+            //params["email_otp"] = data["response"]["email_otp"];
             Get.to(
                 () => BothOtpScreen(
                       params: params,
@@ -490,7 +505,7 @@ class UserController extends BaseController {
       Map<String, dynamic> params = Map();
       params["mobile"] = phoneNumberController.text;
       params["otp"] = otp;
-      params["email_otp"] = emailOtp;
+      //params["email_otp"] = emailOtp;
       params["device_token"] = token;
       params["device_id"] = "aa0cd79f26dd98b8";
       params["device_type"] = ApiUrl.deviceType;
@@ -687,15 +702,15 @@ class UserController extends BaseController {
         showError(msg: "Please select service type..");
         return;
       }
-      if (emailController.text.isEmpty) {
-        showError(msg: "Please enter your Email address");
-        return;
-      }
-      if (!RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
-          .hasMatch(emailController.text)) {
-        showError(msg: "Please enter a valid email address");
-        return;
-      }
+      // if (emailController.text.isEmpty) {
+      //   showError(msg: "Please enter your Email address");
+      //   return;
+      // }
+      // if (!RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
+      //     .hasMatch(emailController.text)) {
+      //   showError(msg: "Please enter a valid email address");
+      //   return;
+      // }
       if (firstNameController.text.isEmpty) {
         showError(msg: "Please enter your first name");
         return;
@@ -772,9 +787,9 @@ class UserController extends BaseController {
 
       String? token = await FirebaseMessaging.instance.getToken();
       Map<String, dynamic> params = Map();
-      params["first_name"] = firstNameController.text;
-      params["last_name"] = lastNameController.text;
-      params["email"] = emailController.text.trim();
+      params["first_name"] = firstNameController.text.trim();
+      params["last_name"] = lastNameController.text.trim();
+      //params["email"] = emailController.text.trim();
       params["country_code"] = countryCode;
       params["mobile"] = phoneNumberController.text;
       params["password"] = passwordController.text;
@@ -813,15 +828,15 @@ class UserController extends BaseController {
     removeUnFocusManager();
     try {
 
-      if (emailController.text.isEmpty) {
-        showError(msg: "Please enter your Email address");
-        return;
-      }
-      if (!RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
-          .hasMatch(emailController.text)) {
-        showError(msg: "Please enter a valid email address");
-        return;
-      }
+      // if (emailController.text.isEmpty) {
+      //   showError(msg: "Please enter your Email address");
+      //   return;
+      // }
+      // if (!RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
+      //     .hasMatch(emailController.text)) {
+      //   showError(msg: "Please enter a valid email address");
+      //   return;
+      // }
       if (firstNameController.text.isEmpty) {
         showError(msg: "Please enter your first name");
         return;

@@ -41,8 +41,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _userController.userData.value.lastName ?? "";
     _userController.phoneNumberController.text =
         _userController.userData.value.mobile ?? "";
-    _userController.emailController.text =
-        _userController.userData.value.email ?? "";
+    _userController.emailController.text = "";
+        //_userController.userData.value.email ?? "";
 
     _userController.carModelController.text =
         _userController.userData.value.service?.serviceModel ?? "";
@@ -174,15 +174,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: customAppTextFieldWidget(cont.lastNameController,
                         "last_name".tr, "last_name".tr, double.infinity),
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 45.0),
-                    child: customAppTextFieldWidget(cont.emailController,
-                        "email".tr, "email".tr, double.infinity,
-                        isReadOnly: true),
-                  ),
+                  // SizedBox(
+                  //   height: 15,
+                  // ),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 45.0),
+                  //   child: customAppTextFieldWidget(cont.emailController,
+                  //       "email".tr, "email".tr, double.infinity,
+                  //       isReadOnly: true),
+                  // ),
                   SizedBox(
                     height: 15,
                   ),

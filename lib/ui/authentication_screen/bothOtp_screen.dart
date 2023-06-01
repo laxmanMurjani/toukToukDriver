@@ -130,70 +130,70 @@ class _BothOtpScreenState extends State<BothOtpScreen> {
               //   }, // end onSubmit
               // ),
               SizedBox(height: 20.h),
-              RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  text: "Please_type_the_verification_code_sent_to_your".tr,
-                  style: TextStyle(color: Colors.black, fontSize: 18),
-                  children: <TextSpan>[
-                    TextSpan(
-                        text: 'your_email'.tr,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold)),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20.h),
-              PinCodeTextField(
-                appContext: context,
-                length: 6,
-                obscureText: false,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                // animationType: AnimationType.fade,
-                enableActiveFill: true,
-                keyboardType: TextInputType.number,
-                boxShadows: [BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(0, 3), // changes position of shadow
-                ),],
-                pinTheme: PinTheme(
-                    shape: PinCodeFieldShape.box,
-                    borderRadius: BorderRadius.circular(5),
-                    fieldHeight: 50,
-                    borderWidth: 1,
-                    fieldWidth: 50,
-                    activeFillColor: Colors.white,
-                    activeColor: AppColors.white,
-                    disabledColor: AppColors.white,
-                    errorBorderColor: Colors.red,
-                    inactiveColor: AppColors.white,
-                    selectedColor: AppColors.white,
-                    selectedFillColor: AppColors.white,
-                    inactiveFillColor: AppColors.white
-                ),
-                // animationDuration: Duration(milliseconds: 300),
-                backgroundColor: Colors.transparent,
-
-                onCompleted: (v) {
-                  print("Completed===>${v}");
-                  emailOtp = v;
-                  print("value00===>${_otp}");
-                },
-                onChanged: (value) {
-                  print("value===>${value}");
-                  emailOtp = value;
-                },
-                beforeTextPaste: (text) {
-                  print("Allowing to paste $text");
-                  //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-                  //but you can show anything you want here, like your pop up saying wrong paste format or etc
-                  return true;
-                },
-              ),
+              // RichText(
+              //   textAlign: TextAlign.center,
+              //   text: TextSpan(
+              //     text: "Please_type_the_verification_code_sent_to_your".tr,
+              //     style: TextStyle(color: Colors.black, fontSize: 18),
+              //     children: <TextSpan>[
+              //       TextSpan(
+              //           text: 'your_email'.tr,
+              //           style: TextStyle(
+              //               color: Colors.black,
+              //               fontSize: 18,
+              //               fontWeight: FontWeight.bold)),
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(height: 20.h),
+              // PinCodeTextField(
+              //   appContext: context,
+              //   length: 6,
+              //   obscureText: false,
+              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //   // animationType: AnimationType.fade,
+              //   enableActiveFill: true,
+              //   keyboardType: TextInputType.number,
+              //   boxShadows: [BoxShadow(
+              //     color: Colors.grey.withOpacity(0.5),
+              //     spreadRadius: 5,
+              //     blurRadius: 7,
+              //     offset: Offset(0, 3), // changes position of shadow
+              //   ),],
+              //   pinTheme: PinTheme(
+              //       shape: PinCodeFieldShape.box,
+              //       borderRadius: BorderRadius.circular(5),
+              //       fieldHeight: 50,
+              //       borderWidth: 1,
+              //       fieldWidth: 50,
+              //       activeFillColor: Colors.white,
+              //       activeColor: AppColors.white,
+              //       disabledColor: AppColors.white,
+              //       errorBorderColor: Colors.red,
+              //       inactiveColor: AppColors.white,
+              //       selectedColor: AppColors.white,
+              //       selectedFillColor: AppColors.white,
+              //       inactiveFillColor: AppColors.white
+              //   ),
+              //   // animationDuration: Duration(milliseconds: 300),
+              //   backgroundColor: Colors.transparent,
+              //
+              //   onCompleted: (v) {
+              //     print("Completed===>${v}");
+              //     emailOtp = v;
+              //     print("value00===>${_otp}");
+              //   },
+              //   onChanged: (value) {
+              //     print("value===>${value}");
+              //     emailOtp = value;
+              //   },
+              //   beforeTextPaste: (text) {
+              //     print("Allowing to paste $text");
+              //     //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+              //     //but you can show anything you want here, like your pop up saying wrong paste format or etc
+              //     return true;
+              //   },
+              // ),
               // OtpTextField(
               //   numberOfFields: 6,
               //   borderColor: AppColors.primaryColor,
@@ -218,14 +218,17 @@ class _BothOtpScreenState extends State<BothOtpScreen> {
               CustomButton(
                 text: "continue".tr,
                 onTap: () async {
-                  if (_otp.length != 4 || emailOtp.length != 6) {
+                  if (_otp.length != 4
+                      //|| emailOtp.length != 6
+                  ) {
                     print("enter 1");
                     cont.showError(msg: "please_enter_otp".tr);
                     return;
                   }
                   if (!isResendOtp) {
-                    if (_otp != widget.params["otp"].toString() ||
-                        emailOtp != widget.params["email_otp"].toString()) {
+                    if (_otp != widget.params["otp"].toString()
+                        //|| emailOtp != widget.params["email_otp"].toString()
+                    ) {
                       // print(widget.params["otp"].toString());
                       // print(widget.params["email_otp"].toString());
                       // print(_otp);
