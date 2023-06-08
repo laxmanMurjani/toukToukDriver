@@ -64,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen>
   );
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final HomeController _homeController = Get.find();
+  final UserController _userController = Get.find();
   RequestElement requestElement = RequestElement();
   location.Location _location = location.Location.instance;
   String? _mapStyle;
@@ -133,6 +134,9 @@ class _HomeScreenState extends State<HomeScreen>
     });
 
     // BackgroundLocation.startLocationService(forceAndroidLocationManager: true);
+
+        // _userController.updateUserModuleType(
+        //             userModuleType: UserModuleType.TAXI);
   }
 
   TextEditingController textController1 = TextEditingController();
@@ -835,115 +839,115 @@ class _HomeScreenState extends State<HomeScreen>
                                 SizedBox(
                                   height: 10.h,
                                 ),
-                                if (cont.providerUiSelectionType.value ==
-                                    ProviderUiSelectionType.none ||
-                                    userCont.selectedUserModuleType.value !=
-                                        cont.responseUserModuleType.value)
-                                  Container(
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                        color: AppColors.unselectedColor,
-                                        borderRadius: BorderRadius.circular(30.r)),
-                                    child: Row(
-                                      children: [
-                                        InkWell(
-                                          onTap: () async {
-                                            userCont.updateUserModuleType(
-                                                userModuleType: UserModuleType.TAXI);
-                                            // userCont.selectedUserModuleType.value = UserModuleType.TAXI;
-                                          },
-                                          child: Container(
-                                            child: Center(
-                                              child: Text(
-                                                "taxi".tr,
-                                                style: TextStyle(
-                                                  color: userCont.selectedUserModuleType
-                                                      .value ==
-                                                      UserModuleType.TAXI
-                                                      ? AppColors.unselectedColor
-                                                      : AppColors.selectedColor,
-                                                  fontSize: 16.sp,
-                                                ),
-                                              ),
-                                            ),
-                                            width: 105.w,
-                                            height: 47.w,
-                                            decoration: BoxDecoration(
-                                              color: userCont.selectedUserModuleType
-                                                  .value ==
-                                                  UserModuleType.TAXI
-                                                  ? AppColors.selectedColor
-                                                  : AppColors.unselectedColor,
-                                            ),
-                                          ),
-                                        ),
-                                        InkWell(
-                                          onTap: () async {
-                                            userCont.updateUserModuleType(
-                                                userModuleType:
-                                                UserModuleType.DELIVERY);
-                                            // userCont.selectedUserModuleType.value = UserModuleType.DELIVERY;
-                                          },
-                                          child: Container(
-                                            child: Center(
-                                              child: Text(
-                                                "delivery".tr,
-                                                style: TextStyle(
-                                                  color: userCont.selectedUserModuleType
-                                                      .value ==
-                                                      UserModuleType.DELIVERY
-                                                      ? AppColors.unselectedColor
-                                                      : AppColors.selectedColor,
-                                                  fontSize: 16.sp,
-                                                ),
-                                              ),
-                                            ),
-                                            decoration: BoxDecoration(
-                                              color: userCont.selectedUserModuleType
-                                                  .value ==
-                                                  UserModuleType.DELIVERY
-                                                  ? AppColors.selectedColor
-                                                  : AppColors.unselectedColor,
-                                            ),
-                                            width: 105.w,
-                                            height: 47.w,
-                                          ),
-                                        ),
-                                        // InkWell(
-                                        //   onTap: () async {
-                                        //     userCont.selectedUserModuleType.value = UserModuleType.BOTH;
-                                        //
-                                        //
-                                        //
-                                        //      // cont.selectedUserModuleType.value = cont.responseUserModuleType.value;
-                                        //      },
-                                        //   child: Container(
-                                        //     width: 105.w,
-                                        //     height: 47.w,
-                                        //
-                                        //     child: Center(
-                                        //       child: Text("Both",
-                                        //         style: TextStyle(
-                                        //           color: userCont.selectedUserModuleType.value == UserModuleType.BOTH
-                                        //               ? AppColors.unselectedColor
-                                        //               : AppColors.selectedColor,
-                                        //           fontSize: 16.sp,
-                                        //         ),
-                                        //       ),
-                                        //     ),
-                                        //     decoration: BoxDecoration(
-                                        //         color: userCont.selectedUserModuleType.value == UserModuleType.BOTH
-                                        //             ? AppColors.selectedColor
-                                        //             : AppColors.unselectedColor,
-                                        //         borderRadius: BorderRadius.only(
-                                        //           topRight: Radius.circular(30.r),
-                                        //           bottomRight: Radius.circular(30.r),
-                                        //         )),
-                                        //   ),
-                                        // ),
-                                      ],
-                                    ),
-                                  ),
+                                // if (cont.providerUiSelectionType.value ==
+                                //     ProviderUiSelectionType.none ||
+                                //     userCont.selectedUserModuleType.value !=
+                                //         cont.responseUserModuleType.value)
+                                //   Container(
+                                //     clipBehavior: Clip.antiAlias,
+                                //     decoration: BoxDecoration(
+                                //         color: AppColors.unselectedColor,
+                                //         borderRadius: BorderRadius.circular(30.r)),
+                                //     child: Row(
+                                //       children: [
+                                //         InkWell(
+                                //           onTap: () async {
+                                //             userCont.updateUserModuleType(
+                                //                 userModuleType: UserModuleType.TAXI);
+                                //             // userCont.selectedUserModuleType.value = UserModuleType.TAXI;
+                                //           },
+                                //           child: Container(
+                                //             child: Center(
+                                //               child: Text(
+                                //                 "taxi".tr,
+                                //                 style: TextStyle(
+                                //                   color: userCont.selectedUserModuleType
+                                //                       .value ==
+                                //                       UserModuleType.TAXI
+                                //                       ? AppColors.unselectedColor
+                                //                       : AppColors.selectedColor,
+                                //                   fontSize: 16.sp,
+                                //                 ),
+                                //               ),
+                                //             ),
+                                //             width: 105.w,
+                                //             height: 47.w,
+                                //             decoration: BoxDecoration(
+                                //               color: userCont.selectedUserModuleType
+                                //                   .value ==
+                                //                   UserModuleType.TAXI
+                                //                   ? AppColors.selectedColor
+                                //                   : AppColors.unselectedColor,
+                                //             ),
+                                //           ),
+                                //         ),
+                                //         InkWell(
+                                //           onTap: () async {
+                                //             userCont.updateUserModuleType(
+                                //                 userModuleType:
+                                //                 UserModuleType.DELIVERY);
+                                //             // userCont.selectedUserModuleType.value = UserModuleType.DELIVERY;
+                                //           },
+                                //           child: Container(
+                                //             child: Center(
+                                //               child: Text(
+                                //                 "delivery".tr,
+                                //                 style: TextStyle(
+                                //                   color: userCont.selectedUserModuleType
+                                //                       .value ==
+                                //                       UserModuleType.DELIVERY
+                                //                       ? AppColors.unselectedColor
+                                //                       : AppColors.selectedColor,
+                                //                   fontSize: 16.sp,
+                                //                 ),
+                                //               ),
+                                //             ),
+                                //             decoration: BoxDecoration(
+                                //               color: userCont.selectedUserModuleType
+                                //                   .value ==
+                                //                   UserModuleType.DELIVERY
+                                //                   ? AppColors.selectedColor
+                                //                   : AppColors.unselectedColor,
+                                //             ),
+                                //             width: 105.w,
+                                //             height: 47.w,
+                                //           ),
+                                //         ),
+                                //         // InkWell(
+                                //         //   onTap: () async {
+                                //         //     userCont.selectedUserModuleType.value = UserModuleType.BOTH;
+                                //         //
+                                //         //
+                                //         //
+                                //         //      // cont.selectedUserModuleType.value = cont.responseUserModuleType.value;
+                                //         //      },
+                                //         //   child: Container(
+                                //         //     width: 105.w,
+                                //         //     height: 47.w,
+                                //         //
+                                //         //     child: Center(
+                                //         //       child: Text("Both",
+                                //         //         style: TextStyle(
+                                //         //           color: userCont.selectedUserModuleType.value == UserModuleType.BOTH
+                                //         //               ? AppColors.unselectedColor
+                                //         //               : AppColors.selectedColor,
+                                //         //           fontSize: 16.sp,
+                                //         //         ),
+                                //         //       ),
+                                //         //     ),
+                                //         //     decoration: BoxDecoration(
+                                //         //         color: userCont.selectedUserModuleType.value == UserModuleType.BOTH
+                                //         //             ? AppColors.selectedColor
+                                //         //             : AppColors.unselectedColor,
+                                //         //         borderRadius: BorderRadius.only(
+                                //         //           topRight: Radius.circular(30.r),
+                                //         //           bottomRight: Radius.circular(30.r),
+                                //         //         )),
+                                //         //   ),
+                                //         // ),
+                                //       ],
+                                //     ),
+                                //   ),
                                 if (cont.homeAddress.isNotEmpty) ...[
                                   Expanded(
                                     child: Row(

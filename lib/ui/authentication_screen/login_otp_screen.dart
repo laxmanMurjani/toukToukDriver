@@ -199,9 +199,10 @@ class _LoginOtpScreenState extends State<LoginOtpScreen> {
                             return;
                           } else if (((cont.phoneNumberController.text.length ==
                               6 || cont.phoneNumberController.text.length ==
-                              8) &&
+                              8 || cont.phoneNumberController.text.length ==
+                              7) &&
                               cont.countryCode == '+961') || cont.phoneNumberController.text.length ==
-                              10 && cont.countryCode == '+91') {
+                              10 && cont.countryCode != '+961') {
                             print('passed');
                             cont.sendOtp(params: params);
                             return;

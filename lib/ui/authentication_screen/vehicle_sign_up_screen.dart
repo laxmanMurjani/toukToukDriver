@@ -128,62 +128,62 @@ class _VehicleSignUpScreenState extends State<VehicleSignUpScreen> {
                             );
                           }).toList(),
                         ),
-                        SizedBox(height: 15.h),
-                        Row(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(bottom: 5.h),
-                              child: Text(
-                                "Delivery service type".tr,
-                                style: TextStyle(
-                                  fontSize: 13.sp,
-                                  color: Color(0x50000000),
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        DropdownButton<ServiceType>(
-                          hint: Text(
-                            'please_choose_a_service_type'.tr,
-                            style: TextStyle(
-                              fontSize: 10.sp,
-                              color: Colors.grey[600],
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          // Not necessary for Option 1
-                          value: cont.deliveryServiceType,
-                          isExpanded: true,
-                          isDense: true,
-                          focusColor: AppColors.primaryColor,
-                          style: TextStyle(
-                              fontSize: 12.sp, fontWeight: FontWeight.w600),
-                          underline: Container(
-                            height: 1.h,
-                            width: double.infinity,
-                            decoration:
-                            BoxDecoration(color: AppColors.underLineColor),
-                          ),
-                          onChanged: (newValue) {
-                            setState(() {
-                              cont.deliveryServiceType = newValue;
-                            });
-                          },
-                          items: cont.serviceTypeList.map((location) {
-                            return DropdownMenuItem(
-                              child: Text(
-                                location.name ?? "",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12.sp,
-                                ),
-                              ),
-                              value: location,
-                            );
-                          }).toList(),
-                        ),
+                        // SizedBox(height: 15.h),
+                        // Row(
+                        //   children: [
+                        //     Padding(
+                        //       padding: EdgeInsets.only(bottom: 5.h),
+                        //       child: Text(
+                        //         "Delivery service type".tr,
+                        //         style: TextStyle(
+                        //           fontSize: 13.sp,
+                        //           color: Color(0x50000000),
+                        //           fontWeight: FontWeight.w600,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        // DropdownButton<ServiceType>(
+                        //   hint: Text(
+                        //     'please_choose_a_service_type'.tr,
+                        //     style: TextStyle(
+                        //       fontSize: 10.sp,
+                        //       color: Colors.grey[600],
+                        //       fontWeight: FontWeight.w600,
+                        //     ),
+                        //   ),
+                        //   // Not necessary for Option 1
+                        //   value: cont.deliveryServiceType,
+                        //   isExpanded: true,
+                        //   isDense: true,
+                        //   focusColor: AppColors.primaryColor,
+                        //   style: TextStyle(
+                        //       fontSize: 12.sp, fontWeight: FontWeight.w600),
+                        //   underline: Container(
+                        //     height: 1.h,
+                        //     width: double.infinity,
+                        //     decoration:
+                        //     BoxDecoration(color: AppColors.underLineColor),
+                        //   ),
+                        //   onChanged: (newValue) {
+                        //     setState(() {
+                        //       cont.deliveryServiceType = newValue;
+                        //     });
+                        //   },
+                        //   items: cont.serviceTypeList.map((location) {
+                        //     return DropdownMenuItem(
+                        //       child: Text(
+                        //         location.name ?? "",
+                        //         style: TextStyle(
+                        //           color: Colors.black,
+                        //           fontSize: 12.sp,
+                        //         ),
+                        //       ),
+                        //       value: location,
+                        //     );
+                        //   }).toList(),
+                        // ),
                         SizedBox(height: 15.h),
                         CustomTextFiled(
                             controller: cont.carModelController,

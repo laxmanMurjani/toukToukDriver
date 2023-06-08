@@ -698,10 +698,10 @@ class UserController extends BaseController {
         showError(msg: "Please select service type..");
         return;
       }
-      if (deliveryServiceType == null) {
-        showError(msg: "Please select service type..");
-        return;
-      }
+      // if (deliveryServiceType == null) {
+      //   showError(msg: "Please select service type..");
+      //   return;
+      // }
       // if (emailController.text.isEmpty) {
       //   showError(msg: "Please enter your Email address");
       //   return;
@@ -742,7 +742,7 @@ class UserController extends BaseController {
         return;
       }
 
-  if (carCompanyNameController.text.isEmpty) {
+      if (carCompanyNameController.text.isEmpty) {
         showError(msg: "Please enter your vehicle company name");
         return;
       }
@@ -783,43 +783,54 @@ class UserController extends BaseController {
       //         colorText: Colors.white);
       //   }
       // }
-      showLoader();
+      if (((phoneNumberController.text.length ==
+          6 || phoneNumberController.text.length ==
+          8 || phoneNumberController.text.length ==
+          7) &&
+          countryCode == '+961') || phoneNumberController.text.length ==
+          10 && countryCode != '+961'){
+        showLoader();
 
-      String? token = await FirebaseMessaging.instance.getToken();
-      Map<String, dynamic> params = Map();
-      params["first_name"] = firstNameController.text.trim();
-      params["last_name"] = lastNameController.text.trim();
-      //params["email"] = emailController.text.trim();
-      params["country_code"] = countryCode;
-      params["mobile"] = phoneNumberController.text;
-      params["password"] = passwordController.text;
-      params["password_confirmation"] = conPasswordController.text;
-      params["service_type"] = "${taxiServiceType?.id ?? 1}";
-      params["delivery_service"] = "${deliveryServiceType?.id ?? 1}";
-      params["service_model"] = carModelController.text;
-      params["service_number"] = carNumberController.text;
-      params["car_camp_name"] = carCompanyNameController.text;
-      params["car_color"] = carColorController.text;
-      params["device_id"] = "aa0cd79f26dd98b8";
-      params["device_token"] = token;
-      params["device_type"] = ApiUrl.deviceType;
-      params["login_by"] = "manual";
+        String? token = await FirebaseMessaging.instance.getToken();
+        Map<String, dynamic> params = Map();
+        params["first_name"] = firstNameController.text.trim();
+        params["last_name"] = lastNameController.text.trim();
+        //params["email"] = emailController.text.trim();
+        params["country_code"] = countryCode;
+        params["mobile"] = phoneNumberController.text;
+        params["password"] = passwordController.text;
+        params["password_confirmation"] = conPasswordController.text;
+        params["service_type"] = "${taxiServiceType?.id ?? 1}";
+        params["delivery_service"] = "${deliveryServiceType?.id ?? 1}";
+        params["service_model"] = carModelController.text;
+        params["service_number"] = carNumberController.text;
+        params["car_camp_name"] = carCompanyNameController.text;
+        params["car_color"] = carColorController.text;
+        params["device_id"] = "aa0cd79f26dd98b8";
+        params["device_token"] = token;
+        params["device_type"] = ApiUrl.deviceType;
+        params["login_by"] = "manual";
 
-      await apiService.postRequest(
-        url: ApiUrl.signUp,
-        params: params,
-        onSuccess: (Map<String, dynamic> data) {
-          dismissLoader();
-          sendBothOtp(params: params);
-          // userToken.value =
-          //     loginResponseModelFromJson(jsonEncode(data["response"]));
-          // userToken.refresh();
-          // getUserProfileData();
-        },
-        onError: (ErrorType errorType, String msg) {
-          showError(msg: msg);
-        },
-      );
+        await apiService.postRequest(
+          url: ApiUrl.signUp,
+          params: params,
+          onSuccess: (Map<String, dynamic> data) {
+            dismissLoader();
+            sendBothOtp(params: params);
+            // userToken.value =
+            //     loginResponseModelFromJson(jsonEncode(data["response"]));
+            // userToken.refresh();
+            // getUserProfileData();
+          },
+          onError: (ErrorType errorType, String msg) {
+            showError(msg: msg);
+          },
+        );
+        return;
+      }
+      Get.snackbar("Alert", "Please enter a valid mobile number",
+          backgroundColor: Colors.redAccent.withOpacity(0.8),
+          colorText: Colors.white);
     } catch (e) {
       print(e);
     }
