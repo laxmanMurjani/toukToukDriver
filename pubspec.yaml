@@ -42,10 +42,14 @@ dependencies:
   geolocator:
   location: ^4.4.0
   geocoding: ^2.0.2
-  country_code_picker: ^2.0.2
+  country_code_picker: ^3.0.0
   flutter_share: ^2.0.0
   dotted_line: ^3.1.0
-  modal_bottom_sheet: ^2.0.1
+  modal_bottom_sheet:
+    git:
+      url: https://github.com/followthemoney1/modal_bottom_sheet.git
+      ref: main
+      path: modal_bottom_sheet
   carousel_slider: ^4.0.0
   slide_button: ^0.2.9
   flutter_swipe_button: ^1.1.0

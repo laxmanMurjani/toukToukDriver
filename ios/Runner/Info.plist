@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Mozilit Driver</string>
+	<string>Touk Touk Driver</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -15,7 +15,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>mozlit_driver</string>
+	<string>Touk Touk Driver</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -41,7 +41,7 @@
 	<key>FacebookClientToken</key>
 	<string>75c92ea6546f706e6b1386adf04b658b</string>
 	<key>FacebookDisplayName</key>
-	<string>Mozlit Driver</string>
+	<string>Touk Touk Driver</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>tel</string>
@@ -70,26 +70,23 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>This app requires access to the camera.</string>
+	<string>to enable you to upload your picture on your profile to make it easier for driver and user to identify while starting a ride</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>This app needs access to location.</string>
+	<string>This app needs access to location to find nearest service executives for on demand towing and vehicle recovery service.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app needs access to location.</string>
+	<string>This app needs access to location to find nearest service executives for on demand towing and vehicle recovery service.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to location.</string>
+	<string>This app needs access to location to find nearest service executives for on demand towing and vehicle recovery service.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app does not require access to the microphone.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app requires access to the photo library.</string>
+	<string>to enable you to upload your picture on your profile to make it easier for driver and user to identify while starting a ride</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
 		<string>location</string>
 		<string>remote-notification</string>
 	</array>
-	<!-- <array>
-    <string>UIInterfaceOrientationPortrait</string>
-	</array> -->
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
