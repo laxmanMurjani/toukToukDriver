@@ -765,15 +765,15 @@ class UserController extends BaseController {
         showError(msg: "Please Accept Terms and Conditions");
         return;
       }
-      if (!passwordController.text.contains((RegExp(r'[0-9]'))) ||
-          !passwordController.text
-              .contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-        Get.snackbar("Make strong password",
-            "Password must be alphanumeric with special characters",
-            backgroundColor: Colors.redAccent.withOpacity(0.8),
-            colorText: Colors.white);
-        return;
-      }
+      // if (!passwordController.text.contains((RegExp(r'[0-9]'))) ||
+      //     !passwordController.text
+      //         .contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+      //   Get.snackbar("Make strong password",
+      //       "Password must be alphanumeric with special characters",
+      //       backgroundColor: Colors.redAccent.withOpacity(0.8),
+      //       colorText: Colors.white);
+      //   return;
+      // }
       // if(passwordController.text.contains((RegExp(r'[0-9]')))){
       //   if(passwordController.text.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))){
       //     //cont.sendBothOtp(params: params);
@@ -880,15 +880,15 @@ class UserController extends BaseController {
         return;
       }
 
-      if (!passwordController.text.contains((RegExp(r'[0-9]'))) ||
-          !passwordController.text
-              .contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-        Get.snackbar("Make strong password",
-            "Password must be alphanumeric with special characters",
-            backgroundColor: Colors.redAccent.withOpacity(0.8),
-            colorText: Colors.white);
-        return;
-      }
+      // if (!passwordController.text.contains((RegExp(r'[0-9]'))) ||
+      //     !passwordController.text
+      //         .contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+      //   Get.snackbar("Make strong password",
+      //       "Password must be alphanumeric with special characters",
+      //       backgroundColor: Colors.redAccent.withOpacity(0.8),
+      //       colorText: Colors.white);
+      //   return;
+      // }
       if (((phoneNumberController.text.length ==
           6 || phoneNumberController.text.length ==
           8) &&
