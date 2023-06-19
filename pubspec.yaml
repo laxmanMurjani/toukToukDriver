@@ -46,10 +46,10 @@ dependencies:
   flutter_share: ^2.0.0
   dotted_line: ^3.1.0
   modal_bottom_sheet:
-    git:
-      url: https://github.com/followthemoney1/modal_bottom_sheet.git
-      ref: main
-      path: modal_bottom_sheet
+#    git:
+#      url: https://github.com/followthemoney1/modal_bottom_sheet.git
+#      ref: main
+#      path: modal_bottom_sheet
   carousel_slider: ^4.0.0
   slide_button: ^0.2.9
   flutter_swipe_button: ^1.1.0
@@ -76,8 +76,9 @@ dependencies:
   lottie: ^2.2.0
 
   flutter_local_notifications: ^12.0.3+1
-  flutter_html:
-    path: package/flutter_html-2.2.1
+  flutter_html: 2.2.1
+
+  #    path: package/flutter_html-2.2.1
   google_place: ^0.4.7
   qr_code_scanner: ^1.0.0
   image_picker: ^0.8.6
