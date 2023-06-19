@@ -360,42 +360,96 @@ class _HomeScreenState extends State<HomeScreen>
                           Padding(
                             padding: EdgeInsets.only(
                                 bottom: 40, left: 20, right: 20),
-                            child: SwipeableButtonView(
+                            child: userCont.selectedLanguage.value == 1 ? Directionality(
+                              textDirection: TextDirection.ltr,
+                              child: SwipeableButtonView(
+                                buttonText: isUserOffline
+                                    ? 'swipe_to_online'.tr
+                                    : 'swipe_to_offline'.tr,
+                                buttontextstyle: TextStyle(
+                                    fontSize: 16.sp, color: AppColors.primaryColor),
+                                buttonColor: AppColors.primaryColor,
+                                buttonWidget: Container(
+                                  padding: EdgeInsets.all(10.w),
+                                  child: Image.asset(
+                                    isUserOffline
+                                        ? AppImage.icPauseRiding
+                                        : AppImage.icRiding,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                activeColor: Colors.white,
+                                isFinished: cont.isSwipeCompleted.value,
+                                onWaitingProcess: () {
+                                  cont.providerAvailableStatusChange();
+                                },
+                                onFinish: () async {
+                                  cont.isSwipeCompleted.value = false;
+                                },
+                              ),
+                            ) :
+
+                            SwipeableButtonView(
                               buttonText: isUserOffline
                                   ? 'swipe_to_online'.tr
                                   : 'swipe_to_offline'.tr,
                               buttontextstyle: TextStyle(
-                                  fontSize: 13.sp,
-                                  color: AppColors.primaryColor),
-                              buttonColor: isUserOffline ? Colors.red : Colors.green,
+                                  fontSize: 16.sp, color: AppColors.primaryColor),
+                              buttonColor: AppColors.primaryColor,
                               buttonWidget: Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color:AppColors.primaryColor,
-                                  // color:isUserOffline ?Colors.red : Colors.green,
-                                ),
                                 padding: EdgeInsets.all(10.w),
                                 child: Image.asset(
                                   isUserOffline
                                       ? AppImage.icPauseRiding
                                       : AppImage.icRiding,
-                                  color:isUserOffline ?Colors.white : Colors.white,
+                                  color: Colors.white,
                                 ),
                               ),
-                              activeColor: isUserOffline ?Colors.white : Colors.white,
+                              activeColor: Colors.white,
                               isFinished: cont.isSwipeCompleted.value,
                               onWaitingProcess: () {
                                 cont.providerAvailableStatusChange();
-                                // Future.delayed(Duration(milliseconds: 200), () {
-                                //   setState(() {
-                                //     cont.isSwipeCompleted.value = true;
-                                //   });
-                                // });
                               },
                               onFinish: () async {
                                 cont.isSwipeCompleted.value = false;
                               },
                             ),
+                            // SwipeableButtonView(
+                            //   buttonText: isUserOffline
+                            //       ? 'swipe_to_online'.tr
+                            //       : 'swipe_to_offline'.tr,
+                            //   buttontextstyle: TextStyle(
+                            //       fontSize: 13.sp,
+                            //       color: AppColors.primaryColor),
+                            //   buttonColor: isUserOffline ? Colors.red : Colors.green,
+                            //   buttonWidget: Container(
+                            //     decoration: BoxDecoration(
+                            //       shape: BoxShape.circle,
+                            //       color:AppColors.primaryColor,
+                            //       // color:isUserOffline ?Colors.red : Colors.green,
+                            //     ),
+                            //     padding: EdgeInsets.all(10.w),
+                            //     child: Image.asset(
+                            //       isUserOffline
+                            //           ? AppImage.icPauseRiding
+                            //           : AppImage.icRiding,
+                            //       color:isUserOffline ?Colors.white : Colors.white,
+                            //     ),
+                            //   ),
+                            //   activeColor: isUserOffline ?Colors.white : Colors.white,
+                            //   isFinished: cont.isSwipeCompleted.value,
+                            //   onWaitingProcess: () {
+                            //     cont.providerAvailableStatusChange();
+                            //     // Future.delayed(Duration(milliseconds: 200), () {
+                            //     //   setState(() {
+                            //     //     cont.isSwipeCompleted.value = true;
+                            //     //   });
+                            //     // });
+                            //   },
+                            //   onFinish: () async {
+                            //     cont.isSwipeCompleted.value = false;
+                            //   },
+                            // ),
                           ),
                         ],
 
@@ -702,140 +756,155 @@ class _HomeScreenState extends State<HomeScreen>
                                     ],
                                   ),
                                 ),
-                                ExpandChild(
-                                    arrowColor: AppColors.primaryColor,
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 5),
+                                // Stack(children: [
+                                //
+                                //
+                                // ],),
+                                Stack(alignment: Alignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 2.0),
+                                      child: Container(width: 42,height: 38,decoration: BoxDecoration(color:
+                                      AppColors.primaryColor,borderRadius: BorderRadius.circular(20)),child: Align(alignment:
+                                      Alignment.center,child: Icon(Icons.sort,color: Colors.white,),),),
+                                    ),
+                                    ExpandChild(
+                                      arrowPadding: EdgeInsets.only(bottom: 20),
+                                        arrowColor: AppColors.primaryColor,
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 10, vertical: 5),
 
-                                      height: MediaQuery.of(context)
-                                          .size
-                                          .height *
-                                          0.12,
-                                      alignment: Alignment.center,
-                                      width: MediaQuery.of(context)
-                                          .size
-                                          .width *
-                                          0.95,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.white,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(25)),
-                                      ),
-                                      // height: 100,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                              Get.to(() => EarningScreen(
-                                              ));
-                                            },
-                                            child: Container(
-                                                padding: EdgeInsets.only(
-                                                    top: 7,
-                                                    bottom: 7,
-                                                    left: 0,
-                                                    right: 0),
-                                                height: 80,
-                                                width: 80,
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                    BorderRadius
-                                                        .circular(
-                                                        10)),
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceAround,
-                                                  children: [
-                                                    Image.asset(
-                                                      AppImage.earning,
-                                                      height: 35,
-                                                      width: 35,
-                                                    ),
+                                          height: MediaQuery.of(context)
+                                              .size
+                                              .height *
+                                              0.12,
+                                          alignment: Alignment.center,
+                                          width: MediaQuery.of(context)
+                                              .size
+                                              .width *
+                                              0.95,
+                                          decoration: BoxDecoration(
+                                            color: AppColors.white,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(25)),
+                                          ),
+                                          // height: 100,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                            children: [
+                                              InkWell(
+                                                onTap: () {
+                                                  Get.to(() => EarningScreen(
+                                                  ));
+                                                },
+                                                child: Container(
+                                                    padding: EdgeInsets.only(
+                                                        top: 7,
+                                                        bottom: 7,
+                                                        left: 0,
+                                                        right: 0),
+                                                    height: 80,
+                                                    width: 80,
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius:
+                                                        BorderRadius
+                                                            .circular(
+                                                            10)),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceAround,
+                                                      children: [
+                                                        Image.asset(
+                                                          AppImage.earning,
+                                                          height: 35,
+                                                          width: 35,
+                                                        ),
 
-                                                    Text(
-                                                      'earning'.tr,
-                                                      style: TextStyle(
-                                                          fontSize: 12),
-                                                    )
-                                                  ],
-                                                )),
+                                                        Text(
+                                                          'earning'.tr,
+                                                          style: TextStyle(
+                                                              fontSize: 12),
+                                                        )
+                                                      ],
+                                                    )),
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  Get.to(() => YourTripsScreen());
+                                                },
+                                                child: Container(
+                                                    padding:
+                                                    EdgeInsets.all(7),
+                                                    height: 80,
+                                                    width: 80,
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius:
+                                                        BorderRadius
+                                                            .circular(
+                                                            10)),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceAround,
+                                                      children: [
+                                                        Image.asset(
+                                                          AppImage.pastRide,
+                                                          height: 30,
+                                                          width: 30,
+                                                        ),
+                                                        SizedBox(height: 5),
+                                                        Text(
+                                                          'past_rides'.tr,
+                                                          style: TextStyle(
+                                                              fontSize: 12),
+                                                        )
+                                                      ],
+                                                    )),
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  Get.to(() => ProfilePage());
+                                                },
+                                                child: Container(
+                                                    padding:
+                                                    EdgeInsets.all(7),
+                                                    height: 80,
+                                                    width: 80,
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius:
+                                                        BorderRadius
+                                                            .circular(
+                                                            10)),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceAround,
+                                                      children: [
+                                                        Image.asset(
+                                                          AppImage.account,
+                                                          height: 30,
+                                                          width: 30,
+                                                        ),
+                                                        SizedBox(height: 5),
+                                                        Text(
+                                                          'account'.tr,
+                                                          style: TextStyle(
+                                                              fontSize: 12),
+                                                        )
+                                                      ],
+                                                    )),
+                                              ),
+                                            ],
                                           ),
-                                          InkWell(
-                                            onTap: () {
-                                              Get.to(() => YourTripsScreen());
-                                            },
-                                            child: Container(
-                                                padding:
-                                                EdgeInsets.all(7),
-                                                height: 80,
-                                                width: 80,
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                    BorderRadius
-                                                        .circular(
-                                                        10)),
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceAround,
-                                                  children: [
-                                                    Image.asset(
-                                                      AppImage.pastRide,
-                                                      height: 30,
-                                                      width: 30,
-                                                    ),
-                                                    SizedBox(height: 5),
-                                                    Text(
-                                                      'past_rides'.tr,
-                                                      style: TextStyle(
-                                                          fontSize: 12),
-                                                    )
-                                                  ],
-                                                )),
-                                          ),
-                                          InkWell(
-                                            onTap: () {
-                                              Get.to(() => ProfilePage());
-                                            },
-                                            child: Container(
-                                                padding:
-                                                EdgeInsets.all(7),
-                                                height: 80,
-                                                width: 80,
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                    BorderRadius
-                                                        .circular(
-                                                        10)),
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceAround,
-                                                  children: [
-                                                    Image.asset(
-                                                      AppImage.account,
-                                                      height: 30,
-                                                      width: 30,
-                                                    ),
-                                                    SizedBox(height: 5),
-                                                    Text(
-                                                      'account'.tr,
-                                                      style: TextStyle(
-                                                          fontSize: 12),
-                                                    )
-                                                  ],
-                                                )),
-                                          ),
-                                        ],
-                                      ),
-                                    )),
+                                        )),
+                                  ],
+                                ),
                                 SizedBox(
                                   height: 10.h,
                                 ),

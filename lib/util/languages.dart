@@ -6,6 +6,8 @@ class Languages extends Translations {
     return {
       "en_US": {
         "language": "English",
+        "login": "Login",
+        "Login With Password": "Login With Password",
         "payment_confirm": "your transaction is under process kindly wait for a while",
         "forget_password": "Forgot Password",
         "total_km_distance": "Total km Distance",
@@ -40,8 +42,8 @@ class Languages extends Translations {
         "or_continue_with": "Or Continue with",
         "create_account": "Create\nAccount",
         "create_an_account": "Create an Account",
-        "first_name": "FirstName",
-        "Lastname": "LastName",
+        "first_name": "First Name",
+        "last_name": "Last Name",
         "next": "Next",
 
         "service_type": "Service Type",
@@ -257,6 +259,7 @@ class Languages extends Translations {
       },
       "hi_IN": {
         "have_a_nice_day":"आपका दिन शुभ हो",
+        "Login With Password": "पासवर्ड से लॉगिन करें",
         "vehicle_details": "वाहन की सूचना",
         "sorry_for_inconvenience_time_Our_partner": "असुविधा के समय के लिए खेद है, हमारे साथी या व्यस्त। कृपया कुछ देर बाद प्रयास करें",
         "car_color": "कार का रंग",
@@ -487,6 +490,7 @@ class Languages extends Translations {
       },
       "nl_NL": {
         "language": "Dutch",
+        "Login With Password": "Inloggen met wachtwoord",
         "forgot_password": "Wachtwoord vergeten",
         "otp": "OTP",
         "new_password": "nieuw paswoord",
@@ -672,6 +676,7 @@ class Languages extends Translations {
       },
       "es_SP": {
         "language": "Inglés",
+        "Login With Password": "Iniciar sesión con contraseña",
         "payment_confirm": "su transacción está en proceso por favor espere un momento",
         "forget_password": "Has olvidado tu contraseña",
         "total_km_distance": "Distancia total en km",
@@ -904,6 +909,13 @@ class Languages extends Translations {
       },
       "ar_AE": {
         "language": " إنجليزي ",
+        "log_in": "تسجيل الدخول",
+        "Driver_Registration": "تسجيل السائق",
+        "first_name": "الاسم الأول",
+        "Lastname": "اسم العائلة",
+        "next": "التالي",
+        "login": "تسجيل الدخول",
+        "Login With Password": "تسجيل الدخول بكلمة مرور",
         "forget_password": " هل نسيت كلمة السر ",
         "otp": "OTP",
         "new_password": " كلمة السر الجديدة ",
@@ -1109,6 +1121,13 @@ class Languages extends Translations {
       },
       "hy_AM": {
         "language": " Անգլերեն ",
+        "log_in": "Մուտք գործեք",
+        "Driver_Registration": "Վարորդի գրանցում",
+        "first_name": "Անուն",
+        "last_name": "Ազգանուն",
+        "next": "Հաջորդը",
+        "Login": "մուտք",
+        "Login With Password": "Մուտք գործել Գաղտնաբառով",
         "forget_password": " Մոռացել եք գաղտնաբառը ",
         "otp": "OTP",
         "new_password": " նոր ծածկագիր ",
@@ -1123,7 +1142,6 @@ class Languages extends Translations {
         "email": " Էլ ",
         "password": " Գաղտնաբառ ",
         "forget_password?": " Մոռացեք գաղտնաբառը?",
-        "log_in": "Log In",
         "don't_have_an_account?": " Չունե՞ք հաշիվ:",
         "register": " Գրանցվել ",
         "enter_phone_number_to_continue":
@@ -1142,7 +1160,7 @@ class Languages extends Translations {
         "or_continue_with": " Կամ Շարունակեք ",
         "create_account": " Գրանցվել ",
         "firstname": " Անուն ",
-        "Lastname": " Ազգանուն ",
+        "last_name": " Ազգանուն ",
         "car_model": " Ավտոմեքենայի մոդել ",
         "car_number": " Մեքենայի համարը ",
         "service_type": " Ծառայության տեսակը ",

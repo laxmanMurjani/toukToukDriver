@@ -12,6 +12,7 @@ import 'package:mozlit_driver/ui/authentication_screen/login_screen.dart';
 import 'package:mozlit_driver/ui/authentication_screen/sign_up_screen.dart';
 import 'package:mozlit_driver/ui/widget/custom_button.dart';
 import 'package:mozlit_driver/ui/widget/custom_text_filed.dart';
+import 'package:mozlit_driver/ui/widget/dialog/chooseLang.dart';
 import 'package:mozlit_driver/ui/widget/no_internet_widget.dart';
 import 'package:mozlit_driver/util/app_constant.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -27,6 +28,11 @@ class _LoginOtpScreenState extends State<LoginOtpScreen> {
   final UserController _userController = Get.find();
 
   Map<String, dynamic> params = Map();
+  var items = [
+    'English',
+    'Arabic',
+    'Armenian'
+  ];
 
   @override
   void initState() {
@@ -68,6 +74,50 @@ class _LoginOtpScreenState extends State<LoginOtpScreen> {
                            ),
                          ),
                        ],
+                     ),
+
+                     Align(alignment: Alignment.topRight,child:
+                     Container(width: MediaQuery.of(context).size.width*0.35,height: 40,decoration: 
+                       BoxDecoration(color: Colors.grey[300],borderRadius: BorderRadius.circular(5)),
+                       child: Padding(
+                         padding: const EdgeInsets.only(left: 8.0),
+                         child: DropdownButton<String>(
+                           // Initial Value
+                           value: cont.selectedLanguage.value == 0? 'English' :
+                           cont.selectedLanguage.value == 1? 'Arabic' : 'Armenian',
+
+                           // Down Arrow Icon
+                           icon: const Icon(Icons.keyboard_arrow_down),
+
+                           // Array list of items
+                           items: items.map((String items) {
+                             return DropdownMenuItem(
+                               value: items,
+                               child: Text(items),
+                             );
+                           }).toList(),
+                           // After selecting the desired option,it will
+                           // change button value to selected value
+                           onChanged: (String? newValue) {
+                             setState(() {
+                               //dropdownvalue = newValue!;
+                               if(newValue=='English'){
+                                 cont.selectedLanguage.value = 0;
+                                 cont.setLanguage();
+                               }else if(newValue=='Arabic'){
+                                 cont.selectedLanguage.value = 1;
+                                 Get.updateLocale(Locale('ar', 'AE'));
+                                 cont.setLanguage();
+                               }else if(newValue=='Armenian'){
+                                 cont.selectedLanguage.value = 2;
+                                 Get.updateLocale(Locale('hy', 'AM'));
+                                 cont.setLanguage();
+                               }
+                             });
+                           },
+                         ),
+                       ),
+                     ),
                      ),
                      Align(
                        alignment: Alignment.bottomCenter,
@@ -238,7 +288,7 @@ class _LoginOtpScreenState extends State<LoginOtpScreen> {
                                 // ],
                                 ),
                             child: Text(
-                              'Continue',
+                              'continue'.tr,
                               style: TextStyle(
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.w600,
@@ -276,7 +326,7 @@ class _LoginOtpScreenState extends State<LoginOtpScreen> {
                           },
                         ),
                       ),
-                      SizedBox(height: 60.h),
+                      SizedBox(height: 50.h),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 30),
                         child: CustomButton(
@@ -287,6 +337,14 @@ class _LoginOtpScreenState extends State<LoginOtpScreen> {
                           },
                         ),
                       ),
+                      // SizedBox(height: 10.h),
+                      // GestureDetector(onTap: (){
+                      //   Get.to(() => ChooseLang());
+                      // },child: Container(height: 25, width: MediaQuery.of(context).size.width*0.6,
+                      //     decoration: BoxDecoration(color: AppColors.primaryColor,
+                      // borderRadius: BorderRadius.circular(5)),
+                      //     child: Align(alignment: Alignment.center,child:
+                      //     Text('choose_language'.tr,style: TextStyle(color: Colors.white),))))
                       // SizedBox(height: 40.h),
                     ],
                   ),

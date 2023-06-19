@@ -22,6 +22,11 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final UserController _userController = Get.find();
   Map<String, dynamic> params = Map();
+  var items = [
+    'English',
+    'Arabic',
+    'Armenian'
+  ];
 
   @override
   void initState() {
@@ -57,7 +62,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SizedBox(height: 18.h),
+                        SizedBox(height: 38.h),
                         ClipRRect(borderRadius: BorderRadius.circular(30),
                           child: Image.asset(
                             AppImage.appMainLogo,
@@ -92,8 +97,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         SizedBox(height: 15.w),
                         CustomTextFiled(
                           controller: cont.lastNameController,
-                          label: "lastname".tr,
-                          hint: "lastname".tr,
+                          label: "last_name".tr,
+                          hint: "last_name".tr,
                           inputType: TextInputType.name,
                           textCapitalization: TextCapitalization.sentences,
                             // inputFormatter: [
@@ -257,6 +262,49 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                 ],
+              ),
+              Align(alignment: Alignment.topRight,child:
+              Container(width: MediaQuery.of(context).size.width*0.35,height: 40,decoration:
+              BoxDecoration(color: Colors.grey[300],borderRadius: BorderRadius.circular(5)),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: DropdownButton<String>(
+                    // Initial Value
+                    value: cont.selectedLanguage.value == 0? 'English' :
+                    cont.selectedLanguage.value == 1? 'Arabic' : 'Armenian',
+
+                    // Down Arrow Icon
+                    icon: const Icon(Icons.keyboard_arrow_down),
+
+                    // Array list of items
+                    items: items.map((String items) {
+                      return DropdownMenuItem(
+                        value: items,
+                        child: Text(items),
+                      );
+                    }).toList(),
+                    // After selecting the desired option,it will
+                    // change button value to selected value
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        //dropdownvalue = newValue!;
+                        if(newValue=='English'){
+                          cont.selectedLanguage.value = 0;
+                          cont.setLanguage();
+                        }else if(newValue=='Arabic'){
+                          cont.selectedLanguage.value = 1;
+                          Get.updateLocale(Locale('ar', 'AE'));
+                          cont.setLanguage();
+                        }else if(newValue=='Armenian'){
+                          cont.selectedLanguage.value = 2;
+                          Get.updateLocale(Locale('hy', 'AM'));
+                          cont.setLanguage();
+                        }
+                      });
+                    },
+                  ),
+                ),
+              ),
               ),
             ],
           ),

@@ -19,6 +19,7 @@ import 'package:mozlit_driver/util/firebase_service.dart';
 import 'package:mozlit_driver/util/languages.dart';
 import 'package:mozlit_driver/util/remote_config_service.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:wakelock/wakelock.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -43,6 +44,7 @@ Future<void> main() async {
   ));
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  Wakelock.enable();
   FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.instance;
   await RemoteConfigService.setupRemoteConfig();
   AppString.googleMapKey =firebaseRemoteConfig.getString("map_key");

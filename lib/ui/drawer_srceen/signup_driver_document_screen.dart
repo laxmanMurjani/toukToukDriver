@@ -165,7 +165,54 @@ class _SignUpDriverDocumentScreenState extends State<SignUpDriverDocumentScreen>
                             ),
                             InkWell(
                               onTap: () async {
-                                _imagePick(document: document);
+                                return showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text(
+                                          "Choose option",
+                                          style: TextStyle(color: Colors.blue),
+                                        ),
+                                        content: SingleChildScrollView(
+                                          child: ListBody(
+                                            children: [
+                                              Divider(
+                                                height: 1,
+                                                color: Colors.blue,
+                                              ),
+                                              ListTile(
+                                                onTap: () {
+                                                  Get.back();
+                                                  _imagePick(document: document);
+                                                  //_imagePick(document: widget.document!);
+                                                },
+                                                title: Text("Gallery"),
+                                                leading: Icon(
+                                                  Icons.account_box,
+                                                  color: Colors.blue,
+                                                ),
+                                              ),
+                                              Divider(
+                                                height: 1,
+                                                color: Colors.blue,
+                                              ),
+                                              ListTile(
+                                                onTap: () {
+                                                  Get.back();
+                                                  _photoPick(document: document);
+                                                  //_photoPick(document: widget.document!);
+                                                },
+                                                title: Text("Camera"),
+                                                leading: Icon(
+                                                  Icons.camera,
+                                                  color: Colors.blue,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    });
                               },
                               child: Container(
                                 width: 115,

@@ -62,17 +62,17 @@ class _DriverDocumentChangeScreenState
           }
           return Stack(
             children: [
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 100.0),
-                  child: Image.asset(
-                    AppImage.logoOpacity,
-                    width: 300,
-                    height: 300,
-                  ),
-                ),
-              ),
+              // Align(
+              //   alignment: Alignment.bottomCenter,
+              //   child: Padding(
+              //     padding: const EdgeInsets.symmetric(vertical: 100.0),
+              //     child: Image.asset(
+              //       AppImage.logoOpacity,
+              //       width: 300,
+              //       height: 300,
+              //     ),
+              //   ),
+              // ),
               Column(
                 children: [
                   // Padding(
