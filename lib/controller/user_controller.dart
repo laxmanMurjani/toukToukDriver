@@ -1499,6 +1499,7 @@ class UserController extends BaseController {
     //   count++;
     // }
     params["id[]"] = documentId;
+    //params["document[]"] = documentImagePath==null? '' : await dio.MultipartFile.fromFile(documentImagePath);
     params["document[]"] = await dio.MultipartFile.fromFile(documentImagePath);
 
     // params["id[]"] = idList;
