@@ -8,6 +8,7 @@ import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -71,6 +72,12 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   void initState() {
+    // Future.delayed(Duration.zero,() async{
+    //   bool checkPermissionStatus = await FlutterOverlayWindow.isPermissionGranted();
+    //   if(!checkPermissionStatus){
+    //     await FlutterOverlayWindow.requestPermission();
+    //   }
+    // },);
     rootBundle.loadString('assets/map_style.txt').then((string) {
       _mapStyle = string;
     });
@@ -1530,7 +1537,7 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);
 
     switch (state) {
@@ -1540,6 +1547,18 @@ class _HomeScreenState extends State<HomeScreen>
         }
         break;
       case AppLifecycleState.inactive:
+        // print('statusIsInactive');
+        // if (await FlutterOverlayWindow.isActive()) return;
+        // await FlutterOverlayWindow.showOverlay(
+        // enableDrag: true,
+        // overlayTitle: "X-SLAYER",
+        // overlayContent: 'Overlay Enabled',
+        // flag: OverlayFlag.defaultFlag,
+        // visibility: NotificationVisibility.visibilityPublic,
+        // positionGravity: PositionGravity.auto,
+        // height: 200,
+        // width: WindowSize.matchParent,
+        // );
         break;
       case AppLifecycleState.paused:
         break;

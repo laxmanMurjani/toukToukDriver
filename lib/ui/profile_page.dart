@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -469,6 +472,34 @@ class _ProfilePageState extends State<ProfilePage> {
                             Icon(
                               Icons.language,
                               size: 28,
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+
+                      InkWell(
+                        onTap: () {
+                          FlutterOverlayWindow.closeOverlay()
+                              .then((value) => log('STOPPED: alue: $value'));
+                          // _showLogoutDialog();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Close overlay'.tr,
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: AppColors.primaryColor),
+                            ),
+                            Image.asset(
+                              AppImage.logOut,
+                              width: 35,
+                              height: 35,
+                              fit: BoxFit.contain,
                             )
                           ],
                         ),

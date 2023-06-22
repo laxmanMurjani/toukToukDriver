@@ -13,6 +13,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:mozlit_driver/controller/home_controller.dart';
 import 'package:mozlit_driver/controller/user_controller.dart';
+import 'package:mozlit_driver/overlays/messanger_chathead.dart';
 import 'package:mozlit_driver/ui/splash_screen.dart';
 import 'package:mozlit_driver/util/app_constant.dart';
 import 'package:mozlit_driver/util/firebase_service.dart';
@@ -130,6 +131,19 @@ Future<void> main() async {
   runApp(MyApp());
 }
 
+@pragma("vm:entry-point")
+void overlayMain() {
+  WidgetsFlutterBinding.ensureInitialized();
+  final HomeController _homeController = Get.put(HomeController());
+  final UserController _userController = Get.put(UserController());
+  runApp(
+    const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: MessangerChatHead(),
+    ),
+  );
+}
+
 class MyApp extends StatefulWidget {
   @override
   State<MyApp> createState() => _MyAppState();
@@ -137,7 +151,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final UserController _userController = Get.put(UserController());
-  final HomeController _homeController = Get.put(HomeController());
+  final  _homeController = Get.lazyPut(()=>HomeController());
 
   @override
   void initState() {

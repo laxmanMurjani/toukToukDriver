@@ -42,8 +42,10 @@ import 'package:mozlit_driver/enum/provider_ui_selection_type.dart';
 import 'package:mozlit_driver/model/home_active_trip_model.dart';
 import 'package:mozlit_driver/util/app_constant.dart';
 
+bool showOverlyRequest = false;
+
 class HomeController extends BaseController {
-  final UserController _userController = Get.find();
+  final UserController _userController = Get.put(UserController());
   Rx<ProviderUiSelectionType> providerUiSelectionType =
       ProviderUiSelectionType.none.obs;
   Rx<HomeActiveTripModel> homeActiveTripModel = HomeActiveTripModel().obs;
@@ -86,7 +88,7 @@ class HomeController extends BaseController {
   RxInt _currentDestinationId = 0.obs;
   LatLng? _rideCurrentDestinationLatLng;
   location.Location _location = location.Location.instance;
-  GooglePlace googlePlace = GooglePlace(AppString.googleMapKey!);
+  GooglePlace googlePlace = GooglePlace(AppString.googleMapKey ?? "");
 
   FocusNode locationWhereToFocusNode = FocusNode();
   LatLng? latLngWhereTo1;
@@ -106,6 +108,7 @@ class HomeController extends BaseController {
   LatLng googleMapLatLng = LatLng(0, 0);
   RxList<Reason> reasonList = <Reason>[].obs;
   Rx<UserModuleType> responseUserModuleType = UserModuleType.TAXI.obs;
+  RxBool isOverlay = false.obs;
 
 
   @override
@@ -152,6 +155,10 @@ class HomeController extends BaseController {
 
       });
 
+      showOverlayRequestUpdate(Function update){
+        showOverlyRequest = true;
+        update.call();
+      }
 
     homeActiveTripModel.listen((HomeActiveTripModel p0) {
       print("object  ==>  ${p0.accountStatus}");
@@ -174,10 +181,12 @@ class HomeController extends BaseController {
           responseUserModuleType.value = UserModuleType.BOTH;
         }
         if (requestElement.request?.status == CheckStatus.SEARCHING) {
+          print("checkRequest1111");
           if (providerUiSelectionType.value !=
               ProviderUiSelectionType.searchingRequest) {
             timeLeftToRespond.value = requestElement.timeLeftToRespond ?? 60;
             _startTimer();
+
           }
           providerUiSelectionType.value =
               ProviderUiSelectionType.searchingRequest;
@@ -771,8 +780,11 @@ class HomeController extends BaseController {
   void _startTimer() {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       timeLeftToRespond.value--;
+      isOverlay.value = true;
+      print("checkRequest1111");
       if (timeLeftToRespond.value <= 0) {
         timer.cancel();
+        isOverlay.value = false;
         getTrip();
       }
     });
