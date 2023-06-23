@@ -821,16 +821,23 @@ class _TripApprovedWidgetState extends State<TripApprovedWidget> {
                   if (isShowBtnTapWhenDropped)
                     InkWell(
                       onTap: () {
-                        if (multiPleLocationText != null) {
-                          Map<String, String> params = {};
-                          params["location_id"] = "${currentDestination.id}";
-                          params["request_id"] =
-                              "${currentDestination.requestId}";
-                          params["status"] = CheckStatus.PICKEDUP;
-                          cont.updateMultipleDestination(params: params);
-                          return;
-                        }
-                        Get.dialog(AddTollChargeDialog());
+                        // if (multiPleLocationText != null) {
+                        //   Map<String, String> params = {};
+                        //   params["location_id"] = "${currentDestination.id}";
+                        //   params["request_id"] =
+                        //       "${currentDestination.requestId}";
+                        //   params["status"] = CheckStatus.PICKEDUP;
+                        //   cont.updateMultipleDestination(params: params);
+                        //   return;
+                        // }
+                        //Get.dialog(AddTollChargeDialog());
+                        Map<String, String> params = {};
+                        params["status"] = "DROPPED";
+                        params["_method"] = "PATCH";
+                        params["latitude"] = cont.userCurrentLocation!.latitude.toString();
+                        params["longitude"] = cont.userCurrentLocation!.longitude.toString();
+                        params["toll_price"] = "0"; //${cont.tollTaxController.text}
+                        cont.updateTrip(data: params);
                         // _showDeclineDialog(context);
                         // cont.waitingTimeSec.value = 0;
                       },

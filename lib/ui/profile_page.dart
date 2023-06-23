@@ -476,34 +476,34 @@ class _ProfilePageState extends State<ProfilePage> {
                           ],
                         ),
                       ),
-                      SizedBox(
-                        height: 15,
-                      ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
 
-                      InkWell(
-                        onTap: () {
-                          FlutterOverlayWindow.closeOverlay()
-                              .then((value) => log('STOPPED: alue: $value'));
-                          // _showLogoutDialog();
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Close overlay'.tr,
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: AppColors.primaryColor),
-                            ),
-                            Image.asset(
-                              AppImage.logOut,
-                              width: 35,
-                              height: 35,
-                              fit: BoxFit.contain,
-                            )
-                          ],
-                        ),
-                      ),
+                      // InkWell(
+                      //   onTap: () {
+                      //     FlutterOverlayWindow.closeOverlay()
+                      //         .then((value) => log('STOPPED: alue: $value'));
+                      //     // _showLogoutDialog();
+                      //   },
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //     children: [
+                      //       Text(
+                      //         'Close overlay'.tr,
+                      //         style: TextStyle(
+                      //             fontSize: 14,
+                      //             color: AppColors.primaryColor),
+                      //       ),
+                      //       Image.asset(
+                      //         AppImage.logOut,
+                      //         width: 35,
+                      //         height: 35,
+                      //         fit: BoxFit.contain,
+                      //       )
+                      //     ],
+                      //   ),
+                      // ),
 
                       SizedBox(
                         height: 15,

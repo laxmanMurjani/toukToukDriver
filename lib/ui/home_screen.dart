@@ -5,10 +5,12 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:expand_widget/expand_widget.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_overlay_window/flutter_overlay_window.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -760,6 +762,27 @@ class _HomeScreenState extends State<HomeScreen>
                                               width: 30),
                                         ),
                                       ),
+                                      // InkWell(
+                                      //   onTap: () async {
+                                      //     var a = await FirebaseMessaging.instance.getToken();
+                                      //     print('dToken: ${await FirebaseMessaging.instance.getToken()}');
+                                      //     //_homeController.ringTone();
+                                      //     //FlutterRingtonePlayer.playNotification();
+                                      //     //FlutterRingtonePlayer.play(fromAsset: "assets/driverNotification.wav");
+                                      //     //VerifiedDialogue()
+                                      //     //Get.to(() => NotificationManagerScreen());
+                                      //     //GetStorage().erase();
+                                      //   },
+                                      //   child: Padding(
+                                      //     padding:
+                                      //     const EdgeInsets.symmetric(
+                                      //         horizontal: 12.0),
+                                      //     child: Image.asset(
+                                      //         AppImage.bell,color: AppColors.white,
+                                      //         height: 30,
+                                      //         width: 30),
+                                      //   ),
+                                      // ),
                                     ],
                                   ),
                                 ),

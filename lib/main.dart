@@ -11,8 +11,11 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:mozlit_driver/api/api.dart';
+import 'package:mozlit_driver/api/api_service.dart';
 import 'package:mozlit_driver/controller/home_controller.dart';
 import 'package:mozlit_driver/controller/user_controller.dart';
+import 'package:mozlit_driver/enum/error_type.dart';
 import 'package:mozlit_driver/overlays/messanger_chathead.dart';
 import 'package:mozlit_driver/ui/splash_screen.dart';
 import 'package:mozlit_driver/util/app_constant.dart';
@@ -23,6 +26,26 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:wakelock/wakelock.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // try {
+  //   // showLoader();
+  //   await apiService.getRequest(
+  //     url: ApiUrl.ringTone,
+  //     onSuccess: (Map<String, dynamic> data) {
+  //       print('daataa: ${data['response']}');
+  //       print('krunal:');
+  //       // dismissLoader();
+  //       // tripHistoryModelList.clear();
+  //       // tripHistoryModelList
+  //       //     .addAll(tripHistoryModelFromJson(jsonEncode(data["response"])));
+  //     },
+  //     onError: (ErrorType? errorType, String? msg) {
+  //       // showError(msg: msg);
+  //     },
+  //   );
+  // } catch (e) {
+  //   print("Error ==>$e");
+  //   // showError(msg: "$e");
+  // }
   await Firebase.initializeApp();
   print('Handling a background message ${message.messageId}');
 }

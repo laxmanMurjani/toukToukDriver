@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:math' as math;
 import 'package:dio/dio.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_place/google_place.dart';
@@ -166,6 +167,9 @@ class HomeController extends BaseController {
         Get.to(() => SignUpDriverDocumentScreen(isForceFullyAdd: true));
         // Get.to(() => DriverDocumentScreen(isForceFullyAdd: true));
       }
+      if(p0.requests.isEmpty){
+        FlutterRingtonePlayer.stop();
+      }
       if (p0.requests.isNotEmpty) {
         reasonList.clear();
         reasonList.addAll(p0.reasons);
@@ -192,6 +196,8 @@ class HomeController extends BaseController {
               ProviderUiSelectionType.searchingRequest;
         }
         if (requestElement.request?.status == CheckStatus.STARTED) {
+          print('gam:');
+          FlutterRingtonePlayer.stop();
           if (providerUiSelectionType.value !=
                   ProviderUiSelectionType.startedRequest &&
               googleMapController != null) {
@@ -219,6 +225,7 @@ class HomeController extends BaseController {
                   0);
         }
         if (requestElement.request?.status == CheckStatus.ACCEPTED) {
+          print('bam');
           if (providerUiSelectionType.value !=
                   ProviderUiSelectionType.acceptedRequest &&
               googleMapController != null) {
@@ -778,6 +785,7 @@ class HomeController extends BaseController {
   }
 
   void _startTimer() {
+    FlutterRingtonePlayer.play(fromAsset: "assets/driverNotification.wav");
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       timeLeftToRespond.value--;
       isOverlay.value = true;
@@ -786,6 +794,7 @@ class HomeController extends BaseController {
         timer.cancel();
         isOverlay.value = false;
         getTrip();
+        FlutterRingtonePlayer.stop();
       }
     });
   }
@@ -1076,6 +1085,28 @@ class HomeController extends BaseController {
           tripHistoryModelList.clear();
           tripHistoryModelList
               .addAll(tripHistoryModelFromJson(jsonEncode(data["response"])));
+        },
+        onError: (ErrorType? errorType, String? msg) {
+          showError(msg: msg);
+        },
+      );
+    } catch (e) {
+      print("Error ==>$e");
+      showError(msg: "$e");
+    }
+  }
+
+  Future<void> ringTone() async {
+    try {
+      showLoader();
+      await apiService.getRequest(
+        url: ApiUrl.ringTone,
+        onSuccess: (Map<String, dynamic> data) {
+          print('daataa: ${data['response']}');
+          dismissLoader();
+          // tripHistoryModelList.clear();
+          // tripHistoryModelList
+          //     .addAll(tripHistoryModelFromJson(jsonEncode(data["response"])));
         },
         onError: (ErrorType? errorType, String? msg) {
           showError(msg: msg);
