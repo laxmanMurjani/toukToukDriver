@@ -96,7 +96,8 @@ dependencies:
   awesome_dropdown: ^0.0.4
   google_fonts: ^4.0.4
   flutter_overlay_window: ^0.4.3
-  flutter_ringtone_player: ^3.2.0
+#  flutter_ringtone_player: ^3.2.0
+  audioplayers: ^4.1.0
 
 
 

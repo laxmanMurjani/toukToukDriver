@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
+// import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mozlit_driver/api/api.dart';
@@ -332,7 +332,8 @@ class _AvailableRequestWidgetState extends State<AvailableRequestWidget> {
                       InkWell(
                         onTap: () {
                           print('request rejected');
-                          FlutterRingtonePlayer.stop();
+                          // FlutterRingtonePlayer.stop();
+                          cont.stopRingtone();
                           cont.rejectTrip();
                         },
                         child: Container(
@@ -357,7 +358,7 @@ class _AvailableRequestWidgetState extends State<AvailableRequestWidget> {
                       InkWell(
                         onTap: () {
                           print('request accepted');
-                          FlutterRingtonePlayer.stop();
+                          cont.stopRingtone();
                           cont.updateTrip();
                         },
                         child: Container(

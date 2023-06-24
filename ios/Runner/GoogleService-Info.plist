@@ -3,9 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>167903828680-sna26f76nnqvijttc2q7k2kauqivpdr7.apps.googleusercontent.com</string>
+	<string>167903828680-7265hctck0pbf7rt947g3i5ea3o4h9he.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.167903828680-sna26f76nnqvijttc2q7k2kauqivpdr7</string>
+	<string>com.googleusercontent.apps.167903828680-7265hctck0pbf7rt947g3i5ea3o4h9he</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>167903828680-4gqu77l8o04tnpb9fjj1ubijc3t01d54.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBgelLs_bGCIiSmVUOS1pjwARZX7kWebf4</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.ToukTouk.driver</string>
+	<string>com.touktouk.driver</string>
 	<key>PROJECT_ID</key>
 	<string>touk-touk-taxi</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:167903828680:ios:4293832cc8ff8d9561a3fd</string>
+	<string>1:167903828680:ios:c8db0df4e182d96461a3fd</string>
 	<key>DATABASE_URL</key>
 	<string>https://touk-touk-taxi-default-rtdb.firebaseio.com</string>
 </dict>

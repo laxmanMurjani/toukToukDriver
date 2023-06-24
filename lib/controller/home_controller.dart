@@ -5,8 +5,9 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:math' as math;
 import 'package:dio/dio.dart';
-import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
+// import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_place/google_place.dart';
 import 'package:location/location.dart' as location;
@@ -111,6 +112,9 @@ class HomeController extends BaseController {
   Rx<UserModuleType> responseUserModuleType = UserModuleType.TAXI.obs;
   RxBool isOverlay = false.obs;
 
+  final player = AudioPlayer();
+
+
 
   @override
   void onInit() {
@@ -168,7 +172,7 @@ class HomeController extends BaseController {
         // Get.to(() => DriverDocumentScreen(isForceFullyAdd: true));
       }
       if(p0.requests.isEmpty){
-        FlutterRingtonePlayer.stop();
+        stopRingtone();
       }
       if (p0.requests.isNotEmpty) {
         reasonList.clear();
@@ -197,7 +201,7 @@ class HomeController extends BaseController {
         }
         if (requestElement.request?.status == CheckStatus.STARTED) {
           print('gam:');
-          FlutterRingtonePlayer.stop();
+          stopRingtone();
           if (providerUiSelectionType.value !=
                   ProviderUiSelectionType.startedRequest &&
               googleMapController != null) {
@@ -425,6 +429,18 @@ class HomeController extends BaseController {
       }
     });
   }
+
+  String ringtoneUrl = 'https://www.example.com/ringtone.mp3';
+
+   playRingtone() async {
+     await player.play(UrlSource('https://example.com/my-audio.wav'));
+  }
+
+  void stopRingtone() async {
+     await player.stop();
+  }
+
+
 
   Future<void> getTrip() async {
     try {
@@ -785,7 +801,7 @@ class HomeController extends BaseController {
   }
 
   void _startTimer() {
-    FlutterRingtonePlayer.play(fromAsset: "assets/driverNotification.wav");
+    playRingtone();
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       timeLeftToRespond.value--;
       isOverlay.value = true;
@@ -794,7 +810,8 @@ class HomeController extends BaseController {
         timer.cancel();
         isOverlay.value = false;
         getTrip();
-        FlutterRingtonePlayer.stop();
+        // FlutterRingtonePlayer.stop();
+        stopRingtone();
       }
     });
   }
