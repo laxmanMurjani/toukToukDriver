@@ -174,7 +174,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final UserController _userController = Get.put(UserController());
-  final  _homeController = Get.lazyPut(()=>HomeController());
+  final HomeController _homeController = Get.put(HomeController());
+  //final  _homeController = Get.lazyPut(()=>HomeController());
 
   @override
   void initState() {

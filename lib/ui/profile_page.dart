@@ -44,20 +44,20 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final UserController _userController = Get.find();
-  final HomeController homeController = Get.find();
+  //final HomeController _homeController = Get.find();
   // late Razorpay _razorpay;
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(
-      Duration.zero,
-      () async {
-      await  _userController.getChargingStation(liveLat: homeController.userCurrentLocation!.latitude.toString(),
-            liveLong: homeController.userCurrentLocation!.longitude.toString()
-        );
-      },
-    );
+    // Future.delayed(
+    //   Duration.zero,
+    //   () async {
+    //   await  _userController.getChargingStation(liveLat: _homeController.userCurrentLocation!.latitude.toString(),
+    //         liveLong: _homeController.userCurrentLocation!.longitude.toString()
+    //     );
+    //   },
+    // );
     // _razorpay = Razorpay();
     // _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
     // _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
@@ -78,10 +78,12 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       // appBar: CustomAppBar(text: "Profile Page"),
       backgroundColor: Colors.white,
-      body: GetX<UserController>(builder: (cont) {
-        if (cont.error.value.errorType == ErrorType.internet) {
-          return NoInternetWidget();
-        }
+      body: GetX<UserController>(builder: (cont)
+    {
+      if (cont.error.value.errorType == ErrorType.internet) {
+        return NoInternetWidget();
+      }
+      return GetX<HomeController>(builder: (homeCont) {
         return Padding(
           padding: const EdgeInsets.only(top: 45, left: 30, right: 30),
           child: Column(
@@ -96,7 +98,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           Column(
                             children: [
                               Text(
-                                  '${_userController.userData.value.firstName ?? ""} ${_userController.userData.value.lastName ?? ""}',
+                                  '${cont.userData.value.firstName ?? ""} ${cont
+                                      .userData.value.lastName ?? ""}',
                                   style: TextStyle(
                                       fontSize: 18,
                                       color: AppColors.primaryColor,
@@ -133,22 +136,31 @@ class _ProfilePageState extends State<ProfilePage> {
                                     child: CustomFadeInImage(
                                       height: 40.w,
                                       width: 40.w,
-                                      url: _userController
-                                                  .userData.value.avatar !=
-                                              null
-                                          ? "${ApiUrl.baseImageUrl}${_userController.userData.value.avatar}"
+                                      url: cont.userData.value.avatar !=
+                                          null
+                                          ? "${ApiUrl.baseImageUrl}${cont
+                                          .userData.value.avatar}"
                                           : "https://www.kindpng.com/picc/m/52-526237_avatar-profile-hd-png-download.png",
                                       //"${ApiUrl.baseImageUrl}${_userController.userData.value.avatar ?? "https://p.kindpng.com/picc/s/668-6689202_avatar-profile-hd-png-download.png"}",
                                       fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),
-                                homeController.homeActiveTripModel.value.providerVerifyCheck == null? SizedBox() :
-                                homeController.homeActiveTripModel.value.providerVerifyCheck == 'verified'?
-                                Positioned(bottom:0, right:0,child: Container(height:20, width:20,decoration: BoxDecoration(
-                                    color:Colors.white,shape: BoxShape.circle
-                                ),
-                                    child: Image.asset(AppImage.verifiedIcon,height: 20,width: 20,)),) : SizedBox()
+                                homeCont.homeActiveTripModel.value
+                                    .providerVerifyCheck == null ? SizedBox() :
+                                homeCont.homeActiveTripModel.value
+                                    .providerVerifyCheck == 'verified' ?
+                                Positioned(bottom: 0,
+                                  right: 0,
+                                  child: Container(height: 20,
+                                      width: 20,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          shape: BoxShape.circle
+                                      ),
+                                      child: Image.asset(
+                                        AppImage.verifiedIcon, height: 20,
+                                        width: 20,)),) : SizedBox()
                               ],
                             ),
                           ),
@@ -174,10 +186,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                   decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius:
-                                          BorderRadius.circular(10)),
+                                      BorderRadius.circular(10)),
                                   child: Column(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceAround,
                                     children: [
                                       SizedBox(
                                         height: 0,
@@ -213,10 +225,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                   decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius:
-                                          BorderRadius.circular(10)),
+                                      BorderRadius.circular(10)),
                                   child: Column(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceAround,
                                     children: [
                                       Image.asset(
                                         AppImage.help,
@@ -246,10 +258,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                   decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius:
-                                          BorderRadius.circular(10)),
+                                      BorderRadius.circular(10)),
                                   child: Column(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceAround,
                                     children: [
                                       Image.asset(
                                         AppImage.summary,
@@ -333,31 +345,31 @@ class _ProfilePageState extends State<ProfilePage> {
                       SizedBox(
                         height: 15,
                       ),
-                      InkWell(
-                        onTap: () {
-                          Get.to(() => InstantRide());
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'instant_ride'.tr,
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: AppColors.primaryColor),
-                            ),
-                            Image.asset(
-                              AppImage.instantRide,
-                              width: 28,
-                              fit: BoxFit.contain,
-                              height: 28,
-                            )
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
+                      // InkWell(
+                      //   onTap: () {
+                      //     Get.to(() => InstantRide());
+                      //   },
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //     children: [
+                      //       Text(
+                      //         'instant_ride'.tr,
+                      //         style: TextStyle(
+                      //             fontSize: 14,
+                      //             color: AppColors.primaryColor),
+                      //       ),
+                      //       Image.asset(
+                      //         AppImage.instantRide,
+                      //         width: 28,
+                      //         fit: BoxFit.contain,
+                      //         height: 28,
+                      //       )
+                      //     ],
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
                       InkWell(
                         onTap: () {
                           Get.to(() => DriverDocumentScreen());
@@ -541,8 +553,8 @@ class _ProfilePageState extends State<ProfilePage> {
             ],
           ),
         );
-      }),
-    );
+      });
+    }));
   }
 
   // openCheckout() async {

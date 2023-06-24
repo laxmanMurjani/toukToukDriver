@@ -4,10 +4,10 @@ import 'dart:developer';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:math' as math;
+import 'package:assets_audio_player/assets_audio_player.dart';
+// import 'package:audioplayers/audioplayers.dart';
 import 'package:dio/dio.dart';
-// import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_place/google_place.dart';
 import 'package:location/location.dart' as location;
@@ -112,8 +112,9 @@ class HomeController extends BaseController {
   Rx<UserModuleType> responseUserModuleType = UserModuleType.TAXI.obs;
   RxBool isOverlay = false.obs;
 
-  final player = AudioPlayer();
-
+  //final player = AudioPlayer();
+  // late AssetsAudioPlayer assetsAudioPlayer;
+  final assetsAudioPlayer = AssetsAudioPlayer();
 
 
   @override
@@ -173,6 +174,7 @@ class HomeController extends BaseController {
       }
       if(p0.requests.isEmpty){
         stopRingtone();
+        //FlutterRingtonePlayer.stop();
       }
       if (p0.requests.isNotEmpty) {
         reasonList.clear();
@@ -202,6 +204,7 @@ class HomeController extends BaseController {
         if (requestElement.request?.status == CheckStatus.STARTED) {
           print('gam:');
           stopRingtone();
+          //FlutterRingtonePlayer.stop();
           if (providerUiSelectionType.value !=
                   ProviderUiSelectionType.startedRequest &&
               googleMapController != null) {
@@ -430,16 +433,48 @@ class HomeController extends BaseController {
     });
   }
 
-  String ringtoneUrl = 'https://www.example.com/ringtone.mp3';
+  // String ringtoneUrl = 'https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3';
 
-   playRingtone() async {
-     await player.play(UrlSource('https://example.com/my-audio.wav'));
+  playRingtone() async {
+    assetsAudioPlayer.open(
+      //Audio("assets/driverNotification.wav"),
+        Playlist(
+            audios: [
+              Audio("assets/driverNotification.wav")
+            ]
+        ),
+        loopMode: LoopMode.playlist
+    );
+    //await player.play(UrlSource(ringtoneUrl));
+    // openPlayer();
+    // assetsAudioPlayer.play();
   }
 
   void stopRingtone() async {
-     await player.stop();
+    assetsAudioPlayer.stop();
+    // await player.stop();
+    // Audio.
   }
 
+
+
+  // void openPlayer() async {
+  //   await assetsAudioPlayer.open(
+  //     Playlist(audios: [Audio.network(
+  //         'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/Music_for_Video/springtide/Sounds_strange_weird_but_unmistakably_romantic_Vol1/springtide_-_03_-_We_Are_Heading_to_the_East.mp3',
+  //         metas: Metas(
+  //           id: 'Online',
+  //           title: 'Online',
+  //           artist: 'Florent Champigny',
+  //           album: 'OnlineAlbum',
+  //           // image: MetasImage.network('https://www.google.com')
+  //           image: MetasImage.network(
+  //               'https://image.shutterstock.com/image-vector/pop-music-text-art-colorful-600w-515538502.jpg'),
+  //         ))], startIndex: 0),
+  //     showNotification: true,
+  //     autoStart: true,
+  //   );
+  // }
 
 
   Future<void> getTrip() async {
@@ -802,6 +837,8 @@ class HomeController extends BaseController {
 
   void _startTimer() {
     playRingtone();
+
+    // FlutterRingtonePlayer.play(fromAsset: "assets/driverNotification.wav");
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       timeLeftToRespond.value--;
       isOverlay.value = true;
@@ -810,8 +847,8 @@ class HomeController extends BaseController {
         timer.cancel();
         isOverlay.value = false;
         getTrip();
-        // FlutterRingtonePlayer.stop();
         stopRingtone();
+        // FlutterRingtonePlayer.stop();
       }
     });
   }
