@@ -222,7 +222,8 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Toll Charge : ${cont.tollTaxController.text}".tr,
+                          "Toll Charge : 0 ${cont.homeActiveTripModel.value.currency ?? ""}".tr,
+                          // "Toll Charge : ${cont.tollTaxController.text}".tr,
                           style: TextStyle(
                             color: Colors.black,
                           ),
@@ -258,7 +259,8 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
                         ),
                         Spacer(),
                         Text(
-                          "${requestElement.request?.payment?.total ?? "0"} ${cont.homeActiveTripModel.value.currency ?? ""}",
+
+                          "${ formatNumberWithCommas(requestElement.request?.payment?.total!.toInt())} ${cont.homeActiveTripModel.value.currency ?? ""}",
                           style: TextStyle(
                               color: AppColors.primaryColor,
                               fontSize: 13.sp,
@@ -501,4 +503,9 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
     super.dispose();
     _homeController.removeListener(() {});
   }
+}
+
+String formatNumberWithCommas(int? number) {
+  final formatter = NumberFormat('#,##0');
+  return formatter.format(number);
 }
