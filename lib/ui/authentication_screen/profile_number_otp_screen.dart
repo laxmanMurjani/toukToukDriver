@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 // import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
@@ -25,6 +27,24 @@ class ProfileNumberOtpScreenState extends State<ProfileNumberOtpScreen> {
   final phoneNumber = Get.arguments[0];
   final countryCode = Get.arguments[1];
   bool isResendOtp = false;
+  int secondsRemaining = 30;
+  bool enableResend = false;
+  Timer? timer;
+  @override
+  initState() {
+    super.initState();
+    timer = Timer.periodic(Duration(seconds: 1), (_) {
+      if (secondsRemaining != 0) {
+        setState(() {
+          secondsRemaining--;
+        });
+      } else {
+        setState(() {
+          enableResend = true;
+        });
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -228,8 +248,10 @@ class ProfileNumberOtpScreenState extends State<ProfileNumberOtpScreen> {
                           style: TextStyle(
                             color: AppColors.drawer.withOpacity(0.8),
                           )),
+                      enableResend?
                       InkWell(
                         onTap: () async {
+                          _resendCode();
                           setState(() {
                             isResendOtp = true;
                           });
@@ -244,6 +266,11 @@ class ProfileNumberOtpScreenState extends State<ProfileNumberOtpScreen> {
                           style: TextStyle(
                               color: Colors.black, fontWeight: FontWeight.bold),
                         ),
+                      ) : SizedBox(),
+                      enableResend? SizedBox() :
+                      Text(
+                        'Resend OTP after $secondsRemaining seconds',
+                        style: TextStyle(color: Colors.black, fontSize: 12),
                       ),
                     ],
                   ),
@@ -267,5 +294,18 @@ class ProfileNumberOtpScreenState extends State<ProfileNumberOtpScreen> {
         );
       }),
     );
+  }
+  void _resendCode() {
+    //other code here
+    setState((){
+      secondsRemaining = 30;
+      enableResend = false;
+    });
+  }
+
+  @override
+  dispose(){
+    timer!.cancel();
+    super.dispose();
   }
 }

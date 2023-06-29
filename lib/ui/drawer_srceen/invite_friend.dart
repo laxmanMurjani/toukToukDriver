@@ -270,7 +270,7 @@ class _InviteFriendScreenState extends State<InviteFriendScreen> {
                           width: 290,
                           // color: Colors.black45,
                           child: Text(
-                            "get INR 100 in your Mozilit wallet for every friend you refer".tr,
+                            "get ${cont.userData.value.currency} 100 in your Mozilit wallet for every friend you refer".tr,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.black,
