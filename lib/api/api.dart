@@ -1,7 +1,9 @@
 import 'dart:io';
 
 class ApiUrl {
-  static const String _baseUrl = 'https://demo.mozilit.com/superAdminLogin/touk_touktaxi/public';
+  static const String _baseUrl = 'http://165.22.218.247/public';
+      //'http://165.22.218.247/touk_touktaxi/public';
+      //'https://demo.mozilit.com/superAdminLogin/touk_touktaxi/public';
       //'https://demo.mozilit.com/superAdminLogin/mozilit_official/public';
       //'https://etoride.etomotors.com';
   // static const String _baseUrl = 'https://demo.mozilit.com/superAdminLogin/eto_taxi/public';
