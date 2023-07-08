@@ -77,6 +77,7 @@ class ApiUrl {
   static String deleteAccount = "$_apiBaseUrl/delete/account";
   static String selectModuleType = "$_apiBaseUrl/profile/servicetype/module";
   static String ringTone = "$_apiBaseUrl/incoming_ring";
+  static String chooseServiceType = "$_apiBaseUrl/profile/servicetype/module";
 
   static String tripRate({required String requestId}) =>
       "$_apiBaseUrl/trip/$requestId/rate";
