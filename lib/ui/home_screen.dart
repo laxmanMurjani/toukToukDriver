@@ -10,9 +10,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter_overlay_window/flutter_overlay_window.dart';
+import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:geolocator/geolocator.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mozlit_driver/api/api.dart';
@@ -132,6 +132,7 @@ class _HomeScreenState extends State<HomeScreen>
             _homeController.breakDownSendNewRide();
           }
         }
+        _userController.getChangeServiceType();
       });
       Future.delayed(
         Duration(seconds: 7),
@@ -257,7 +258,7 @@ class _HomeScreenState extends State<HomeScreen>
                 onMapCreated: (GoogleMapController controller) {
                   controller.setMapStyle(_mapStyle);
                   cont.googleMapController = controller;
-                  // determinePosition();
+                  determinePosition();
                 },
               ),
               if (isSuspend)
@@ -339,7 +340,7 @@ class _HomeScreenState extends State<HomeScreen>
                           if (!isUserOffline)
                             GestureDetector(
                               onTap: () {
-                                // determinePosition();
+                                determinePosition();
                               },
                               child: Padding(
                                 padding: EdgeInsets.only(right: 20),
@@ -582,531 +583,539 @@ class _HomeScreenState extends State<HomeScreen>
                   top: 40,
                   child: Padding(
                     padding: const EdgeInsets.only(top:8.0),
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                    child: Column(
+                      children: [
+                        Container(
+                          height:
+                          MediaQuery.of(context).size.height *
+                              0.085,
+                          width:
+                          MediaQuery.of(context).size.width *
+                              0.95,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryColor,
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(55)),
+                          ),
+                          child: Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment:
+                            CrossAxisAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.start,
+                                crossAxisAlignment:
+                                CrossAxisAlignment.center,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      Get.to(
+                                              () => ProfileScreen());
 
-                          children: [
-                            // if (cont.userUiSelectionType.value !=
-                            //         UserUiSelectionType.serviceType &&
-                            //     cont.userUiSelectionType.value !=
-                            //         UserUiSelectionType.vehicleDetails &&
-                            //     cont.userUiSelectionType.value !=
-                            //         UserUiSelectionType.scheduleRide &&
-                            //     cont.userUiSelectionType.value !=
-                            //         UserUiSelectionType.findingDriver)
-                            Column(
-                              children: [
-                                Container(
-                                  height:
-                                  MediaQuery.of(context).size.height *
-                                      0.085,
-                                  width:
-                                  MediaQuery.of(context).size.width *
-                                      0.95,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 5),
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: AppColors.primaryColor,
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(55)),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.center,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                              Get.to(
-                                                      () => ProfileScreen());
-
-                                            },
-                                            child: Stack(
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                  EdgeInsets.all(2.0),
-                                                  child: Container(
-                                                    height: 45.w,
-                                                    width: 45.w,
-                                                    clipBehavior:
-                                                    Clip.antiAlias,
-                                                    decoration:
-                                                    BoxDecoration(
-                                                      // color: Colors.red,
-                                                        border:
-                                                        Border.all(
-                                                          color: AppColors
-                                                              .primaryColor,
-                                                          width: 1,
-                                                        ),
-                                                        borderRadius:
-                                                        BorderRadius
-                                                            .circular(
-                                                            25.h)),
-                                                    padding:
-                                                    EdgeInsets.all(1),
-                                                    child: userCont
-                                                        .userData
-                                                        .value
-                                                        .avatar ==
-                                                        null
-                                                        ? CircleAvatar(
-                                                      radius: 25,
-                                                      backgroundColor:
-                                                      AppColors
-                                                          .white,
-                                                      backgroundImage:
-                                                      AssetImage(
-                                                          AppImage
-                                                              .profilePic),
-                                                    )
-                                                        : CircleAvatar(
-                                                      radius: 25,
-                                                      backgroundImage:
-                                                      NetworkImage(
-                                                        '${ApiUrl.baseImageUrl}${userCont.userData.value.avatar}',
-                                                      ),
-                                                      backgroundColor:
-                                                      AppColors
-                                                          .white,
-                                                      // child: CustomFadeInImage(
-                                                      //     url:
-                                                      //         '${ApiUrl.baseImageUrl}${_userController.userData.value.picture}',
-                                                      //     fit: BoxFit
-                                                      //         .contain,
-                                                      //     placeHolder:
-                                                      //         AppImage
-                                                      //             .icUserPlaceholder,
-                                                      //   ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                cont.homeActiveTripModel.value.providerVerifyCheck == null? SizedBox() :
-                                                cont.homeActiveTripModel.value.providerVerifyCheck == 'verified'?
-                                                Positioned(bottom:0, right:0,child: Container(height:20, width:20,decoration: BoxDecoration(
-                                                    color:Colors.white,shape: BoxShape.circle
-                                                ),
-                                                    child: Image.asset(AppImage.verifiedIcon,height: 20,width: 20,)),) : SizedBox()
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 8,
-                                          ),
-                                          Column(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                            children: [
-                                              RichText(
-                                                text: TextSpan(
-                                                  text: 'hi'.tr,
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                      FontWeight.w500,
-                                                      color: AppColors
-                                                          .white),
-                                                  children: <TextSpan>[
-                                                    TextSpan(
-                                                        text:
-                                                        ' ${userCont.userData.value.firstName ?? ""} ${userCont.userData.value.lastName ?? ""} ',
-                                                        style: TextStyle(
-                                                            fontSize: 16,
-                                                            color: AppColors
-                                                                .white,
-                                                            fontWeight:
-                                                            FontWeight
-                                                                .w500)),
-                                                  ],
-                                                ),
-                                              ),
-
-                                              Text('have_a_nice_day'.tr,
-                                                  style: TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                      FontWeight
-                                                          .w500,
-                                                      color: AppColors
-                                                          .white)),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          // assetsAudioPlayer.open(
-                                          //   Audio("assets/driverNotification.wav"),
-                                          // );
-                                          //VerifiedDialogue()
-                                          Get.to(() => NotificationManagerScreen());
-                                          //GetStorage().erase();
-                                        },
-                                        child: Padding(
-                                          padding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 12.0),
-                                          child: Image.asset(
-                                              AppImage.bell,color: AppColors.white,
-                                              height: 30,
-                                              width: 30),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                // Stack(children: [
-                                //
-                                //
-                                // ],),
-                                Stack(alignment: Alignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 2.0),
-                                      child: Container(width: 42,height: 38,decoration: BoxDecoration(color:
-                                      AppColors.primaryColor,borderRadius: BorderRadius.circular(20)),child: Align(alignment:
-                                      Alignment.center,child: Icon(Icons.sort,color: Colors.white,),),),
-                                    ),
-                                    ExpandChild(
-                                      indicatorPadding: EdgeInsets.only(bottom: 20),
-                                      indicatorIconColor: AppColors.primaryColor,
-                                      // arrowPadding: ,
-                                      //   arrowColor: AppColors.primaryColor,
-                                        child: Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 10, vertical: 5),
-
-                                          height: MediaQuery.of(context)
-                                              .size
-                                              .height *
-                                              0.12,
-                                          alignment: Alignment.center,
-                                          width: MediaQuery.of(context)
-                                              .size
-                                              .width *
-                                              0.95,
-                                          decoration: BoxDecoration(
-                                            color: AppColors.white,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(25)),
-                                          ),
-                                          // height: 100,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                            children: [
-                                              InkWell(
-                                                onTap: () {
-                                                  Get.to(() => EarningScreen(
-                                                  ));
-                                                },
-                                                child: Container(
-                                                    padding: EdgeInsets.only(
-                                                        top: 7,
-                                                        bottom: 7,
-                                                        left: 0,
-                                                        right: 0),
-                                                    height: 80,
-                                                    width: 80,
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.white,
-                                                        borderRadius:
-                                                        BorderRadius
-                                                            .circular(
-                                                            10)),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceAround,
-                                                      children: [
-                                                        Image.asset(
-                                                          AppImage.earning,
-                                                          height: 35,
-                                                          width: 35,
-                                                        ),
-
-                                                        Text(
-                                                          'earning'.tr,
-                                                          style: TextStyle(
-                                                              fontSize: 12),
-                                                        )
-                                                      ],
-                                                    )),
-                                              ),
-                                              InkWell(
-                                                onTap: () {
-                                                  Get.to(() => YourTripsScreen());
-                                                },
-                                                child: Container(
-                                                    padding:
-                                                    EdgeInsets.all(7),
-                                                    height: 80,
-                                                    width: 80,
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.white,
-                                                        borderRadius:
-                                                        BorderRadius
-                                                            .circular(
-                                                            10)),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceAround,
-                                                      children: [
-                                                        Image.asset(
-                                                          AppImage.pastRide,
-                                                          height: 30,
-                                                          width: 30,
-                                                        ),
-                                                        SizedBox(height: 5),
-                                                        Text(
-                                                          'past_rides'.tr,
-                                                          style: TextStyle(
-                                                              fontSize: 12),
-                                                        )
-                                                      ],
-                                                    )),
-                                              ),
-                                              InkWell(
-                                                onTap: () {
-                                                  Get.to(() => ProfilePage());
-                                                },
-                                                child: Container(
-                                                    padding:
-                                                    EdgeInsets.all(7),
-                                                    height: 80,
-                                                    width: 80,
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.white,
-                                                        borderRadius:
-                                                        BorderRadius
-                                                            .circular(
-                                                            10)),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceAround,
-                                                      children: [
-                                                        Image.asset(
-                                                          AppImage.account,
-                                                          height: 30,
-                                                          width: 30,
-                                                        ),
-                                                        SizedBox(height: 5),
-                                                        Text(
-                                                          'account'.tr,
-                                                          style: TextStyle(
-                                                              fontSize: 12),
-                                                        )
-                                                      ],
-                                                    )),
-                                              ),
-                                            ],
-                                          ),
-                                        )),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 10.h,
-                                ),
-                                // if (cont.providerUiSelectionType.value ==
-                                //     ProviderUiSelectionType.none ||
-                                //     userCont.selectedUserModuleType.value !=
-                                //         cont.responseUserModuleType.value)
-                                //   Container(
-                                //     clipBehavior: Clip.antiAlias,
-                                //     decoration: BoxDecoration(
-                                //         color: AppColors.unselectedColor,
-                                //         borderRadius: BorderRadius.circular(30.r)),
-                                //     child: Row(
-                                //       children: [
-                                //         InkWell(
-                                //           onTap: () async {
-                                //             userCont.updateUserModuleType(
-                                //                 userModuleType: UserModuleType.TAXI);
-                                //             // userCont.selectedUserModuleType.value = UserModuleType.TAXI;
-                                //           },
-                                //           child: Container(
-                                //             child: Center(
-                                //               child: Text(
-                                //                 "taxi".tr,
-                                //                 style: TextStyle(
-                                //                   color: userCont.selectedUserModuleType
-                                //                       .value ==
-                                //                       UserModuleType.TAXI
-                                //                       ? AppColors.unselectedColor
-                                //                       : AppColors.selectedColor,
-                                //                   fontSize: 16.sp,
-                                //                 ),
-                                //               ),
-                                //             ),
-                                //             width: 105.w,
-                                //             height: 47.w,
-                                //             decoration: BoxDecoration(
-                                //               color: userCont.selectedUserModuleType
-                                //                   .value ==
-                                //                   UserModuleType.TAXI
-                                //                   ? AppColors.selectedColor
-                                //                   : AppColors.unselectedColor,
-                                //             ),
-                                //           ),
-                                //         ),
-                                //         InkWell(
-                                //           onTap: () async {
-                                //             userCont.updateUserModuleType(
-                                //                 userModuleType:
-                                //                 UserModuleType.DELIVERY);
-                                //             // userCont.selectedUserModuleType.value = UserModuleType.DELIVERY;
-                                //           },
-                                //           child: Container(
-                                //             child: Center(
-                                //               child: Text(
-                                //                 "delivery".tr,
-                                //                 style: TextStyle(
-                                //                   color: userCont.selectedUserModuleType
-                                //                       .value ==
-                                //                       UserModuleType.DELIVERY
-                                //                       ? AppColors.unselectedColor
-                                //                       : AppColors.selectedColor,
-                                //                   fontSize: 16.sp,
-                                //                 ),
-                                //               ),
-                                //             ),
-                                //             decoration: BoxDecoration(
-                                //               color: userCont.selectedUserModuleType
-                                //                   .value ==
-                                //                   UserModuleType.DELIVERY
-                                //                   ? AppColors.selectedColor
-                                //                   : AppColors.unselectedColor,
-                                //             ),
-                                //             width: 105.w,
-                                //             height: 47.w,
-                                //           ),
-                                //         ),
-                                //         // InkWell(
-                                //         //   onTap: () async {
-                                //         //     userCont.selectedUserModuleType.value = UserModuleType.BOTH;
-                                //         //
-                                //         //
-                                //         //
-                                //         //      // cont.selectedUserModuleType.value = cont.responseUserModuleType.value;
-                                //         //      },
-                                //         //   child: Container(
-                                //         //     width: 105.w,
-                                //         //     height: 47.w,
-                                //         //
-                                //         //     child: Center(
-                                //         //       child: Text("Both",
-                                //         //         style: TextStyle(
-                                //         //           color: userCont.selectedUserModuleType.value == UserModuleType.BOTH
-                                //         //               ? AppColors.unselectedColor
-                                //         //               : AppColors.selectedColor,
-                                //         //           fontSize: 16.sp,
-                                //         //         ),
-                                //         //       ),
-                                //         //     ),
-                                //         //     decoration: BoxDecoration(
-                                //         //         color: userCont.selectedUserModuleType.value == UserModuleType.BOTH
-                                //         //             ? AppColors.selectedColor
-                                //         //             : AppColors.unselectedColor,
-                                //         //         borderRadius: BorderRadius.only(
-                                //         //           topRight: Radius.circular(30.r),
-                                //         //           bottomRight: Radius.circular(30.r),
-                                //         //         )),
-                                //         //   ),
-                                //         // ),
-                                //       ],
-                                //     ),
-                                //   ),
-                                if (cont.homeAddress.isNotEmpty) ...[
-                                  Expanded(
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                    },
+                                    child: Stack(
                                       children: [
-                                        Expanded(
-                                          child: ConstrainedBox(
-                                            constraints:
-                                            BoxConstraints(minHeight: 40.w),
-                                            child: Container(
-                                              margin: EdgeInsets.symmetric(
-                                                  horizontal: 10.w),
-                                              padding: EdgeInsets.symmetric(
-                                                  vertical: 3.h, horizontal: 10.w),
-                                              alignment: Alignment.centerLeft,
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                BorderRadius.circular(12.r),
-                                                boxShadow: [
-                                                  AppBoxShadow.defaultShadow(),
-                                                ],
-                                              ),
-                                              child: Text(
-                                                "${cont.homeAddress.value}",
-                                                // maxLines: 2,
-                                                style: TextStyle(fontSize: 12.sp),
-                                                // overflow: TextOverflow.ellipsis,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        GestureDetector(
-                                          onTap: () async {
-                                            // _scaffoldKey.currentState!.openDrawer();
-                                            // var uri = Uri.parse("google.navigation:q=${cont.homeAddress.value.replaceAll(",,", ",")}");
-                                            var uri = Uri.parse(
-                                                "google.navigation://q=${cont.googleMapLatLng.latitude},${cont.googleMapLatLng.longitude}&mode=d");
-                                            if (Platform.isIOS) {
-                                              uri = Uri.parse(
-                                                  "https://maps.apple.com?q=${cont.googleMapLatLng.latitude},${cont.googleMapLatLng.longitude}&mode=d");
-                                            }
-                                            if (await canLaunchUrl(uri)) {
-                                              await launchUrl(uri);
-                                            } else {
-                                              cont.showError(
-                                                  msg:
-                                                  "${"could_not_launch".tr} $uri");
-                                            }
-                                          },
+                                        Padding(
+                                          padding:
+                                          EdgeInsets.all(2.0),
                                           child: Container(
-                                            height: 40.w,
-                                            width: 40.w,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                              BorderRadius.circular(12.r),
-                                              boxShadow: [
-                                                AppBoxShadow.defaultShadow(),
-                                              ],
-                                            ),
-                                            child: Center(
-                                              child: Image.asset(
-                                                AppImage.icHomeLocation,
-                                                width: 22.w,
+                                            height: 45.w,
+                                            width: 45.w,
+                                            clipBehavior:
+                                            Clip.antiAlias,
+                                            decoration:
+                                            BoxDecoration(
+                                              // color: Colors.red,
+                                                border:
+                                                Border.all(
+                                                  color: AppColors
+                                                      .primaryColor,
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                BorderRadius
+                                                    .circular(
+                                                    25.h)),
+                                            padding:
+                                            EdgeInsets.all(1),
+                                            child: userCont
+                                                .userData
+                                                .value
+                                                .avatar ==
+                                                null
+                                                ? CircleAvatar(
+                                              radius: 25,
+                                              backgroundColor:
+                                              AppColors
+                                                  .white,
+                                              backgroundImage:
+                                              AssetImage(
+                                                  AppImage
+                                                      .profilePic),
+                                            )
+                                                : CircleAvatar(
+                                              radius: 25,
+                                              backgroundImage:
+                                              NetworkImage(
+                                                '${ApiUrl.baseImageUrl}${userCont.userData.value.avatar}',
                                               ),
+                                              backgroundColor:
+                                              AppColors
+                                                  .white,
+                                              // child: CustomFadeInImage(
+                                              //     url:
+                                              //         '${ApiUrl.baseImageUrl}${_userController.userData.value.picture}',
+                                              //     fit: BoxFit
+                                              //         .contain,
+                                              //     placeHolder:
+                                              //         AppImage
+                                              //             .icUserPlaceholder,
+                                              //   ),
                                             ),
                                           ),
                                         ),
+                                        cont.homeActiveTripModel.value.providerVerifyCheck == null? SizedBox() :
+                                        cont.homeActiveTripModel.value.providerVerifyCheck == 'verified'?
+                                        Positioned(bottom:0, right:0,child: Container(height:20, width:20,decoration: BoxDecoration(
+                                            color:Colors.white,shape: BoxShape.circle
+                                        ),
+                                            child: Image.asset(AppImage.verifiedIcon,height: 20,width: 20,)),) : SizedBox()
                                       ],
                                     ),
                                   ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Column(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      RichText(
+                                        text: TextSpan(
+                                          text: 'hi'.tr,
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight:
+                                              FontWeight.w500,
+                                              color: AppColors
+                                                  .white),
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                                text:
+                                                ' ${userCont.userData.value.firstName ?? ""} ${userCont.userData.value.lastName ?? ""} ',
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    color: AppColors
+                                                        .white,
+                                                    fontWeight:
+                                                    FontWeight
+                                                        .w500)),
+                                          ],
+                                        ),
+                                      ),
+
+                                      Text('have_a_nice_day'.tr,
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight:
+                                              FontWeight
+                                                  .w500,
+                                              color: AppColors
+                                                  .white)),
+                                    ],
+                                  ),
                                 ],
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  // assetsAudioPlayer.open(
+                                  //   Audio("assets/driverNotification.wav"),
+                                  // );
+                                  //VerifiedDialogue()
+                                  Get.to(() => NotificationManagerScreen());
+                                  //GetStorage().erase();
+                                },
+                                child: Padding(
+                                  padding:
+                                  const EdgeInsets.symmetric(
+                                      horizontal: 12.0),
+                                  child: Image.asset(
+                                      AppImage.bell,color: AppColors.white,
+                                      height: 30,
+                                      width: 30),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        // Stack(children: [
+                        //
+                        //
+                        // ],),
+                        Stack(alignment: Alignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 2.0),
+                              child: Container(width: 42,height: 38,decoration: BoxDecoration(color:
+                              AppColors.primaryColor,borderRadius: BorderRadius.circular(20)),child: Align(alignment:
+                              Alignment.center,child: Icon(Icons.sort,color: Colors.white,),),),
+                            ),
+                            ExpandChild(
+                              arrowPadding: EdgeInsets.only(bottom: 20),
+                                arrowColor: AppColors.primaryColor,
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 5),
+
+                                  height: MediaQuery.of(context)
+                                      .size
+                                      .height *
+                                      0.12,
+                                  alignment: Alignment.center,
+                                  width: MediaQuery.of(context)
+                                      .size
+                                      .width *
+                                      0.95,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.white,
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(25)),
+                                  ),
+                                  // height: 100,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          Get.to(() => EarningScreen(
+                                          ));
+                                        },
+                                        child: Container(
+                                            padding: EdgeInsets.only(
+                                                top: 7,
+                                                bottom: 7,
+                                                left: 0,
+                                                right: 0),
+                                            height: 80,
+                                            width: 80,
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                BorderRadius
+                                                    .circular(
+                                                    10)),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .spaceAround,
+                                              children: [
+                                                Image.asset(
+                                                  AppImage.earning,
+                                                  height: 35,
+                                                  width: 35,
+                                                ),
+
+                                                Text(
+                                                  'earning'.tr,
+                                                  style: TextStyle(
+                                                      fontSize: 12),
+                                                )
+                                              ],
+                                            )),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          Get.to(() => YourTripsScreen());
+                                        },
+                                        child: Container(
+                                            padding:
+                                            EdgeInsets.all(7),
+                                            height: 80,
+                                            width: 80,
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                BorderRadius
+                                                    .circular(
+                                                    10)),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .spaceAround,
+                                              children: [
+                                                Image.asset(
+                                                  AppImage.pastRide,
+                                                  height: 30,
+                                                  width: 30,
+                                                ),
+                                                SizedBox(height: 5),
+                                                Text(
+                                                  'past_rides'.tr,
+                                                  style: TextStyle(
+                                                      fontSize: 12),
+                                                )
+                                              ],
+                                            )),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          Get.to(() => ProfilePage());
+                                        },
+                                        child: Container(
+                                            padding:
+                                            EdgeInsets.all(7),
+                                            height: 80,
+                                            width: 80,
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                BorderRadius
+                                                    .circular(
+                                                    10)),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .spaceAround,
+                                              children: [
+                                                Image.asset(
+                                                  AppImage.account,
+                                                  height: 30,
+                                                  width: 30,
+                                                ),
+                                                SizedBox(height: 5),
+                                                Text(
+                                                  'account'.tr,
+                                                  style: TextStyle(
+                                                      fontSize: 12),
+                                                )
+                                              ],
+                                            )),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                          ],
+                        ),
+
+                        SizedBox(
+                          height: 10.h,
+                        ),
+
+                     cont.homeActiveTripModel.value.multiDestination.isNotEmpty ? SizedBox() :  SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              selectedServiceTypeWidget(cont),
+                              Expanded(
+                                child: SizedBox(
+                                  height: 110,
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: userCont.serviceTypeList1.length,
+                                    itemBuilder: (context, index) {
+                                      return allServiceTypeWidget(userCont,index,cont);
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        // if (cont.providerUiSelectionType.value ==
+                        //     ProviderUiSelectionType.none ||
+                        //     userCont.selectedUserModuleType.value !=
+                        //         cont.responseUserModuleType.value)
+                        //   Container(
+                        //     clipBehavior: Clip.antiAlias,
+                        //     decoration: BoxDecoration(
+                        //         color: AppColors.unselectedColor,
+                        //         borderRadius: BorderRadius.circular(30.r)),
+                        //     child: Row(
+                        //       children: [
+                        //         InkWell(
+                        //           onTap: () async {
+                        //             userCont.updateUserModuleType(
+                        //                 userModuleType: UserModuleType.TAXI);
+                        //             // userCont.selectedUserModuleType.value = UserModuleType.TAXI;
+                        //           },
+                        //           child: Container(
+                        //             child: Center(
+                        //               child: Text(
+                        //                 "taxi".tr,
+                        //                 style: TextStyle(
+                        //                   color: userCont.selectedUserModuleType
+                        //                       .value ==
+                        //                       UserModuleType.TAXI
+                        //                       ? AppColors.unselectedColor
+                        //                       : AppColors.selectedColor,
+                        //                   fontSize: 16.sp,
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             width: 105.w,
+                        //             height: 47.w,
+                        //             decoration: BoxDecoration(
+                        //               color: userCont.selectedUserModuleType
+                        //                   .value ==
+                        //                   UserModuleType.TAXI
+                        //                   ? AppColors.selectedColor
+                        //                   : AppColors.unselectedColor,
+                        //             ),
+                        //           ),
+                        //         ),
+                        //         InkWell(
+                        //           onTap: () async {
+                        //             userCont.updateUserModuleType(
+                        //                 userModuleType:
+                        //                 UserModuleType.DELIVERY);
+                        //             // userCont.selectedUserModuleType.value = UserModuleType.DELIVERY;
+                        //           },
+                        //           child: Container(
+                        //             child: Center(
+                        //               child: Text(
+                        //                 "delivery".tr,
+                        //                 style: TextStyle(
+                        //                   color: userCont.selectedUserModuleType
+                        //                       .value ==
+                        //                       UserModuleType.DELIVERY
+                        //                       ? AppColors.unselectedColor
+                        //                       : AppColors.selectedColor,
+                        //                   fontSize: 16.sp,
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             decoration: BoxDecoration(
+                        //               color: userCont.selectedUserModuleType
+                        //                   .value ==
+                        //                   UserModuleType.DELIVERY
+                        //                   ? AppColors.selectedColor
+                        //                   : AppColors.unselectedColor,
+                        //             ),
+                        //             width: 105.w,
+                        //             height: 47.w,
+                        //           ),
+                        //         ),
+                        //         // InkWell(
+                        //         //   onTap: () async {
+                        //         //     userCont.selectedUserModuleType.value = UserModuleType.BOTH;
+                        //         //
+                        //         //
+                        //         //
+                        //         //      // cont.selectedUserModuleType.value = cont.responseUserModuleType.value;
+                        //         //      },
+                        //         //   child: Container(
+                        //         //     width: 105.w,
+                        //         //     height: 47.w,
+                        //         //
+                        //         //     child: Center(
+                        //         //       child: Text("Both",
+                        //         //         style: TextStyle(
+                        //         //           color: userCont.selectedUserModuleType.value == UserModuleType.BOTH
+                        //         //               ? AppColors.unselectedColor
+                        //         //               : AppColors.selectedColor,
+                        //         //           fontSize: 16.sp,
+                        //         //         ),
+                        //         //       ),
+                        //         //     ),
+                        //         //     decoration: BoxDecoration(
+                        //         //         color: userCont.selectedUserModuleType.value == UserModuleType.BOTH
+                        //         //             ? AppColors.selectedColor
+                        //         //             : AppColors.unselectedColor,
+                        //         //         borderRadius: BorderRadius.only(
+                        //         //           topRight: Radius.circular(30.r),
+                        //         //           bottomRight: Radius.circular(30.r),
+                        //         //         )),
+                        //         //   ),
+                        //         // ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        if (cont.homeAddress.isNotEmpty) ...[
+                          Expanded(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: ConstrainedBox(
+                                    constraints:
+                                    BoxConstraints(minHeight: 40.w),
+                                    child: Container(
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 10.w),
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 3.h, horizontal: 10.w),
+                                      alignment: Alignment.centerLeft,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                        BorderRadius.circular(12.r),
+                                        boxShadow: [
+                                          AppBoxShadow.defaultShadow(),
+                                        ],
+                                      ),
+                                      child: Text(
+                                        "${cont.homeAddress.value}",
+                                        // maxLines: 2,
+                                        style: TextStyle(fontSize: 12.sp),
+                                        // overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () async {
+                                    // _scaffoldKey.currentState!.openDrawer();
+                                    // var uri = Uri.parse("google.navigation:q=${cont.homeAddress.value.replaceAll(",,", ",")}");
+                                    var uri = Uri.parse(
+                                        "google.navigation://q=${cont.googleMapLatLng.latitude},${cont.googleMapLatLng.longitude}&mode=d");
+                                    if (Platform.isIOS) {
+                                      uri = Uri.parse(
+                                          "https://maps.apple.com?q=${cont.googleMapLatLng.latitude},${cont.googleMapLatLng.longitude}&mode=d");
+                                    }
+                                    if (await canLaunchUrl(uri)) {
+                                      await launchUrl(uri);
+                                    } else {
+                                      cont.showError(
+                                          msg:
+                                          "${"could_not_launch".tr} $uri");
+                                    }
+                                  },
+                                  child: Container(
+                                    height: 40.w,
+                                    width: 40.w,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius:
+                                      BorderRadius.circular(12.r),
+                                      boxShadow: [
+                                        AppBoxShadow.defaultShadow(),
+                                      ],
+                                    ),
+                                    child: Center(
+                                      child: Image.asset(
+                                        AppImage.icHomeLocation,
+                                        width: 22.w,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
-                          ]),
+                          ),
+                        ],
+                      ],
                     ),
                   )),
 
@@ -1424,90 +1433,90 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  // Future<Position?> determinePosition() async {
-  //   LocationPermission permission;
-  //
-  //   // Test if location services are enabled.
-  //
-  //   permission = await Geolocator.checkPermission();
-  //   if (permission == LocationPermission.denied) {
-  //     permission = await Geolocator.requestPermission();
-  //     if (permission == LocationPermission.denied) {
-  //       Get.showSnackbar(GetSnackBar(
-  //         messageText: Text(
-  //           "location_permissions_are_denied".tr,
-  //           style: TextStyle(
-  //             color: Colors.white,
-  //           ),
-  //         ),
-  //         mainButton: InkWell(
-  //           onTap: () {},
-  //           child: Padding(
-  //             padding: EdgeInsets.symmetric(horizontal: 15),
-  //             child: Text(
-  //               "allow".tr,
-  //               style: TextStyle(
-  //                 color: Colors.orange,
-  //                 fontSize: 16,
-  //                 fontWeight: FontWeight.w600,
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //       ));
-  //     }
-  //   }
-  //
-  //   if (permission == LocationPermission.deniedForever) {
-  //     await openAppSettings();
-  //   }
-  //   Position? position;
-  //   try {
-  //     position = await Geolocator.getCurrentPosition();
-  //   } catch (e) {
-  //     Get.showSnackbar(GetSnackBar(
-  //       messageText: Text(
-  //         e.toString(),
-  //         style: const TextStyle(
-  //           color: Colors.white,
-  //         ),
-  //       ),
-  //       mainButton: InkWell(
-  //         onTap: () {},
-  //         child: Padding(
-  //           padding: EdgeInsets.symmetric(horizontal: 15),
-  //           child: Text(
-  //             "allow".tr,
-  //             style: TextStyle(
-  //               color: Colors.orange,
-  //               fontSize: 16,
-  //               fontWeight: FontWeight.w600,
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     ));
-  //     // showError(msg: e.toString());
-  //   }
-  //   if (position != null) {
-  //     LatLng latLng = LatLng(position.latitude, position.longitude);
-  //     _homeController.userCurrentLocation = latLng;
-  //     CameraPosition cameraPosition = CameraPosition(
-  //       target: LatLng(latLng.latitude, latLng.longitude),
-  //       zoom: 14.4746,
-  //     );
-  //     _homeController.googleMapController
-  //         ?.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-  //     if (_homeController.userImageMarker != null) {
-  //       _homeController.showMarker(
-  //           latLng: _homeController.userCurrentLocation!,
-  //           oldLatLng: _homeController.userCurrentLocation!);
-  //     } else {
-  //       _capturePng();
-  //     }
-  //   }
-  //   return position;
-  // }
+  Future<Position?> determinePosition() async {
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        Get.showSnackbar(GetSnackBar(
+          messageText: Text(
+            "location_permissions_are_denied".tr,
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          mainButton: InkWell(
+            onTap: () {},
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Text(
+                "allow".tr,
+                style: TextStyle(
+                  color: Colors.orange,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ),
+        ));
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      await openAppSettings();
+    }
+    Position? position;
+    try {
+      position = await Geolocator.getCurrentPosition();
+    } catch (e) {
+      Get.showSnackbar(GetSnackBar(
+        messageText: Text(
+          e.toString(),
+          style: const TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        mainButton: InkWell(
+          onTap: () {},
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: Text(
+              "allow".tr,
+              style: TextStyle(
+                color: Colors.orange,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ),
+      ));
+      // showError(msg: e.toString());
+    }
+    if (position != null) {
+      LatLng latLng = LatLng(position.latitude, position.longitude);
+      _homeController.userCurrentLocation = latLng;
+      CameraPosition cameraPosition = CameraPosition(
+        target: LatLng(latLng.latitude, latLng.longitude),
+        zoom: 14.4746,
+      );
+      _homeController.googleMapController
+          ?.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+      if (_homeController.userImageMarker != null) {
+        _homeController.showMarker(
+            latLng: _homeController.userCurrentLocation!,
+            oldLatLng: _homeController.userCurrentLocation!);
+      } else {
+        _capturePng();
+      }
+    }
+    return position;
+  }
 
   @override
   void dispose() {
@@ -1573,4 +1582,89 @@ class _HomeScreenState extends State<HomeScreen>
         break;
     }
   }
+  Widget selectedServiceTypeWidget(HomeController cont){
+    return  Padding(
+      padding: const EdgeInsets.only(left: 10.0),
+      child: cont.homeActiveTripModel.value.driverServiceType == null ? SizedBox() : Column(
+        children: [
+          Container(
+            height: 60,
+            width: 100,
+            decoration: BoxDecoration(
+                color: AppColors.gray,
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20))
+            ),
+            child: cont.homeActiveTripModel.value.driverServiceType == null ?
+            Image.asset(AppImage.appMainLogo):
+            Image.network(cont.homeActiveTripModel.value.driverServiceType['image']),
+          ), Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.all(5),
+            height: 45,
+            width: 100,
+            decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.only(bottomLeft:  Radius.circular(20),
+                    bottomRight: Radius.circular(20))
+            ),
+            child: Text(
+              cont.homeActiveTripModel.value.driverServiceType == null ? "": cont.homeActiveTripModel.value.driverServiceType['name'],
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(color: AppColors.white,fontSize: 12,fontWeight: FontWeight.w400),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+  Widget allServiceTypeWidget(UserController cont,int index, HomeController homeCont){
+    return  Padding(
+      padding: const EdgeInsets.only(left: 10.0),
+      child: cont.serviceTypeList1.isEmpty ? SizedBox() : InkWell(
+        onTap:(){
+          print("dddd===>${index}");
+         homeCont.chooseServiceType(provider_id: homeCont.homeActiveTripModel.value.provider_id.toString(),
+             service_type_id: cont.serviceTypeList1[index].id.toString());
+        } ,
+        child: Column(
+          children: [
+            Container(
+              height: 60,
+              width: 100,
+              decoration: BoxDecoration(
+                  color: AppColors.gray,
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20))
+              ),
+              child: cont.serviceTypeList1.isEmpty ?
+              Image.asset(AppImage.appMainLogo):
+              Image.network(cont.serviceTypeList1[index].image!),
+            ), Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.all(5),
+              height: 45,
+              width: 100,
+              decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.only(bottomLeft:  Radius.circular(20),
+                      bottomRight: Radius.circular(20))
+              ),
+              child: Text(cont.serviceTypeList1[index].name!,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+
+                style: TextStyle(color: AppColors.white,fontSize: 12,fontWeight: FontWeight.w400),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
 }
+
