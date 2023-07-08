@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:geolocator/geolocator.dart';
+// import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_place/google_place.dart';
@@ -364,7 +364,7 @@ class _InstantRideState extends State<InstantRide> {
                                 onMapCreated: (GoogleMapController controller) {
                                   controller.setMapStyle(_mapStyle);
                                   _controller = controller;
-                                  determinePosition();
+                                  // determinePosition();
                                 },
                                 onCameraIdle: () {
                                   print("CameraMove ==>   onCameraIdle");
@@ -545,76 +545,76 @@ class _InstantRideState extends State<InstantRide> {
     );
   }
 
-  Future<Position?> determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    // Test if location services are enabled.
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        Get.showSnackbar(GetBar(
-          messageText:  Text(
-            "location_permissions_are_denied".tr,
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          mainButton: InkWell(
-            onTap: () {},
-            child:  Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Text(
-                "allow".tr,
-                style: TextStyle(
-                  color: Colors.orange,
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ),
-        ));
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      await openAppSettings();
-    }
-    Position? position;
-    try {
-      position = await Geolocator.getCurrentPosition();
-    } catch (e) {
-      Get.showSnackbar(GetBar(
-        messageText: Text(
-          e.toString(),
-          style: const TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        mainButton: InkWell(
-          onTap: () {},
-          child:  Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            child: Text(
-              "allow".tr,
-              style: TextStyle(
-                color: Colors.orange,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ),
-      ));
-    }
-    if (position != null) {
-      showMarker(latLng: LatLng(position.latitude, position.longitude));
-    }
-    return position;
-  }
+  // Future<Position?> determinePosition() async {
+  //   bool serviceEnabled;
+  //   LocationPermission permission;
+  //
+  //   // Test if location services are enabled.
+  //
+  //   permission = await Geolocator.checkPermission();
+  //   if (permission == LocationPermission.denied) {
+  //     permission = await Geolocator.requestPermission();
+  //     if (permission == LocationPermission.denied) {
+  //       Get.showSnackbar(GetBar(
+  //         messageText:  Text(
+  //           "location_permissions_are_denied".tr,
+  //           style: TextStyle(
+  //             color: Colors.white,
+  //           ),
+  //         ),
+  //         mainButton: InkWell(
+  //           onTap: () {},
+  //           child:  Padding(
+  //             padding: EdgeInsets.symmetric(horizontal: 15),
+  //             child: Text(
+  //               "allow".tr,
+  //               style: TextStyle(
+  //                 color: Colors.orange,
+  //                 fontSize: 16.sp,
+  //                 fontWeight: FontWeight.w600,
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       ));
+  //     }
+  //   }
+  //
+  //   if (permission == LocationPermission.deniedForever) {
+  //     await openAppSettings();
+  //   }
+  //   Position? position;
+  //   try {
+  //     position = await Geolocator.getCurrentPosition();
+  //   } catch (e) {
+  //     Get.showSnackbar(GetBar(
+  //       messageText: Text(
+  //         e.toString(),
+  //         style: const TextStyle(
+  //           color: Colors.white,
+  //         ),
+  //       ),
+  //       mainButton: InkWell(
+  //         onTap: () {},
+  //         child:  Padding(
+  //           padding: EdgeInsets.symmetric(horizontal: 15),
+  //           child: Text(
+  //             "allow".tr,
+  //             style: TextStyle(
+  //               color: Colors.orange,
+  //               fontSize: 16.sp,
+  //               fontWeight: FontWeight.w600,
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ));
+  //   }
+  //   if (position != null) {
+  //     showMarker(latLng: LatLng(position.latitude, position.longitude));
+  //   }
+  //   return position;
+  // }
 
   Future<void> showMarker({required LatLng latLng}) async {
     CameraPosition cameraPosition = CameraPosition(

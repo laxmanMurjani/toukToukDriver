@@ -10,9 +10,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_overlay_window/flutter_overlay_window.dart';
+// import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:geolocator/geolocator.dart';
+// import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mozlit_driver/api/api.dart';
@@ -257,7 +257,7 @@ class _HomeScreenState extends State<HomeScreen>
                 onMapCreated: (GoogleMapController controller) {
                   controller.setMapStyle(_mapStyle);
                   cont.googleMapController = controller;
-                  determinePosition();
+                  // determinePosition();
                 },
               ),
               if (isSuspend)
@@ -339,7 +339,7 @@ class _HomeScreenState extends State<HomeScreen>
                           if (!isUserOffline)
                             GestureDetector(
                               onTap: () {
-                                determinePosition();
+                                // determinePosition();
                               },
                               child: Padding(
                                 padding: EdgeInsets.only(right: 20),
@@ -781,8 +781,10 @@ class _HomeScreenState extends State<HomeScreen>
                                       Alignment.center,child: Icon(Icons.sort,color: Colors.white,),),),
                                     ),
                                     ExpandChild(
-                                      arrowPadding: EdgeInsets.only(bottom: 20),
-                                        arrowColor: AppColors.primaryColor,
+                                      indicatorPadding: EdgeInsets.only(bottom: 20),
+                                      indicatorIconColor: AppColors.primaryColor,
+                                      // arrowPadding: ,
+                                      //   arrowColor: AppColors.primaryColor,
                                         child: Container(
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 10, vertical: 5),
@@ -1422,90 +1424,90 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  Future<Position?> determinePosition() async {
-    LocationPermission permission;
-
-    // Test if location services are enabled.
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        Get.showSnackbar(GetSnackBar(
-          messageText: Text(
-            "location_permissions_are_denied".tr,
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          mainButton: InkWell(
-            onTap: () {},
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Text(
-                "allow".tr,
-                style: TextStyle(
-                  color: Colors.orange,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ),
-        ));
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      await openAppSettings();
-    }
-    Position? position;
-    try {
-      position = await Geolocator.getCurrentPosition();
-    } catch (e) {
-      Get.showSnackbar(GetSnackBar(
-        messageText: Text(
-          e.toString(),
-          style: const TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        mainButton: InkWell(
-          onTap: () {},
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            child: Text(
-              "allow".tr,
-              style: TextStyle(
-                color: Colors.orange,
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ),
-      ));
-      // showError(msg: e.toString());
-    }
-    if (position != null) {
-      LatLng latLng = LatLng(position.latitude, position.longitude);
-      _homeController.userCurrentLocation = latLng;
-      CameraPosition cameraPosition = CameraPosition(
-        target: LatLng(latLng.latitude, latLng.longitude),
-        zoom: 14.4746,
-      );
-      _homeController.googleMapController
-          ?.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-      if (_homeController.userImageMarker != null) {
-        _homeController.showMarker(
-            latLng: _homeController.userCurrentLocation!,
-            oldLatLng: _homeController.userCurrentLocation!);
-      } else {
-        _capturePng();
-      }
-    }
-    return position;
-  }
+  // Future<Position?> determinePosition() async {
+  //   LocationPermission permission;
+  //
+  //   // Test if location services are enabled.
+  //
+  //   permission = await Geolocator.checkPermission();
+  //   if (permission == LocationPermission.denied) {
+  //     permission = await Geolocator.requestPermission();
+  //     if (permission == LocationPermission.denied) {
+  //       Get.showSnackbar(GetSnackBar(
+  //         messageText: Text(
+  //           "location_permissions_are_denied".tr,
+  //           style: TextStyle(
+  //             color: Colors.white,
+  //           ),
+  //         ),
+  //         mainButton: InkWell(
+  //           onTap: () {},
+  //           child: Padding(
+  //             padding: EdgeInsets.symmetric(horizontal: 15),
+  //             child: Text(
+  //               "allow".tr,
+  //               style: TextStyle(
+  //                 color: Colors.orange,
+  //                 fontSize: 16,
+  //                 fontWeight: FontWeight.w600,
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       ));
+  //     }
+  //   }
+  //
+  //   if (permission == LocationPermission.deniedForever) {
+  //     await openAppSettings();
+  //   }
+  //   Position? position;
+  //   try {
+  //     position = await Geolocator.getCurrentPosition();
+  //   } catch (e) {
+  //     Get.showSnackbar(GetSnackBar(
+  //       messageText: Text(
+  //         e.toString(),
+  //         style: const TextStyle(
+  //           color: Colors.white,
+  //         ),
+  //       ),
+  //       mainButton: InkWell(
+  //         onTap: () {},
+  //         child: Padding(
+  //           padding: EdgeInsets.symmetric(horizontal: 15),
+  //           child: Text(
+  //             "allow".tr,
+  //             style: TextStyle(
+  //               color: Colors.orange,
+  //               fontSize: 16,
+  //               fontWeight: FontWeight.w600,
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ));
+  //     // showError(msg: e.toString());
+  //   }
+  //   if (position != null) {
+  //     LatLng latLng = LatLng(position.latitude, position.longitude);
+  //     _homeController.userCurrentLocation = latLng;
+  //     CameraPosition cameraPosition = CameraPosition(
+  //       target: LatLng(latLng.latitude, latLng.longitude),
+  //       zoom: 14.4746,
+  //     );
+  //     _homeController.googleMapController
+  //         ?.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+  //     if (_homeController.userImageMarker != null) {
+  //       _homeController.showMarker(
+  //           latLng: _homeController.userCurrentLocation!,
+  //           oldLatLng: _homeController.userCurrentLocation!);
+  //     } else {
+  //       _capturePng();
+  //     }
+  //   }
+  //   return position;
+  // }
 
   @override
   void dispose() {

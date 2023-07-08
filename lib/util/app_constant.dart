@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:geolocator/geolocator.dart';
+// import 'package:geolocator/geolocator.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppImage {
@@ -118,16 +118,16 @@ class AppImage {
 
 double? latitude, longitude;
 
-Future<void> getCurrentLocation() async {
-  await Geolocator.isLocationServiceEnabled();
-
-  Position position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high);
-  latitude = position.latitude;
-  longitude = position.longitude;
-  print("latitude $latitude");
-  print("longitude $longitude");
-}
+// Future<void> getCurrentLocation() async {
+//   await Geolocator.isLocationServiceEnabled();
+//
+//   Position position = await Geolocator.getCurrentPosition(
+//       desiredAccuracy: LocationAccuracy.high);
+//   latitude = position.latitude;
+//   longitude = position.longitude;
+//   print("latitude $latitude");
+//   print("longitude $longitude");
+// }
 
 class AppColors {
   // static const Color primaryColor = Color(0xff3081A6);

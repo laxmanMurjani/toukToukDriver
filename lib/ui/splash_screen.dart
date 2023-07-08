@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
+// import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:mozlit_driver/controller/user_controller.dart';
 import 'package:mozlit_driver/ui/authentication_screen/sign_in_up_screen.dart';
@@ -29,93 +29,93 @@ class _SplashScreenState extends State<SplashScreen> {
   final UserController _userController = Get.find();
   static final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
   Map<String, dynamic> _deviceData = <String, dynamic>{};
-  Future<Position?> determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    // Test if location services are enabled.
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        Get.showSnackbar(GetBar(
-          messageText: Text(
-            "location_permissions_are_denied".tr,
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          mainButton: InkWell(
-            onTap: () {},
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Text(
-                "allow".tr,
-                style: TextStyle(
-                  color: Colors.orange,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ),
-        ));
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      await openAppSettings();
-    }
-    Position? position;
-    try {
-      position = await Geolocator.getCurrentPosition();
-    } catch (e) {
-      Get.showSnackbar(GetBar(
-        messageText: Text(
-          e.toString(),
-          style: const TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        mainButton: InkWell(
-          onTap: () {},
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            child: Text(
-              "allow".tr,
-              style: TextStyle(
-                color: Colors.orange,
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ),
-      ));
-      // showError(msg: e.toString());
-    }
-    print("position===> ${position!.longitude}");
-
-    // setState(() {
-    //   currentLat = position?.latitude;
-    //   currentLat = position?.longitude;
-    // });
-    await placemarkFromCoordinates(position.latitude, position.longitude)
-        .then((List<Placemark> placemarks) {
-      Placemark place = placemarks[0];
-      String? area = place.street;
-      String? sunLocality = place.subLocality;
-      String? subAdministrativeArea = place.subAdministrativeArea;
-      String? postalCode = place.postalCode;
-      userLiveLocation =
-          "$area, $sunLocality,$subAdministrativeArea,$postalCode";
-      print("area==> $userLiveLocation");
-      setState(() {});
-    });
-
-    return position;
-  }
+  // Future<Position?> determinePosition() async {
+  //   bool serviceEnabled;
+  //   LocationPermission permission;
+  //
+  //   // Test if location services are enabled.
+  //
+  //   permission = await Geolocator.checkPermission();
+  //   if (permission == LocationPermission.denied) {
+  //     permission = await Geolocator.requestPermission();
+  //     if (permission == LocationPermission.denied) {
+  //       Get.showSnackbar(GetBar(
+  //         messageText: Text(
+  //           "location_permissions_are_denied".tr,
+  //           style: TextStyle(
+  //             color: Colors.white,
+  //           ),
+  //         ),
+  //         mainButton: InkWell(
+  //           onTap: () {},
+  //           child: Padding(
+  //             padding: EdgeInsets.symmetric(horizontal: 15),
+  //             child: Text(
+  //               "allow".tr,
+  //               style: TextStyle(
+  //                 color: Colors.orange,
+  //                 fontSize: 16,
+  //                 fontWeight: FontWeight.w600,
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       ));
+  //     }
+  //   }
+  //
+  //   if (permission == LocationPermission.deniedForever) {
+  //     await openAppSettings();
+  //   }
+  //   Position? position;
+  //   try {
+  //     position = await Geolocator.getCurrentPosition();
+  //   } catch (e) {
+  //     Get.showSnackbar(GetBar(
+  //       messageText: Text(
+  //         e.toString(),
+  //         style: const TextStyle(
+  //           color: Colors.white,
+  //         ),
+  //       ),
+  //       mainButton: InkWell(
+  //         onTap: () {},
+  //         child: Padding(
+  //           padding: EdgeInsets.symmetric(horizontal: 15),
+  //           child: Text(
+  //             "allow".tr,
+  //             style: TextStyle(
+  //               color: Colors.orange,
+  //               fontSize: 16,
+  //               fontWeight: FontWeight.w600,
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ));
+  //     // showError(msg: e.toString());
+  //   }
+  //   print("position===> ${position!.longitude}");
+  //
+  //   // setState(() {
+  //   //   currentLat = position?.latitude;
+  //   //   currentLat = position?.longitude;
+  //   // });
+  //   await placemarkFromCoordinates(position.latitude, position.longitude)
+  //       .then((List<Placemark> placemarks) {
+  //     Placemark place = placemarks[0];
+  //     String? area = place.street;
+  //     String? sunLocality = place.subLocality;
+  //     String? subAdministrativeArea = place.subAdministrativeArea;
+  //     String? postalCode = place.postalCode;
+  //     userLiveLocation =
+  //         "$area, $sunLocality,$subAdministrativeArea,$postalCode";
+  //     print("area==> $userLiveLocation");
+  //     setState(() {});
+  //   });
+  //
+  //   return position;
+  // }
 
   Future<void> initPlatformState() async {
     var deviceData = <String, dynamic>{};

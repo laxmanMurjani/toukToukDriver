@@ -24,6 +24,5 @@ extension UserModuleTypeString on UserModuleType {
       case UserModuleType.BOTH:
         return "BOTH";
     }
-    return "BOTH";
   }
 }
