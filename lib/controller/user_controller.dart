@@ -1047,7 +1047,6 @@ class UserController extends BaseController {
             notificationManagerList.clear();
             List<NotificationManagerModel> tempNotificationList =
                 notificationManagerModelFromJson(jsonEncode(data["response"]));
-            print("notificationManagerList==>${jsonEncode(data["response"])}");
             notificationManagerList.addAll(tempNotificationList);
           },
           onError: (ErrorType errorType, String? msg) {
@@ -1364,42 +1363,6 @@ class UserController extends BaseController {
           url: ApiUrl.settings,
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
-            serviceTypeList.clear();
-            serviceTypeList1.clear();
-            taxiServiceType = null;
-            deliveryServiceType = null;
-            ServiceTypeModel serviceTypeModel =
-                serviceTypeModelFromJson(jsonEncode(data["response"]));
-            //serviceTypeList.addAll(serviceTypeModel.serviceTypes);
-            var deliveryservice = serviceTypeModel.serviceTypes
-                .where((o) => o.moduletype == "DELIVERY")
-                .toList();
-            var texiservice = serviceTypeModel.serviceTypes
-                .where((o) => o.moduletype == "TAXI")
-                .toList();
-            // print("deliveryserviceList     $deliveryserviceList");
-            // print("texiserviceList     $texiserviceList");
-            serviceTypeList.addAll(deliveryservice);
-            serviceTypeList1.addAll(texiservice);
-          },
-          onError: (ErrorType errorType, String? msg) {
-            showError(msg: msg);
-          });
-    } catch (e) {
-      log("message   ==>  $e");
-      showError(msg: e.toString());
-      // showError(msg: e.toString());
-    }
-  }
-
-  Future<void> getChangeServiceType() async {
-    try {
-      // showLoader();
-
-      await apiService.getRequest(
-          url: ApiUrl.settings,
-          onSuccess: (Map<String, dynamic> data) async {
-            // dismissLoader();
             serviceTypeList.clear();
             serviceTypeList1.clear();
             taxiServiceType = null;

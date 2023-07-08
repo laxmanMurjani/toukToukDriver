@@ -790,7 +790,8 @@ class HomeController extends BaseController {
     }
   }
 
-  Future<String?> providerRate({required String rating, required String comment}) async {
+  Future<String?> providerRate(
+      {required String rating, required String comment}) async {
     String? msg;
     try {
       Map<String, dynamic> params = Map();
@@ -832,32 +833,6 @@ class HomeController extends BaseController {
       showError(msg: e.toString());
     }
     return msg;
-  }
-
-
-  Future<String?> chooseServiceType({required String provider_id, required String service_type_id}) async {
-
-    try {
-      Map<String, dynamic> params = Map();
-
-      showLoader();
-      params["provider_id"] = provider_id;
-      params["service_type_id"] = service_type_id;
-
-      await apiService.postRequest(
-        url: ApiUrl.chooseServiceType,
-        params: params,
-        onSuccess: (Map<String, dynamic> data) async {
-          print("providerRate  ==>  ${jsonEncode(data)}");
-          dismissLoader();
-        },
-        onError: (ErrorType? errorType, String? msg) {
-          showError(msg: msg);
-        },
-      );
-    } catch (e) {
-      showError(msg: e.toString());
-    }
   }
 
   void _startTimer() {
