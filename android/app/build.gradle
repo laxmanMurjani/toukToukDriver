@@ -34,13 +34,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     compileSdkVersion 33
-    ndkVersion flutter.ndkVersion
 
-    configurations.all{
-        resolutionStrategy{
-            force "com.google.android.gms:play-services-location:21.0.1"
-        }
-    }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
@@ -51,7 +45,7 @@ android {
     }
     defaultConfig {
         applicationId "com.touktouktaxi.driver"
-        minSdkVersion 23
+        minSdkVersion 21
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -66,14 +60,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
-
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-    }
-
     signingConfigs {
         release {
             keyAlias keystoreProperties['keyAlias']
@@ -84,7 +70,7 @@ android {
     }
     buildTypes {
         release {
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
     }
 
@@ -97,5 +83,5 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.work:work-runtime-ktx:2.7.1'
-    implementation "com.google.android.gms:play-services-location:21.0.1"
+
 }

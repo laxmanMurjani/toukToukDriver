@@ -1,8 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'dart:isolate';
 import 'dart:ui';
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:get/get.dart';
 import 'package:mozlit_driver/controller/home_controller.dart';
 import 'package:mozlit_driver/controller/user_controller.dart';
@@ -19,7 +23,7 @@ class MessangerChatHead extends StatefulWidget {
 }
 
 class _MessangerChatHeadState extends State<MessangerChatHead> {
-  // HomeController _homeController = Get.find();
+  final HomeController _homeController = Get.find();
   //final  _homeController = Get.lazyPut(()=>HomeController());
 
   // final UserController _userController = Get.put(UserController());
@@ -35,7 +39,8 @@ class _MessangerChatHeadState extends State<MessangerChatHead> {
   @override
   void initState() {
     super.initState();
-    final _homeController = Get.put(HomeController());
+      print("dshsssss===>${_homeController.isOverlay.value}");
+
     if (homePort != null) return;
     final res = IsolateNameServer.registerPortWithName(
       _receivePort.sendPort,
@@ -49,12 +54,6 @@ class _MessangerChatHeadState extends State<MessangerChatHead> {
       });
     });
 
-
-
-    _requestTimer = Timer.periodic(Duration(seconds: 1), (_) async {
-      print("dsdjhjh===>${_homeController.isOverlay.value}");
-    });
-
   }
 
 
@@ -66,7 +65,30 @@ class _MessangerChatHeadState extends State<MessangerChatHead> {
       elevation: 0.0,
       child: GestureDetector(
         onTap: () async {
-          Get.to(()=> HomeScreen());
+          print("dfhdgfhdgf");
+          // if (Platform.isAndroid) {
+          //   final AndroidIntent intent = AndroidIntent(
+          //     action: 'action_view',
+          //     data: 'package:com.touktouktaxi.driver', // replace com.example.app with your applicationId
+          //   );
+          //   await intent.launch();
+          // }
+          if (Platform.isAndroid) {
+            final extras = json.encode({
+              "Amount": 'amount',
+              "Operation": 'operation',
+              "TransactionID": 'transActionId',
+            });
+            final intent = AndroidIntent(
+              action: 'action_view',
+              package: 'com.touktouktaxi.driver',
+              componentName: 'com.touktouktaxi.driver.MainActivity',
+              arguments: {"POS_EMULATOR_EXTRA": extras},
+            );
+            await intent.launch();
+          }
+
+          // Get.to(()=> HomeScreen());
           // if (_currentShape == BoxShape.rectangle) {
           //   await FlutterOverlayWindow.resizeOverlay(50, 100);
           //   setState(() {
@@ -86,7 +108,7 @@ class _MessangerChatHeadState extends State<MessangerChatHead> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(height: 15,width: 15,
+            !_homeController.isOverlay.value ? SizedBox() : Container(height: 15,width: 15,
               decoration: BoxDecoration(shape: BoxShape.circle,
                   color: Colors.red),child: Align(alignment: Alignment.center,
               child: Text('1',style: TextStyle(color: Colors.white),),),),

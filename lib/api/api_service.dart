@@ -65,9 +65,9 @@ class ApiService {
       }
     } on DioError catch (e) {
       print('Error  ===>  $e  ${e.response}  ${e.type}  ${e.requestOptions.uri}');
-      // if (e.type == DioErrorType.other) {
-      //   onError(ErrorType.internet, e.message);
-      // }
+      if (e.type == DioErrorType.other) {
+        onError(ErrorType.internet, e.message);
+      }
       if (e.response != null) {
         print('Error  ===>  ${e.response?.data}  ${e.type} 123  ${e.requestOptions.uri}');
         onError(ErrorType.none, "${e.response?.data['message'] ?? e.response?.data['error']}");
@@ -117,9 +117,9 @@ class ApiService {
       }
     } on DioError catch (e) {
       print('Error 12 ===>  $e    ${e.type}');
-      // if (e.type == DioErrorType.other) {
-      //   onError(ErrorType.internet, null);
-      // }
+      if (e.type == DioErrorType.other) {
+        onError(ErrorType.internet, null);
+      }
       if (e.response != null) {
         print('Error12  ===>  ${e.response?.data}');
         onError(ErrorType.none,
@@ -167,9 +167,9 @@ class ApiService {
       }
     } on DioError catch (e) {
       print('Error 12 ===>  $e    ${e.type}');
-      // if (e.type == DioErrorType.other) {
-      //   onError(ErrorType.internet, null);
-      // }
+      if (e.type == DioErrorType.other) {
+        onError(ErrorType.internet, null);
+      }
       if (e.response != null) {
         print('Error12  ===>  ${e.response?.data}');
         onError(ErrorType.none,
@@ -199,9 +199,9 @@ class ApiService {
       onSuccess(json.decode(response.toString()));
     } on DioError catch (e) {
       print('Error 12 ===>  $e    ${e.type}');
-      // if (e.type == DioErrorType.other) {
-      //   onError(ErrorType.internet, null);
-      // }
+      if (e.type == DioErrorType.other) {
+        onError(ErrorType.internet, null);
+      }
       if (e.response != null) {
         print('Error12  ===>  ${e.response?.data}');
         onError(ErrorType.none, e.response?.data['message']);

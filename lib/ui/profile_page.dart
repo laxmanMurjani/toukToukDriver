@@ -2,9 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter_overlay_window/flutter_overlay_window.dart';
+import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:flutter_share/flutter_share.dart';
-// import 'package:geolocator/geolocator.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:mozlit_driver/controller/home_controller.dart';
 import 'package:mozlit_driver/controller/user_controller.dart';
@@ -488,34 +488,63 @@ class _ProfilePageState extends State<ProfilePage> {
                           ],
                         ),
                       ),
-                      // SizedBox(
-                      //   height: 15,
-                      // ),
+                      SizedBox(
+                        height: 15,
+                      ),
 
-                      // InkWell(
-                      //   onTap: () {
-                      //     FlutterOverlayWindow.closeOverlay()
-                      //         .then((value) => log('STOPPED: alue: $value'));
-                      //     // _showLogoutDialog();
-                      //   },
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     children: [
-                      //       Text(
-                      //         'Close overlay'.tr,
-                      //         style: TextStyle(
-                      //             fontSize: 14,
-                      //             color: AppColors.primaryColor),
-                      //       ),
-                      //       Image.asset(
-                      //         AppImage.logOut,
-                      //         width: 35,
-                      //         height: 35,
-                      //         fit: BoxFit.contain,
-                      //       )
-                      //     ],
-                      //   ),
-                      // ),
+                      InkWell(
+                        onTap: () {
+                          homeCont.isCloseOverlay.value = true;
+                          FlutterOverlayWindow.closeOverlay()
+                              .then((value) => log('STOPPED: alue: $value'));
+                          // _showLogoutDialog();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Close overlay'.tr,
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: AppColors.primaryColor),
+                            ),
+                            Image.asset(
+                              AppImage.openLayer,
+                              width: 25,
+                              height: 25,
+                              fit: BoxFit.contain,
+                            )
+                          ],
+                        ),
+                      ),
+
+     SizedBox(
+                        height: 15,
+                      ),
+
+                      InkWell(
+                        onTap: () {
+                          homeCont.isCloseOverlay.value = false;
+
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Open overlay'.tr,
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: AppColors.primaryColor),
+                            ),
+                            Image.asset(
+                              AppImage.openLayer,
+                              width: 25,
+                              height: 25,
+                              fit: BoxFit.contain,
+                            )
+                          ],
+                        ),
+                      ),
 
                       SizedBox(
                         height: 15,

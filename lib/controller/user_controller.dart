@@ -6,7 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
-// import 'package:geolocator/geolocator.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:mozlit_driver/api/api.dart';
 import 'package:mozlit_driver/api/api_service.dart';
@@ -1005,37 +1005,37 @@ class UserController extends BaseController {
     }
   }
 
-  // void getLocation() async {
-  //   bool serviceEnabled;
-  //   LocationPermission permission;
-  //
-  //   serviceEnabled = await Geolocator.isLocationServiceEnabled();
-  //   if (!serviceEnabled) {
-  //     return Future.error('Location services are disabled.');
-  //   }
-  //
-  //   permission = await Geolocator.checkPermission();
-  //   if (permission == LocationPermission.denied) {
-  //     permission = await Geolocator.requestPermission();
-  //     if (permission == LocationPermission.denied) {
-  //       return Future.error('Location permissions are denied');
-  //     }
-  //   }
-  //
-  //   if (permission == LocationPermission.deniedForever) {
-  //     return Future.error(
-  //         'Location permissions are permanently denied, we cannot request permissions.');
-  //   }
-  //
-  //   // getCurrentLocation();
-  //   Position position = await Geolocator.getCurrentPosition(
-  //       desiredAccuracy: LocationAccuracy.high);
-  //
-  //   latitude = position.latitude;
-  //   longitude = position.longitude;
-  //   print("latitude $latitude");
-  //   print("longitude $longitude");
-  // }
+  void getLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    // getCurrentLocation();
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    latitude = position.latitude;
+    longitude = position.longitude;
+    print("latitude $latitude");
+    print("longitude $longitude");
+  }
 
   Future<void> getNotificationList() async {
     try {
@@ -1047,6 +1047,7 @@ class UserController extends BaseController {
             notificationManagerList.clear();
             List<NotificationManagerModel> tempNotificationList =
                 notificationManagerModelFromJson(jsonEncode(data["response"]));
+            print("notificationManagerList==>${jsonEncode(data["response"])}");
             notificationManagerList.addAll(tempNotificationList);
           },
           onError: (ErrorType errorType, String? msg) {
@@ -1363,6 +1364,42 @@ class UserController extends BaseController {
           url: ApiUrl.settings,
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
+            serviceTypeList.clear();
+            serviceTypeList1.clear();
+            taxiServiceType = null;
+            deliveryServiceType = null;
+            ServiceTypeModel serviceTypeModel =
+                serviceTypeModelFromJson(jsonEncode(data["response"]));
+            //serviceTypeList.addAll(serviceTypeModel.serviceTypes);
+            var deliveryservice = serviceTypeModel.serviceTypes
+                .where((o) => o.moduletype == "DELIVERY")
+                .toList();
+            var texiservice = serviceTypeModel.serviceTypes
+                .where((o) => o.moduletype == "TAXI")
+                .toList();
+            // print("deliveryserviceList     $deliveryserviceList");
+            // print("texiserviceList     $texiserviceList");
+            serviceTypeList.addAll(deliveryservice);
+            serviceTypeList1.addAll(texiservice);
+          },
+          onError: (ErrorType errorType, String? msg) {
+            showError(msg: msg);
+          });
+    } catch (e) {
+      log("message   ==>  $e");
+      showError(msg: e.toString());
+      // showError(msg: e.toString());
+    }
+  }
+
+  Future<void> getChangeServiceType() async {
+    try {
+      // showLoader();
+
+      await apiService.getRequest(
+          url: ApiUrl.settings,
+          onSuccess: (Map<String, dynamic> data) async {
+            // dismissLoader();
             serviceTypeList.clear();
             serviceTypeList1.clear();
             taxiServiceType = null;

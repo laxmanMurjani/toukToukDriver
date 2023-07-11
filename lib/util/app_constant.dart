@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
-// import 'package:geolocator/geolocator.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppImage {
   static const String _basePath = "assets/images";
 
   static String logo = "$_basePath/logo.png";
+  static String openLayer = "$_basePath/open_layer.png";
   static String logoT = "$_basePath/bg_logo_2.png";
   static String appLogo = "$_basePath/app_logo.png";
   static String appMainLogo = "$_basePath/bg_logo_2.png";
@@ -118,16 +119,16 @@ class AppImage {
 
 double? latitude, longitude;
 
-// Future<void> getCurrentLocation() async {
-//   await Geolocator.isLocationServiceEnabled();
-//
-//   Position position = await Geolocator.getCurrentPosition(
-//       desiredAccuracy: LocationAccuracy.high);
-//   latitude = position.latitude;
-//   longitude = position.longitude;
-//   print("latitude $latitude");
-//   print("longitude $longitude");
-// }
+Future<void> getCurrentLocation() async {
+  await Geolocator.isLocationServiceEnabled();
+
+  Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high);
+  latitude = position.latitude;
+  longitude = position.longitude;
+  print("latitude $latitude");
+  print("longitude $longitude");
+}
 
 class AppColors {
   // static const Color primaryColor = Color(0xff3081A6);
