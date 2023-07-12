@@ -488,63 +488,63 @@ class _ProfilePageState extends State<ProfilePage> {
                           ],
                         ),
                       ),
-                      SizedBox(
-                        height: 15,
-                      ),
-
-                      InkWell(
-                        onTap: () {
-                          homeCont.isCloseOverlay.value = true;
-                          FlutterOverlayWindow.closeOverlay()
-                              .then((value) => log('STOPPED: alue: $value'));
-                          // _showLogoutDialog();
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Close overlay'.tr,
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: AppColors.primaryColor),
-                            ),
-                            Image.asset(
-                              AppImage.openLayer,
-                              width: 25,
-                              height: 25,
-                              fit: BoxFit.contain,
-                            )
-                          ],
-                        ),
-                      ),
-
-     SizedBox(
-                        height: 15,
-                      ),
-
-                      InkWell(
-                        onTap: () {
-                          homeCont.isCloseOverlay.value = false;
-
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Open overlay'.tr,
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: AppColors.primaryColor),
-                            ),
-                            Image.asset(
-                              AppImage.openLayer,
-                              width: 25,
-                              height: 25,
-                              fit: BoxFit.contain,
-                            )
-                          ],
-                        ),
-                      ),
+     //                  SizedBox(
+     //                    height: 15,
+     //                  ),
+     //
+     //                  InkWell(
+     //                    onTap: () {
+     //                      homeCont.isCloseOverlay.value = true;
+     //                      FlutterOverlayWindow.closeOverlay()
+     //                          .then((value) => log('STOPPED: alue: $value'));
+     //                      // _showLogoutDialog();
+     //                    },
+     //                    child: Row(
+     //                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+     //                      children: [
+     //                        Text(
+     //                          'Close overlay'.tr,
+     //                          style: TextStyle(
+     //                              fontSize: 14,
+     //                              color: AppColors.primaryColor),
+     //                        ),
+     //                        Image.asset(
+     //                          AppImage.openLayer,
+     //                          width: 25,
+     //                          height: 25,
+     //                          fit: BoxFit.contain,
+     //                        )
+     //                      ],
+     //                    ),
+     //                  ),
+     //
+     // SizedBox(
+     //                    height: 15,
+     //                  ),
+     //
+     //                  InkWell(
+     //                    onTap: () {
+     //                      homeCont.isCloseOverlay.value = false;
+     //
+     //                    },
+     //                    child: Row(
+     //                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+     //                      children: [
+     //                        Text(
+     //                          'Open overlay'.tr,
+     //                          style: TextStyle(
+     //                              fontSize: 14,
+     //                              color: AppColors.primaryColor),
+     //                        ),
+     //                        Image.asset(
+     //                          AppImage.openLayer,
+     //                          width: 25,
+     //                          height: 25,
+     //                          fit: BoxFit.contain,
+     //                        )
+     //                      ],
+     //                    ),
+     //                  ),
 
                       SizedBox(
                         height: 15,

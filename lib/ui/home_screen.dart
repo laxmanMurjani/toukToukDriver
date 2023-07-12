@@ -75,12 +75,12 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   void initState() {
-    Future.delayed(Duration.zero,() async{
-      bool checkPermissionStatus = await FlutterOverlayWindow.isPermissionGranted();
-      if(!checkPermissionStatus){
-        await FlutterOverlayWindow.requestPermission();
-      }
-    },);
+    // Future.delayed(Duration.zero,() async{
+    //   bool checkPermissionStatus = await FlutterOverlayWindow.isPermissionGranted();
+    //   if(!checkPermissionStatus){
+    //     await FlutterOverlayWindow.requestPermission();
+    //   }
+    // },);
     rootBundle.loadString('assets/map_style.txt').then((string) {
       _mapStyle = string;
     });
@@ -1567,26 +1567,26 @@ class _HomeScreenState extends State<HomeScreen>
           _homeController.googleMapController?.setMapStyle("[]");
         }
         print("gdshghsgdhsgd");
-        await FlutterOverlayWindow.closeOverlay();
+        // await FlutterOverlayWindow.closeOverlay();
         // _homeController.homeActiveTripModel.close();
         break;
       case AppLifecycleState.inactive:
         print('statusIsInactive');
 
-        if(!_homeController.isCloseOverlay.value){
-          if (await FlutterOverlayWindow.isActive()) return;
-          await FlutterOverlayWindow.showOverlay(
-            enableDrag: true,
-            overlayTitle: "Touk Touk Driver",
-            overlayContent: 'Background Mode',
-            flag: OverlayFlag.defaultFlag,
-            visibility: NotificationVisibility.visibilityPublic,
-            positionGravity: PositionGravity.auto,
-            height: 200,
-            width: WindowSize.matchParent,
-          );
-        }
-
+        // if(!_homeController.isCloseOverlay.value){
+        //   if (await FlutterOverlayWindow.isActive()) return;
+        //   await FlutterOverlayWindow.showOverlay(
+        //     enableDrag: true,
+        //     overlayTitle: "Touk Touk Driver",
+        //     overlayContent: 'Background Mode',
+        //     flag: OverlayFlag.defaultFlag,
+        //     visibility: NotificationVisibility.visibilityPublic,
+        //     positionGravity: PositionGravity.auto,
+        //     height: 200,
+        //     width: WindowSize.matchParent,
+        //   );
+        // }
+        //
 
 
 
