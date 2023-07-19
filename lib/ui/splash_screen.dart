@@ -239,7 +239,7 @@ class _SplashScreenState extends State<SplashScreen> {
         //     ],)),
        _userController.isUpdateApp.value ? CustomAlertDialog(
          title: "Update App",
-         message: "This app new feature available in ${Platform.isAndroid ? "Play Store" : "App Store"}, please update app",
+         message: "We are regularly upgrading your experience. New version of this app is available on ${Platform.isAndroid ? "Play Store" : "App Store"}, Please update app.",
          onPostivePressed: () async{
            await _userController.sendUpdateApp();
          },
