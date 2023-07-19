@@ -28,6 +28,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final UserController _userController = Get.find();
+  final UserController _homeController = Get.find();
   static final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
   Map<String, dynamic> _deviceData = <String, dynamic>{};
   Future<Position?> determinePosition() async {
@@ -206,17 +207,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    CustomAlertDialog dialog = CustomAlertDialog(
-      title: "Update App",
-      message: "This app new feature available in ${Platform.isAndroid ? "Play Store" : "App Store"}, please update app",
-      onPostivePressed: () async{
-        _userController.sendUpdateApp();
-      },
-      onNegativePressed: (){Get.back();},
-      positiveBtnText: 'Update',
-      negativeBtnText: 'Cancel',
-      negativeButtonShow: !AppString.isForceCancleButtonShow!,
-      positiveButtonShow: true,);
 
     print("sdsdsdvv==>${AppString.isForceCancleButtonShow}");
 
@@ -247,7 +237,29 @@ class _SplashScreenState extends State<SplashScreen> {
         //       ),
         //       SizedBox(height: 25)
         //     ],)),
-       _userController.isUpdateApp.value ? dialog : SizedBox()
+       _userController.isUpdateApp.value ? CustomAlertDialog(
+         title: "Update App",
+         message: "This app new feature available in ${Platform.isAndroid ? "Play Store" : "App Store"}, please update app",
+         onPostivePressed: () async{
+           await _userController.sendUpdateApp();
+         },
+         onNegativePressed: (){
+           _userController.isUpdateApp.value = false;
+
+           setState(() {});
+
+           if (_userController.userToken.value.accessToken != null) {
+             _userController.getUserProfileData();
+             log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${_userController.selectedLanguage}");
+           } else {
+             Get.off(() => SignInUpScreen());
+           }
+           // Navigator.pop(context);
+         },
+         positiveBtnText: 'Update',
+         negativeBtnText: 'Cancel',
+         negativeButtonShow: !AppString.isForceCancleButtonShow!,
+         positiveButtonShow: true,) : SizedBox()
       ],
     ));
   }
