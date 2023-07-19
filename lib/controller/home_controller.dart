@@ -146,7 +146,7 @@ class HomeController extends BaseController {
 
 
         if(userCurrentLocation != null){
-          print("checkin location");
+          print("checkin location ==> ${event.latitude} ${event.longitude}");
           if (userCurrentLocation?.longitude == 0 &&
               userCurrentLocation?.latitude == 0) {
             showMarker(
@@ -381,9 +381,16 @@ class HomeController extends BaseController {
               ProviderUiSelectionType.pickedUpRequest;
         }
         if (requestElement.request?.status == CheckStatus.DROPPED) {
+          print("cccccccccccccs ====>${requestElement.request?.status}");
+          googleMapPolyLine.clear();
+          googleMapPolyLine.refresh();
+          if (googleMarkers.length > 1) {
+            googleMarkers.clear();
+          }
           homeAddress.value = "";
           if (providerUiSelectionType.value !=
               ProviderUiSelectionType.droppedRequest) {
+            print("hshshsh==>${requestElement.request?.status}");
             List<LatLng> latLngList = [];
             for (int i = 0; i < p0.multiDestination.length; i++) {
               MultiDestination multiDestination = p0.multiDestination[i];
@@ -1286,6 +1293,33 @@ class HomeController extends BaseController {
     refresh();
 
     return placeMarks;
+  }
+
+
+
+  Future<String> getLocationAddressForEndRide() async {
+    List<Placemark> placeMarks =
+    await placemarkFromCoordinates(userCurrentLocation!.latitude, userCurrentLocation!.longitude);
+    String?  currentLocation ;
+    if (placeMarks.isNotEmpty) {
+      Placemark placeMark = placeMarks[0];
+      log("message  ==>  ${placeMark.toJson()}");
+
+        currentLocation =
+        "${placeMark.street},"
+            " ${placeMark.thoroughfare},"
+            "${placeMark.subLocality},"
+            " ${placeMark.locality},"
+            " ${placeMark.subAdministrativeArea} "
+            " ${placeMark.administrativeArea} "
+            "${placeMark.postalCode}, "
+            "${placeMark.country}";
+
+        // locationFromTo.text = tempLocationFromTo.text;
+    }
+    refresh();
+
+    return currentLocation!;
   }
 
   Future<void> getPlaceIdToLatLag({required String placeId}) async {

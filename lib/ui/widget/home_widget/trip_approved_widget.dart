@@ -820,7 +820,9 @@ class _TripApprovedWidgetState extends State<TripApprovedWidget> {
                     ),
                   if (isShowBtnTapWhenDropped)
                     InkWell(
-                      onTap: () {
+                      onTap: () async{
+                    String data = await  _homeController.getLocationAddressForEndRide();
+                    print("dsjdhjsss-===>${data}");
                         // if (multiPleLocationText != null) {
                         //   Map<String, String> params = {};
                         //   params["location_id"] = "${currentDestination.id}";
@@ -832,6 +834,7 @@ class _TripApprovedWidgetState extends State<TripApprovedWidget> {
                         // }
                         //Get.dialog(AddTollChargeDialog());
                         Map<String, String> params = {};
+                        params["userCurrentAddress"] = data;
                         params["status"] = "DROPPED";
                         params["_method"] = "PATCH";
                         params["latitude"] = cont.userCurrentLocation!.latitude.toString();

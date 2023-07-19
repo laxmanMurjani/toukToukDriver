@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
@@ -23,6 +24,7 @@ import 'package:mozlit_driver/util/firebase_service.dart';
 import 'package:mozlit_driver/util/languages.dart';
 import 'package:mozlit_driver/util/remote_config_service.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:wakelock/wakelock.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -72,7 +74,26 @@ Future<void> main() async {
   FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.instance;
   await RemoteConfigService.setupRemoteConfig();
   AppString.googleMapKey =firebaseRemoteConfig.getString("map_key");
-  print("sdnmdn===>${AppString.googleMapKey}");
+  AppString.isForceCancleButtonShow = Platform.isAndroid ? firebaseRemoteConfig.getBool("isForceUpdateAndroid") : firebaseRemoteConfig.getBool("isForceUpdateIos");
+  AppString.firebaseAndroidBuildNumber =firebaseRemoteConfig.getString("androidBuildNumber");
+  AppString.firebaseAndroidVersionCode =firebaseRemoteConfig.getString("androidVersionCode");
+  AppString.firebaseIosBuildNumber =firebaseRemoteConfig.getString("iosBuildNumber");
+  AppString.firebaseIosVersionCode =firebaseRemoteConfig.getString("iosVersionCode");
+
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  if(Platform.isAndroid){
+    AppString.detectAndroidBuildNumber = packageInfo.version.replaceAll(".", "");
+    AppString.detectAndroidVersionCode = packageInfo.buildNumber;
+  } else {
+    AppString.detectIosBuildNumber = packageInfo.version.replaceAll(".", "");
+    AppString.detectIosVersionCode = packageInfo.buildNumber;
+  }
+
+
+  print("sdnmdn===>${AppString.googleMapKey}  ${AppString.firebaseAndroidBuildNumber}  ${AppString.firebaseAndroidVersionCode}  ${AppString.detectAndroidBuildNumber}  ${AppString.detectAndroidVersionCode}  ${AppString.isForceCancleButtonShow}");
+
+
+
   FlutterError.onError = (errorDetails) {
     // If you wish to record a "non-fatal" exception, please use `FirebaseCrashlytics.instance.recordFlutterError` instead
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
@@ -229,7 +250,6 @@ class _MyAppState extends State<MyApp> {
         );
       }
     });
-
     // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     //   RemoteNotification? notification = message.notification;
     //   AndroidNotification? android = message.notification?.android;
@@ -268,7 +288,10 @@ class _MyAppState extends State<MyApp> {
     //     );
     //   }
     // });
+
   }
+
+
 
   @override
   Widget build(BuildContext context) {

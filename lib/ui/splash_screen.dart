@@ -10,6 +10,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:mozlit_driver/controller/user_controller.dart';
 import 'package:mozlit_driver/ui/authentication_screen/sign_in_up_screen.dart';
+import 'package:mozlit_driver/ui/widget/dialog/update_app_dialog.dart';
 import 'package:mozlit_driver/util/app_constant.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -149,6 +150,10 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
 
+  // bool isUpdate = false;
+
+
+
   @override
   void initState() {
     Future.delayed(Duration.zero, () async {
@@ -158,25 +163,68 @@ class _SplashScreenState extends State<SplashScreen> {
 
     super.initState();
 
+
+
     _userController.setLanguage();
-    Timer(const Duration(seconds: 3), () {
-      if (_userController.userToken.value.accessToken != null) {
-        // _userController.currentUserApi();
-        // Get.off(()=> HomeScreen());
-        _userController.getUserProfileData();
-        log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${_userController.selectedLanguage}");
-      } else {
-        Get.off(() => SignInUpScreen());
+    if(Platform.isAndroid){
+      if(int.parse(AppString.detectAndroidBuildNumber!) < int.parse(AppString.firebaseAndroidBuildNumber!) ||
+        int.parse(AppString.detectAndroidVersionCode!) < int.parse(AppString.firebaseAndroidVersionCode!)){
+        _userController.isUpdateApp.value = true;
+    } else{
+        _userController.isUpdateApp.value = false;
+        Timer(const Duration(seconds: 3), () {
+          if (_userController.userToken.value.accessToken != null) {
+            // _userController.currentUserApi();
+            // Get.off(()=> HomeScreen());
+            _userController.getUserProfileData();
+            log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${_userController.selectedLanguage}");
+          } else {
+            Get.off(() => SignInUpScreen());
+          }
+        });
+      }}
+    else{
+      if(int.parse(AppString.detectIosBuildNumber!) <= int.parse(AppString.firebaseIosBuildNumber!) &&
+          int.parse(AppString.detectIosVersionCode!) <= int.parse(AppString.detectIosVersionCode!)){
+        _userController.isUpdateApp.value = true;
+      } else{
+        _userController.isUpdateApp.value = false;
+        Timer(const Duration(seconds: 3), () {
+          if (_userController.userToken.value.accessToken != null) {
+            // _userController.currentUserApi();
+            // Get.off(()=> HomeScreen());
+            _userController.getUserProfileData();
+            log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${_userController.selectedLanguage}");
+          } else {
+            Get.off(() => SignInUpScreen());
+          }
+        });
       }
-    });
+    }
+
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Colors.black,
+    CustomAlertDialog dialog = CustomAlertDialog(
+      title: "Update App",
+      message: "This app new feature available in ${Platform.isAndroid ? "Play Store" : "App Store"}, please update app",
+      onPostivePressed: () async{
+        _userController.sendUpdateApp();
+      },
+      onNegativePressed: (){Get.back();},
+      positiveBtnText: 'Update',
+      negativeBtnText: 'Cancel',
+      negativeButtonShow: !AppString.isForceCancleButtonShow!,
+      positiveButtonShow: true,);
+
+    print("sdsdsdvv==>${AppString.isForceCancleButtonShow}");
+
+    return  Scaffold(backgroundColor: Colors.black,
     //AppColors.primaryColor,
         body: Stack(
       children: [
+
         Container(
           height: MediaQuery.of(context).size.height * 0.6,
           color: Colors.black,
@@ -199,6 +247,7 @@ class _SplashScreenState extends State<SplashScreen> {
         //       ),
         //       SizedBox(height: 25)
         //     ],)),
+       _userController.isUpdateApp.value ? dialog : SizedBox()
       ],
     ));
   }

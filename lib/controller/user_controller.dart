@@ -46,6 +46,7 @@ import 'home_controller.dart';
 
 class UserController extends BaseController {
   RxBool isShowLogin = false.obs;
+  RxBool isUpdateApp = false.obs;
   TextEditingController emailController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
@@ -175,6 +176,22 @@ class UserController extends BaseController {
           });
     } catch (e) {
       print(e);
+    }
+  }
+
+
+  Future<void> sendUpdateApp() async {
+    if (Platform.isAndroid || Platform.isIOS) {
+      final appId = Platform.isAndroid ? 'com.touktouktaxi.driver' : '1599485330';
+      final url = Uri.parse(
+        Platform.isAndroid
+            ? "market://details?id=$appId"
+            : "https://apps.apple.com/app/id$appId",
+      );
+      launchUrl(
+        url,
+        mode: LaunchMode.externalApplication,
+      );
     }
   }
 

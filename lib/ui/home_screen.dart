@@ -36,6 +36,7 @@ import 'package:mozlit_driver/ui/widget/home_widget/trip_approved_widget.dart';
 import 'package:mozlit_driver/ui/widget/no_internet_widget.dart';
 import 'package:mozlit_driver/ui/widget/verifiedScreen.dart';
 import 'package:mozlit_driver/util/app_constant.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:swipeable_button_view/swipeable_button_view.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -107,7 +108,6 @@ class _HomeScreenState extends State<HomeScreen>
           _homeController.userCurrentLocation = LatLng(event.latitude ?? 0, event.longitude ?? 0);
         }
 
-
       });
 
 
@@ -148,11 +148,15 @@ class _HomeScreenState extends State<HomeScreen>
       log("Current Event: $event");
     });
 
+
+
     // BackgroundLocation.startLocationService(forceAndroidLocationManager: true);
 
         // _userController.updateUserModuleType(
         //             userModuleType: UserModuleType.TAXI);
   }
+
+
 
   TextEditingController textController1 = TextEditingController();
   TextEditingController textController2 = TextEditingController();
@@ -163,8 +167,12 @@ class _HomeScreenState extends State<HomeScreen>
   MultiDestination finalDestination = MultiDestination();
   final box = GetStorage();
 
+
+
   @override
   Widget build(BuildContext context) {
+    // print("dddmdmd===>${_initPackageInfo()}");
+
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
@@ -757,6 +765,26 @@ class _HomeScreenState extends State<HomeScreen>
                                       width: 30),
                                 ),
                               ),
+                              // InkWell(
+                              //   onTap: () {
+                              //     print("dfd");
+                              //     print("ddgfdgd==>${int.parse(AppString.detectAndroidBuildNumber!)}");
+                              //     print("ddgfdgd==>${int.parse(AppString.firebaseAndroidBuildNumber!)}");
+                              //     print("ddgfdgd==>${int.parse(AppString.detectAndroidBuildNumber!) < int.parse(AppString.firebaseAndroidBuildNumber!)}");
+                              //
+                              //
+                              //
+                              //   },
+                              //   child: Padding(
+                              //     padding:
+                              //     const EdgeInsets.symmetric(
+                              //         horizontal: 12.0),
+                              //     child: Image.asset(
+                              //         AppImage.bell,color: AppColors.white,
+                              //         height: 30,
+                              //         width: 30),
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),

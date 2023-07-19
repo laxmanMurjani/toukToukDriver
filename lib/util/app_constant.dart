@@ -171,6 +171,17 @@ class AppBoxShadow {
 
 class AppString {
   static String? googleMapKey;
+  static bool? isForceCancleButtonShow;
+  static String? firebaseAndroidVersionCode;
+  static String? firebaseAndroidBuildNumber;
+  static String? firebaseIosVersionCode;
+  static String? firebaseIosBuildNumber;
+  static String? detectAndroidVersionCode;
+  static String? detectAndroidBuildNumber;
+  static String? detectIosBuildNumber;
+  static String? detectIosVersionCode;
+
+
 
   static String MINUTE = "MIN";
   static String HOUR = "HOUR";
