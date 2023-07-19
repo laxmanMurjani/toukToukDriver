@@ -79,6 +79,7 @@ Future<void> main() async {
   AppString.firebaseAndroidVersionCode =firebaseRemoteConfig.getString("androidVersionCode");
   AppString.firebaseIosBuildNumber =firebaseRemoteConfig.getString("iosBuildNumber");
   AppString.firebaseIosVersionCode =firebaseRemoteConfig.getString("iosVersionCode");
+  AppString.testing_version_code_check_dialog = firebaseRemoteConfig.getBool("testing_version_code_check_dialog");
 
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   if(Platform.isAndroid){

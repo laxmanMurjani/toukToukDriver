@@ -167,41 +167,46 @@ class _SplashScreenState extends State<SplashScreen> {
 
 
     _userController.setLanguage();
-    if(Platform.isAndroid){
-      if(int.parse(AppString.detectAndroidBuildNumber!) < int.parse(AppString.firebaseAndroidBuildNumber!) ||
-        int.parse(AppString.detectAndroidVersionCode!) < int.parse(AppString.firebaseAndroidVersionCode!)){
-        _userController.isUpdateApp.value = true;
-    } else{
-        _userController.isUpdateApp.value = false;
-        Timer(const Duration(seconds: 3), () {
-          if (_userController.userToken.value.accessToken != null) {
-            // _userController.currentUserApi();
-            // Get.off(()=> HomeScreen());
-            _userController.getUserProfileData();
-            log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${_userController.selectedLanguage}");
-          } else {
-            Get.off(() => SignInUpScreen());
-          }
-        });
-      }}
-    else{
-      if(int.parse(AppString.detectIosBuildNumber!) <= int.parse(AppString.firebaseIosBuildNumber!) &&
-          int.parse(AppString.detectIosVersionCode!) <= int.parse(AppString.detectIosVersionCode!)){
-        _userController.isUpdateApp.value = true;
-      } else{
-        _userController.isUpdateApp.value = false;
-        Timer(const Duration(seconds: 3), () {
-          if (_userController.userToken.value.accessToken != null) {
-            // _userController.currentUserApi();
-            // Get.off(()=> HomeScreen());
-            _userController.getUserProfileData();
-            log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${_userController.selectedLanguage}");
-          } else {
-            Get.off(() => SignInUpScreen());
-          }
-        });
+
+    if(!AppString.testing_version_code_check_dialog!){
+      if(Platform.isAndroid){
+        if(int.parse(AppString.detectAndroidBuildNumber!) < int.parse(AppString.firebaseAndroidBuildNumber!) ||
+            int.parse(AppString.detectAndroidVersionCode!) < int.parse(AppString.firebaseAndroidVersionCode!)){
+          _userController.isUpdateApp.value = true;
+        } else{
+          _userController.isUpdateApp.value = false;
+          Timer(const Duration(seconds: 3), () {
+            if (_userController.userToken.value.accessToken != null) {
+              // _userController.currentUserApi();
+              // Get.off(()=> HomeScreen());
+              _userController.getUserProfileData();
+              log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${_userController.selectedLanguage}");
+            } else {
+              Get.off(() => SignInUpScreen());
+            }
+          });
+        }}
+      else{
+        if(int.parse(AppString.detectIosBuildNumber!) <= int.parse(AppString.firebaseIosBuildNumber!) &&
+            int.parse(AppString.detectIosVersionCode!) <= int.parse(AppString.detectIosVersionCode!)){
+          _userController.isUpdateApp.value = true;
+        } else{
+          _userController.isUpdateApp.value = false;
+          Timer(const Duration(seconds: 3), () {
+            if (_userController.userToken.value.accessToken != null) {
+              // _userController.currentUserApi();
+              // Get.off(()=> HomeScreen());
+              _userController.getUserProfileData();
+              log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${_userController.selectedLanguage}");
+            } else {
+              Get.off(() => SignInUpScreen());
+            }
+          });
+        }
       }
     }
+
+
 
   }
 
@@ -259,7 +264,12 @@ class _SplashScreenState extends State<SplashScreen> {
          positiveBtnText: 'Update',
          negativeBtnText: 'Cancel',
          negativeButtonShow: !AppString.isForceCancleButtonShow!,
-         positiveButtonShow: true,) : SizedBox()
+         positiveButtonShow: true,) : SizedBox(),
+        AppString.testing_version_code_check_dialog! ? CustomAlertDialog(
+          title: "Check version History",
+          message: "detectUser${Platform.isAndroid ? "Android" : "Ios"}BuildNumber ==>${Platform.isAndroid?AppString.detectAndroidBuildNumber:AppString.detectIosBuildNumber}\ndetectUser${Platform.isAndroid ? "Android" : "Ios"}VersionCode ===> ${Platform.isAndroid ? AppString.detectAndroidVersionCode : AppString.detectIosVersionCode} \n\n"
+              "firebaseUser${Platform.isAndroid ? "Android": "Ios"}BuildNumber ===>${Platform.isAndroid?AppString.firebaseAndroidBuildNumber:AppString.firebaseIosBuildNumber}\ndetectUser${Platform.isAndroid ? "Android" : "Ios"}VersionCode ===> ${Platform.isAndroid ? AppString.firebaseAndroidVersionCode : AppString.firebaseIosVersionCode}",
+        ) : SizedBox()
       ],
     ));
   }

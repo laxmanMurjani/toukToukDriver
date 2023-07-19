@@ -171,6 +171,7 @@ class AppBoxShadow {
 
 class AppString {
   static String? googleMapKey;
+  static bool? testing_version_code_check_dialog;
   static bool? isForceCancleButtonShow;
   static String? firebaseAndroidVersionCode;
   static String? firebaseAndroidBuildNumber;
