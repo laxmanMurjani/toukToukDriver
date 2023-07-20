@@ -187,7 +187,7 @@ class _SplashScreenState extends State<SplashScreen> {
           });
         }}
       else{
-        if(int.parse(AppString.detectIosBuildNumber!) <= int.parse(AppString.firebaseIosBuildNumber!) &&
+        if(int.parse(AppString.detectIosBuildNumber!) < int.parse(AppString.firebaseIosBuildNumber!) &&
             int.parse(AppString.detectIosVersionCode!) <= int.parse(AppString.detectIosVersionCode!)){
           _userController.isUpdateApp.value = true;
         } else{
