@@ -15,9 +15,13 @@ import '../../util/app_constant.dart';
 import '../widget/custom_text_filed.dart';
 
 class SignUpScreen extends StatefulWidget {
+  bool? isDriver;
+   SignUpScreen({this.isDriver});
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
+
+
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final UserController _userController = Get.find();
@@ -225,7 +229,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           children: [
                             InkWell(
                               onTap: () {
-                                cont.signUpDetailsUser();
+                                cont.signUpDetailsUser(widget.isDriver!);
                               },
                               child: Container(
                                 alignment: Alignment.center,

@@ -66,13 +66,6 @@ class _MessangerChatHeadState extends State<MessangerChatHead> {
       child: GestureDetector(
         onTap: () async {
           print("dfhdgfhdgf");
-          // if (Platform.isAndroid) {
-          //   final AndroidIntent intent = AndroidIntent(
-          //     action: 'action_view',
-          //     data: 'package:com.touktouktaxi.driver', // replace com.example.app with your applicationId
-          //   );
-          //   await intent.launch();
-          // }
           if (Platform.isAndroid) {
             final extras = json.encode({
               "Amount": 'amount',
@@ -105,18 +98,9 @@ class _MessangerChatHeadState extends State<MessangerChatHead> {
           //   });
           // }
         },
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            !_homeController.isOverlay.value ? SizedBox() : Container(height: 15,width: 15,
-              decoration: BoxDecoration(shape: BoxShape.circle,
-                  color: Colors.red),child: Align(alignment: Alignment.center,
-              child: Text('1',style: TextStyle(color: Colors.white),),),),
-            Container(height: 50,width: 50,alignment: Alignment.center,margin: EdgeInsets.all(0),
-              decoration: BoxDecoration(shape: BoxShape.circle,
-                image: DecorationImage(image: AssetImage(AppImage.logoT,),),),
-            ),
-          ],
+        child: Container(height: 50,width: 50,alignment: Alignment.center,margin: EdgeInsets.all(0),
+          decoration: BoxDecoration(shape: BoxShape.circle,
+            image: DecorationImage(image: AssetImage(AppImage.logoT,),),),
         ),
       ),
     );

@@ -10,6 +10,7 @@ import 'package:mozlit_driver/controller/user_controller.dart';
 import 'package:mozlit_driver/preference/preference.dart';
 import 'package:mozlit_driver/ui/authentication_screen/login_otp_screen.dart';
 import 'package:mozlit_driver/ui/authentication_screen/login_screen.dart';
+import 'package:mozlit_driver/ui/authentication_screen/select_service_sign_in_up_screen.dart';
 import 'package:mozlit_driver/ui/authentication_screen/sign_up_screen.dart';
 import 'package:mozlit_driver/ui/widget/custom_button.dart';
 import 'package:mozlit_driver/util/app_constant.dart';
@@ -245,7 +246,7 @@ class _SignInUpScreenState extends State<SignInUpScreen>
                                         SizedBox(height: 15.h),
                                         CustomButton(
                                           onTap: () {
-                                            Get.to(() => SignUpScreen());
+                                            Get.to(() => SelectServiceSignInUpScreen());
                                           },
                                           text: "sign_up".tr,
                                         ),

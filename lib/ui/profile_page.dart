@@ -1,11 +1,15 @@
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:mozlit_driver/preference/preference.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mozlit_driver/controller/home_controller.dart';
 import 'package:mozlit_driver/controller/user_controller.dart';
 import 'package:mozlit_driver/enum/error_type.dart';
@@ -21,6 +25,7 @@ import 'package:mozlit_driver/ui/widget/dialog/chooseLang.dart';
 import 'package:mozlit_driver/ui/widget/no_internet_widget.dart';
 import 'package:mozlit_driver/util/app_constant.dart';
 import 'package:mozlit_driver/util/razor_pay.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../api/api.dart';
@@ -488,63 +493,51 @@ class _ProfilePageState extends State<ProfilePage> {
                           ],
                         ),
                       ),
-     //                  SizedBox(
-     //                    height: 15,
-     //                  ),
-     //
-     //                  InkWell(
-     //                    onTap: () {
-     //                      homeCont.isCloseOverlay.value = true;
-     //                      FlutterOverlayWindow.closeOverlay()
-     //                          .then((value) => log('STOPPED: alue: $value'));
-     //                      // _showLogoutDialog();
-     //                    },
-     //                    child: Row(
-     //                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-     //                      children: [
-     //                        Text(
-     //                          'Close overlay'.tr,
-     //                          style: TextStyle(
-     //                              fontSize: 14,
-     //                              color: AppColors.primaryColor),
-     //                        ),
-     //                        Image.asset(
-     //                          AppImage.openLayer,
-     //                          width: 25,
-     //                          height: 25,
-     //                          fit: BoxFit.contain,
-     //                        )
-     //                      ],
-     //                    ),
-     //                  ),
-     //
-     // SizedBox(
-     //                    height: 15,
-     //                  ),
-     //
-     //                  InkWell(
-     //                    onTap: () {
-     //                      homeCont.isCloseOverlay.value = false;
-     //
-     //                    },
-     //                    child: Row(
-     //                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-     //                      children: [
-     //                        Text(
-     //                          'Open overlay'.tr,
-     //                          style: TextStyle(
-     //                              fontSize: 14,
-     //                              color: AppColors.primaryColor),
-     //                        ),
-     //                        Image.asset(
-     //                          AppImage.openLayer,
-     //                          width: 25,
-     //                          height: 25,
-     //                          fit: BoxFit.contain,
-     //                        )
-     //                      ],
-     //                    ),
-     //                  ),
+                   //    SizedBox(
+                   //      height:Platform.isAndroid ? 15 : 0,
+                   //    ),
+                   //
+                   // Platform.isAndroid ?   InkWell(
+                   //      onTap: () {
+                   //        homeCont.isCloseOverlay.value = true;
+                   //        FlutterOverlayWindow.closeOverlay()
+                   //            .then((value) => log('STOPPED: alue: $value'));
+                   //        // _showLogoutDialog();
+                   //      },
+                   //      child: Row(
+                   //        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                   //        children: [
+                   //          Text(
+                   //            'Overlay'.tr,
+                   //            style: TextStyle(
+                   //                fontSize: 14,
+                   //                color: AppColors.primaryColor),
+                   //          ),
+                   //          Switch(
+                   //            value: homeCont.isOverlayOn.value,
+                   //            activeColor: AppColors.primaryColor,
+                   //
+                   //            onChanged: (value) {
+                   //              homeCont.isOverlayOn.value = value;
+                   //              Future.delayed(Duration.zero,() async{
+                   //                final prefs = await SharedPreferences.getInstance();
+                   //                homeCont.isOverlayPermissionCheck.value = await FlutterOverlayWindow.isPermissionGranted();
+                   //                if(!homeCont.isOverlayPermissionCheck.value){
+                   //                  await FlutterOverlayWindow.requestPermission();
+                   //                }
+                   //
+                   //              },);
+                   //              if(homeCont.isOverlayOn.value){
+                   //                homeCont.isCloseOverlay.value = false;
+                   //
+                   //              } else {
+                   //                homeCont.isCloseOverlay.value = true;
+                   //              }
+                   //            },
+                   //          ),
+                   //        ],
+                   //      ),
+                   //    ) : SizedBox(),
 
                       SizedBox(
                         height: 15,
@@ -646,5 +639,11 @@ class _ProfilePageState extends State<ProfilePage> {
         );
       },
     );
+  }
+  checkOverlayPermission()async{
+    bool? permissionStatus;
+    permissionStatus = await FlutterOverlayWindow.isPermissionGranted();
+    permissionStatus = await FlutterOverlayWindow.isActive();
+    print("objecsssst===>$permissionStatus");
   }
 }

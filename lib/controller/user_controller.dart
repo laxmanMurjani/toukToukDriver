@@ -719,10 +719,10 @@ class UserController extends BaseController {
         showError(msg: "Please select service type..");
         return;
       }
-      // if (deliveryServiceType == null) {
-      //   showError(msg: "Please select service type..");
-      //   return;
-      // }
+      if (deliveryServiceType == null) {
+        showError(msg: "Please select service type..");
+        return;
+      }
       // if (emailController.text.isEmpty) {
       //   showError(msg: "Please enter your Email address");
       //   return;
@@ -856,7 +856,7 @@ class UserController extends BaseController {
       print(e);
     }
   }
-  Future<void> signUpDetailsUser() async {
+  Future<void> signUpDetailsUser(bool isDriver) async {
     removeUnFocusManager();
     try {
 
@@ -916,7 +916,7 @@ class UserController extends BaseController {
           countryCode == '+961') || phoneNumberController.text.length ==
           10 && countryCode == '+91') {
         print('passed');
-        Get.to(VehicleSignUpScreen());
+        Get.to(VehicleSignUpScreen(isDriver: isDriver));
         return;
       }
       Get.snackbar("Alert", "Please enter a valid mobile number",
@@ -1430,9 +1430,12 @@ class UserController extends BaseController {
             var texiservice = serviceTypeModel.serviceTypes
                 .where((o) => o.moduletype == "TAXI")
                 .toList();
-            // print("deliveryserviceList     $deliveryserviceList");
-            // print("texiserviceList     $texiserviceList");
-            serviceTypeList.addAll(deliveryservice);
+            print("deliveryserviceList     $deliveryservice");
+            print("texiserviceList     $texiservice");
+
+            selectedUserModuleType
+                .value ==
+                UserModuleType.DELIVERY ?   serviceTypeList.addAll(deliveryservice) :
             serviceTypeList1.addAll(texiservice);
           },
           onError: (ErrorType errorType, String? msg) {
@@ -1715,6 +1718,8 @@ class UserController extends BaseController {
       Map<String, String> params = {};
       params["provider_id"] = "${userData.value.id ?? "0"}";
       params["active_module"] = "${userModuleType.name}";
+      print("updateUserprovider_id===>${userData.value.id}");
+      print("updateUserprovider_id===>${userModuleType.name}");
       await apiService.postRequest(
           url: ApiUrl.selectModuleType,
           params: params,

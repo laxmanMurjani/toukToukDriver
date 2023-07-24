@@ -23,6 +23,7 @@ import 'package:mozlit_driver/enum/error_type.dart';
 import 'package:mozlit_driver/enum/provider_ui_selection_type.dart';
 import 'package:mozlit_driver/enum/user_module_type.dart';
 import 'package:mozlit_driver/model/home_active_trip_model.dart';
+import 'package:mozlit_driver/preference/preference.dart';
 import 'package:mozlit_driver/ui/drawer_srceen/finding_driver_dialog_for_breck_down.dart';
 import 'package:mozlit_driver/ui/profile_page.dart';
 import 'package:mozlit_driver/ui/widget/custom_button.dart';
@@ -38,6 +39,7 @@ import 'package:mozlit_driver/ui/widget/verifiedScreen.dart';
 import 'package:mozlit_driver/util/app_constant.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swipeable_button_view/swipeable_button_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -76,12 +78,7 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   void initState() {
-    // Future.delayed(Duration.zero,() async{
-    //   bool checkPermissionStatus = await FlutterOverlayWindow.isPermissionGranted();
-    //   if(!checkPermissionStatus){
-    //     await FlutterOverlayWindow.requestPermission();
-    //   }
-    // },);
+
     rootBundle.loadString('assets/map_style.txt').then((string) {
       _mapStyle = string;
     });
@@ -112,6 +109,11 @@ class _HomeScreenState extends State<HomeScreen>
 
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      // await FlutterOverlayWindow.requestPermission();
+
+
+
+
       _getTripTimer = Timer.periodic(Duration(seconds: 3), (timer) async {
 
         if (_homeController.homeActiveTripModel.value.is_instant_ride_check !=
@@ -144,10 +146,10 @@ class _HomeScreenState extends State<HomeScreen>
       );
     });
 
-    FlutterOverlayWindow.overlayListener.listen((event) {
-      log("Current Event: $event");
-    });
-
+    // FlutterOverlayWindow.overlayListener.listen((event) {
+    //   log("Current Event: $event");
+    // });
+    //
 
 
     // BackgroundLocation.startLocationService(forceAndroidLocationManager: true);
@@ -185,13 +187,13 @@ class _HomeScreenState extends State<HomeScreen>
           return NoInternetWidget();
         }
 
-        bool isUserOffline =
-            userCont.userData.value.service?.status == "offline";
+
 
         return GetX<HomeController>(builder: (cont) {
           if (cont.error.value.errorType == ErrorType.internet) {
             return NoInternetWidget();
           }
+          bool isUserOffline = cont.homeActiveTripModel.value.serviceStatus == "offline";
           // bool isUserOffline =
           //       cont.homeActiveTripModel.value.accountStatus == "banned";
           bool isOnBoarding =
@@ -941,31 +943,6 @@ class _HomeScreenState extends State<HomeScreen>
                         SizedBox(
                           height: 10.h,
                         ),
-
-                     cont.homeActiveTripModel.value.multiDestination.isNotEmpty ? SizedBox() :  SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              selectedServiceTypeWidget(cont),
-                              Expanded(
-                                child: SizedBox(
-                                  height: 110,
-                                  child: ListView.builder(
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: userCont.serviceTypeList1.length,
-                                    itemBuilder: (context, index) {
-                                      return allServiceTypeWidget(userCont,index,cont);
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
                         // if (cont.providerUiSelectionType.value ==
                         //     ProviderUiSelectionType.none ||
                         //     userCont.selectedUserModuleType.value !=
@@ -1011,8 +988,7 @@ class _HomeScreenState extends State<HomeScreen>
                         //         InkWell(
                         //           onTap: () async {
                         //             userCont.updateUserModuleType(
-                        //                 userModuleType:
-                        //                 UserModuleType.DELIVERY);
+                        //                 userModuleType: UserModuleType.DELIVERY);
                         //             // userCont.selectedUserModuleType.value = UserModuleType.DELIVERY;
                         //           },
                         //           child: Container(
@@ -1075,6 +1051,36 @@ class _HomeScreenState extends State<HomeScreen>
                         //       ],
                         //     ),
                         //   ),
+                        //
+                        // SizedBox(
+                        //   height: 10.h,
+                        // ),
+
+                     cont.homeActiveTripModel.value.multiDestination.isNotEmpty ? SizedBox() :  SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              selectedServiceTypeWidget(cont),
+                              Expanded(
+                                child: SizedBox(
+                                  height: 90,
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: userCont.serviceTypeList1.length,
+                                    itemBuilder: (context, index) {
+                                      return allServiceTypeWidget(userCont,index,cont);
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+
                         if (cont.homeAddress.isNotEmpty) ...[
                           Expanded(
                             child: Row(
@@ -1595,33 +1601,34 @@ class _HomeScreenState extends State<HomeScreen>
           _homeController.googleMapController?.setMapStyle("[]");
         }
         print("gdshghsgdhsgd");
-        // await FlutterOverlayWindow.closeOverlay();
+        // if(_homeController.isOverlayPermissionCheck.value){
+        //   await FlutterOverlayWindow.closeOverlay();
+        // }
+
         // _homeController.homeActiveTripModel.close();
         break;
       case AppLifecycleState.inactive:
-        print('statusIsInactive');
-
-        // if(!_homeController.isCloseOverlay.value){
-        //   if (await FlutterOverlayWindow.isActive()) return;
-        //   await FlutterOverlayWindow.showOverlay(
-        //     enableDrag: true,
-        //     overlayTitle: "Touk Touk Driver",
-        //     overlayContent: 'Background Mode',
-        //     flag: OverlayFlag.defaultFlag,
-        //     visibility: NotificationVisibility.visibilityPublic,
-        //     positionGravity: PositionGravity.auto,
-        //     height: 200,
-        //     width: WindowSize.matchParent,
-        //   );
+        // print('statusIsInactive');
+        // if(_homeController.isOverlayPermissionCheck.value){
+        //   if(!_homeController.isCloseOverlay.value){
+        //     if (await FlutterOverlayWindow.isActive()) return;
+        //     await FlutterOverlayWindow.showOverlay(
+        //       enableDrag: true,
+        //       overlayTitle: "Touk Touk Driver",
+        //       overlayContent: 'Background Mode',
+        //       flag: OverlayFlag.defaultFlag,
+        //       visibility: NotificationVisibility.visibilityPublic,
+        //       positionGravity: PositionGravity.auto,
+        //       height: 200,
+        //       width: WindowSize.matchParent,
+        //     );
+        //   }
         // }
-        //
-
-
 
         break;
       case AppLifecycleState.paused:
-        print("state s paused");
-        print("dsdjhjhsssss00===>${_homeController.isOverlay.value}");
+        // print("state s paused");
+        // print("dsdjhjhsssss00===>${_homeController.isOverlay.value}");
         break;
       case AppLifecycleState.detached:
         break;
@@ -1630,38 +1637,41 @@ class _HomeScreenState extends State<HomeScreen>
   Widget selectedServiceTypeWidget(HomeController cont){
     return  Padding(
       padding: const EdgeInsets.only(left: 10.0),
-      child: cont.homeActiveTripModel.value.driverServiceType == null ? SizedBox() : Column(
-        children: [
-          Container(
-            height: 60,
-            width: 100,
-            decoration: BoxDecoration(
-                color: AppColors.gray,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20))
+      child: cont.homeActiveTripModel.value.driverServiceType == null ? SizedBox() :
+      Container(
+        alignment: Alignment.center,
+        padding: EdgeInsets.all(5),
+        height: 85,
+        width: 106,
+        decoration: BoxDecoration(
+            color: Colors.black,
+            borderRadius: BorderRadius.circular(20)
+        ),
+        child: Column(
+          children: [
+            Container(
+              height: 32,
+              width: 54,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(80)
+              ),
+              child: cont.homeActiveTripModel.value.driverServiceType == null ?
+              Image.asset(AppImage.appMainLogo):
+              Image.network(cont.homeActiveTripModel.value.driverServiceType['image']),
             ),
-            child: cont.homeActiveTripModel.value.driverServiceType == null ?
-            Image.asset(AppImage.appMainLogo):
-            Image.network(cont.homeActiveTripModel.value.driverServiceType['image']),
-          ), Container(
-            alignment: Alignment.center,
-            padding: EdgeInsets.all(5),
-            height: 45,
-            width: 100,
-            decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.only(bottomLeft:  Radius.circular(20),
-                    bottomRight: Radius.circular(20))
-            ),
-            child: Text(
-              cont.homeActiveTripModel.value.driverServiceType == null ? "": cont.homeActiveTripModel.value.driverServiceType['name'],
-              textAlign: TextAlign.center,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(color: AppColors.white,fontSize: 12,fontWeight: FontWeight.w400),
-            ),
-          )
-        ],
+            SizedBox(height: 5),
+            SizedBox(width: 106,
+              child: Text(
+                cont.homeActiveTripModel.value.driverServiceType == null ? "": cont.homeActiveTripModel.value.driverServiceType['name'],
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(color: AppColors.white,fontSize: 12,fontWeight: FontWeight.w400),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -1674,39 +1684,42 @@ class _HomeScreenState extends State<HomeScreen>
          homeCont.chooseServiceType(provider_id: homeCont.homeActiveTripModel.value.provider_id.toString(),
              service_type_id: cont.serviceTypeList1[index].id.toString());
         } ,
-        child: homeCont.homeActiveTripModel.value.driverServiceType['id'] == cont.serviceTypeList1[index].id ? SizedBox() : Column(
-          children: [
-            Container(
-              height: 60,
-              width: 100,
-              decoration: BoxDecoration(
-                  color: AppColors.gray,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20))
-              ),
-              child: cont.serviceTypeList1.isEmpty ?
-              Image.asset(AppImage.appMainLogo):
+        child: homeCont.homeActiveTripModel.value.driverServiceType['id'] == cont.serviceTypeList1[index].id ? SizedBox() :
+        Container(
 
-              Image.network(cont.serviceTypeList1[index].image!),
-            ), Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.all(5),
-              height: 45,
-              width: 100,
-              decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.only(bottomLeft:  Radius.circular(20),
-                      bottomRight: Radius.circular(20))
-              ),
-              child: Text(cont.serviceTypeList1[index].name!,
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+          padding: EdgeInsets.all(5),
+          height: 85,
+          width: 106,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20)
+          ),
+          child: Column(mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                height: 32,
+                width: 54,
+                decoration: BoxDecoration(
+                    color: Color(0xFFF6F6F6),
+                    borderRadius: BorderRadius.circular(80)
+                ),
+                child: cont.serviceTypeList1.isEmpty ?
+                Image.asset(AppImage.appMainLogo):
 
-                style: TextStyle(color: AppColors.white,fontSize: 12,fontWeight: FontWeight.w400),
+                Image.network(cont.serviceTypeList1[index].image!),
               ),
-            )
-          ],
+              SizedBox(height: 5,),
+              SizedBox(
+                width: 100,
+                child: Text(cont.serviceTypeList1[index].name!,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: Colors.black,fontSize: 14,fontWeight: FontWeight.w400),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

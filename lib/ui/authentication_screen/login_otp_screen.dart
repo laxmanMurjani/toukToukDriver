@@ -9,6 +9,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mozlit_driver/controller/user_controller.dart';
 import 'package:mozlit_driver/enum/error_type.dart';
 import 'package:mozlit_driver/ui/authentication_screen/login_screen.dart';
+import 'package:mozlit_driver/ui/authentication_screen/select_service_sign_in_up_screen.dart';
 import 'package:mozlit_driver/ui/authentication_screen/sign_up_screen.dart';
 import 'package:mozlit_driver/ui/widget/custom_button.dart';
 import 'package:mozlit_driver/ui/widget/custom_text_filed.dart';
@@ -333,7 +334,7 @@ class _LoginOtpScreenState extends State<LoginOtpScreen> {
                           text: "register".tr,
                           onTap: () {
                             // cont.registerUser();
-                            Get.to(() => SignUpScreen());
+                            Get.to(() => SelectServiceSignInUpScreen());
                           },
                         ),
                       ),

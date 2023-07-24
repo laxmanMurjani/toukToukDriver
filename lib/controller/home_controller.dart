@@ -112,6 +112,8 @@ class HomeController extends BaseController {
   Rx<UserModuleType> responseUserModuleType = UserModuleType.TAXI.obs;
   RxBool isOverlay = false.obs;
   RxBool isCloseOverlay = false.obs;
+  RxBool isOverlayOn = false.obs;
+  RxBool isOverlayPermissionCheck = false.obs;
 
   //final player = AudioPlayer();
   // late AssetsAudioPlayer assetsAudioPlayer;
