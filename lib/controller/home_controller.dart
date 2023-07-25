@@ -18,6 +18,7 @@ import 'package:mozlit_driver/model/dispute_model.dart';
 import 'package:mozlit_driver/model/estimated_fare_model.dart';
 import 'package:mozlit_driver/model/fare_with_out_auth_model.dart';
 import 'package:mozlit_driver/model/send_new_user_request_model.dart';
+import 'package:mozlit_driver/model/service_type_model.dart';
 import 'package:mozlit_driver/model/summery_model.dart';
 import 'package:mozlit_driver/model/trip_history_details_model.dart';
 import 'package:mozlit_driver/model/trip_history_model.dart';
@@ -184,22 +185,21 @@ class HomeController extends BaseController {
         reasonList.addAll(p0.reasons);
         startTripTime();
         RequestElement requestElement = p0.requests[0];
-        if(requestElement.request?.moduleType == "TAXI" ){
-          responseUserModuleType.value = UserModuleType.TAXI;
-        }
-        if(requestElement.request?.moduleType == "DELIVERY"){
-          responseUserModuleType.value = UserModuleType.DELIVERY;
-        }
-        if(_userController.selectedUserModuleType.value == UserModuleType.BOTH){
-          responseUserModuleType.value = UserModuleType.BOTH;
-        }
+        // if(requestElement.request?.moduleType == "TAXI" ){
+        //   responseUserModuleType.value = UserModuleType.TAXI;
+        // }
+        // if(requestElement.request?.moduleType == "DELIVERY"){
+        //   responseUserModuleType.value = UserModuleType.DELIVERY;
+        // }
+        // if(_userController.selectedUserModuleType.value == UserModuleType.BOTH){
+        //   responseUserModuleType.value = UserModuleType.BOTH;
+        // }
         if (requestElement.request?.status == CheckStatus.SEARCHING) {
           print("checkRequest1111");
           if (providerUiSelectionType.value !=
               ProviderUiSelectionType.searchingRequest) {
             timeLeftToRespond.value = requestElement.timeLeftToRespond ?? 60;
             _startTimer();
-
           }
           providerUiSelectionType.value =
               ProviderUiSelectionType.searchingRequest;
@@ -444,6 +444,46 @@ class HomeController extends BaseController {
   }
 
   // String ringtoneUrl = 'https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3';
+
+  Future<void> getChangeServiceType() async {
+    try {
+      // showLoader();
+
+      await apiService.getRequest(
+          url: ApiUrl.settings,
+          onSuccess: (Map<String, dynamic> data) async {
+            // dismissLoader();
+            _userController.serviceTypeList.clear();
+            _userController.serviceTypeList1.clear();
+            _userController.taxiServiceType = null;
+            _userController.deliveryServiceType = null;
+            ServiceTypeModel serviceTypeModel =
+            serviceTypeModelFromJson(jsonEncode(data["response"]));
+            //serviceTypeList.addAll(serviceTypeModel.serviceTypes);
+            var deliveryservice = serviceTypeModel.serviceTypes
+                .where((o) => o.moduletype == "DELIVERY")
+                .toList();
+            var texiservice = serviceTypeModel.serviceTypes
+                .where((o) => o.moduletype == "TAXI")
+                .toList();
+            print("deliveryserviceList     $deliveryservice");
+            print("texiserviceList     $texiservice");
+            if(homeActiveTripModel.value.active_driver_module == "TAXI"){
+              _userController.serviceTypeList1.addAll(texiservice);
+            } else{
+              _userController.serviceTypeList1.addAll(deliveryservice);
+            }
+
+          },
+          onError: (ErrorType errorType, String? msg) {
+            showError(msg: msg);
+          });
+    } catch (e) {
+      log("message   ==>  $e");
+      showError(msg: e.toString());
+      // showError(msg: e.toString());
+    }
+  }
 
   playRingtone() async {
     assetsAudioPlayer.open(
@@ -853,6 +893,7 @@ class HomeController extends BaseController {
       showLoader();
       params["provider_id"] = provider_id;
       params["service_type_id"] = service_type_id;
+      params["active_module"] = homeActiveTripModel.value.active_driver_module;
 
       await apiService.postRequest(
         url: ApiUrl.chooseServiceType,

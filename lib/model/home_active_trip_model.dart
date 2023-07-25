@@ -12,6 +12,7 @@ String? homeActiveTripModelToJson(HomeActiveTripModel data) =>
 
 class HomeActiveTripModel {
   HomeActiveTripModel({
+    this.active_driver_module,
     this.user_device_token,
     this.provider_id,
     this.accountStatus,
@@ -38,6 +39,7 @@ class HomeActiveTripModel {
   });
 
   String? accountStatus;
+  String? active_driver_module;
   int? provider_id;
   int? breakdown_count_check;
   String? user_device_token;
@@ -63,6 +65,7 @@ class HomeActiveTripModel {
 
   factory HomeActiveTripModel.fromJson(Map<String, dynamic> json) =>
       HomeActiveTripModel(
+          active_driver_module: json["active_driver_module"],
         accountStatus: json["account_status"],
         provider_id: json["provider_id"],
         breakdown_count_check: json["breakdown_count_check"],
@@ -99,6 +102,7 @@ class HomeActiveTripModel {
       );
 
   Map<String, dynamic> toJson() => {
+        "active_driver_module": active_driver_module,
         "account_status": accountStatus,
         "breakdown_count_check": breakdown_count_check,
         "provider_id": provider_id,

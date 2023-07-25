@@ -135,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen>
             _homeController.breakDownSendNewRide();
           }
         }
-        _userController.getChangeServiceType();
+        _homeController.getChangeServiceType();
       });
       Future.delayed(
         Duration(seconds: 7),
@@ -382,7 +382,7 @@ class _HomeScreenState extends State<HomeScreen>
                           SizedBox(
                             height: 10.h,
                           ),
-                          Padding(
+                          cont.homeActiveTripModel.value.multiDestination.isNotEmpty ? SizedBox() : Padding(
                             padding: EdgeInsets.only(
                                 bottom: 40, left: 20, right: 20),
                             child: userCont.selectedLanguage.value == 1 ? Directionality(
@@ -481,9 +481,7 @@ class _HomeScreenState extends State<HomeScreen>
                        if (
 
                        cont.providerUiSelectionType.value ==
-                           ProviderUiSelectionType.searchingRequest &&
-                           userCont.selectedUserModuleType.value ==
-                               cont.responseUserModuleType.value) ...[
+                           ProviderUiSelectionType.searchingRequest ) ...[
                          AvailableRequestWidget()
 
                      ],
@@ -767,26 +765,26 @@ class _HomeScreenState extends State<HomeScreen>
                                       width: 30),
                                 ),
                               ),
-                              // InkWell(
-                              //   onTap: () {
-                              //     print("dfd");
-                              //     print("ddgfdgd==>${int.parse(AppString.detectAndroidBuildNumber!)}");
-                              //     print("ddgfdgd==>${int.parse(AppString.firebaseAndroidBuildNumber!)}");
-                              //     print("ddgfdgd==>${int.parse(AppString.detectAndroidBuildNumber!) < int.parse(AppString.firebaseAndroidBuildNumber!)}");
-                              //
-                              //
-                              //
-                              //   },
-                              //   child: Padding(
-                              //     padding:
-                              //     const EdgeInsets.symmetric(
-                              //         horizontal: 12.0),
-                              //     child: Image.asset(
-                              //         AppImage.bell,color: AppColors.white,
-                              //         height: 30,
-                              //         width: 30),
-                              //   ),
-                              // ),
+                              InkWell(
+                                onTap: () {
+                                  print("dfd");
+                                  print("ddgfdgd==>${int.parse(AppString.detectAndroidBuildNumber!)}");
+                                  print("ddgfdgd==>${int.parse(AppString.firebaseAndroidBuildNumber!)}");
+                                  print("ddgfdgd==>${int.parse(AppString.detectAndroidBuildNumber!) < int.parse(AppString.firebaseAndroidBuildNumber!)}");
+                                  _homeController.stopRingtone();
+
+
+                                },
+                                child: Padding(
+                                  padding:
+                                  const EdgeInsets.symmetric(
+                                      horizontal: 12.0),
+                                  child: Image.asset(
+                                      AppImage.bell,color: AppColors.white,
+                                      height: 30,
+                                      width: 30),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -1071,6 +1069,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     scrollDirection: Axis.horizontal,
                                     itemCount: userCont.serviceTypeList1.length,
                                     itemBuilder: (context, index) {
+                                      print("dksjd===>${userCont.serviceTypeList1.length}");
                                       return allServiceTypeWidget(userCont,index,cont);
                                     },
                                   ),
@@ -1676,6 +1675,7 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
   Widget allServiceTypeWidget(UserController cont,int index, HomeController homeCont){
+
     return  Padding(
       padding: const EdgeInsets.only(left: 10.0),
       child: cont.serviceTypeList1.isEmpty || homeCont.homeActiveTripModel.value.driverServiceType == null ? SizedBox() : InkWell(

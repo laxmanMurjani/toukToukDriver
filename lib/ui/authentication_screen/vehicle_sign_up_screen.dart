@@ -278,7 +278,7 @@ class _VehicleSignUpScreenState extends State<VehicleSignUpScreen> {
                           onTap: () {
                             // print('ll: ${cont.taxiServiceType?.id}');
                             // print('ll: ${cont.deliveryServiceType?.id}');
-                            cont.registerUser();
+                            cont.registerUser(widget.isDriver ? "TAXI": "DELIVERY");
                           },
                           child: Container(
                             alignment: Alignment.center,

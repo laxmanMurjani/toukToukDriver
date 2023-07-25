@@ -712,17 +712,17 @@ class UserController extends BaseController {
     }
   }
 
-  Future<void> registerUser() async {
+  Future<void> registerUser( String activeModuleStatus) async {
     removeUnFocusManager();
     try {
-      if (taxiServiceType == null) {
-        showError(msg: "Please select service type..");
-        return;
-      }
-      if (deliveryServiceType == null) {
-        showError(msg: "Please select service type..");
-        return;
-      }
+      // if (taxiServiceType == null) {
+      //   showError(msg: "Please select service type..");
+      //   return;
+      // }
+      // if (deliveryServiceType == null) {
+      //   showError(msg: "Please select service type..");
+      //   return;
+      // }
       // if (emailController.text.isEmpty) {
       //   showError(msg: "Please enter your Email address");
       //   return;
@@ -831,6 +831,7 @@ class UserController extends BaseController {
         params["device_token"] = token;
         params["device_type"] = ApiUrl.deviceType;
         params["login_by"] = "manual";
+        params["active_module"] = activeModuleStatus;
 
         await apiService.postRequest(
           url: ApiUrl.signUp,
@@ -1388,6 +1389,7 @@ class UserController extends BaseController {
             ServiceTypeModel serviceTypeModel =
                 serviceTypeModelFromJson(jsonEncode(data["response"]));
             //serviceTypeList.addAll(serviceTypeModel.serviceTypes);
+
             var deliveryservice = serviceTypeModel.serviceTypes
                 .where((o) => o.moduletype == "DELIVERY")
                 .toList();
@@ -1396,46 +1398,10 @@ class UserController extends BaseController {
                 .toList();
             // print("deliveryserviceList     $deliveryserviceList");
             // print("texiserviceList     $texiserviceList");
-            serviceTypeList.addAll(deliveryservice);
-            serviceTypeList1.addAll(texiservice);
-          },
-          onError: (ErrorType errorType, String? msg) {
-            showError(msg: msg);
-          });
-    } catch (e) {
-      log("message   ==>  $e");
-      showError(msg: e.toString());
-      // showError(msg: e.toString());
-    }
-  }
-
-  Future<void> getChangeServiceType() async {
-    try {
-      // showLoader();
-
-      await apiService.getRequest(
-          url: ApiUrl.settings,
-          onSuccess: (Map<String, dynamic> data) async {
-            // dismissLoader();
-            serviceTypeList.clear();
-            serviceTypeList1.clear();
-            taxiServiceType = null;
-            deliveryServiceType = null;
-            ServiceTypeModel serviceTypeModel =
-                serviceTypeModelFromJson(jsonEncode(data["response"]));
-            //serviceTypeList.addAll(serviceTypeModel.serviceTypes);
-            var deliveryservice = serviceTypeModel.serviceTypes
-                .where((o) => o.moduletype == "DELIVERY")
-                .toList();
-            var texiservice = serviceTypeModel.serviceTypes
-                .where((o) => o.moduletype == "TAXI")
-                .toList();
-            print("deliveryserviceList     $deliveryservice");
-            print("texiserviceList     $texiservice");
-
             selectedUserModuleType
                 .value ==
-                UserModuleType.DELIVERY ?   serviceTypeList.addAll(deliveryservice) :
+                UserModuleType.DELIVERY ?
+            serviceTypeList.addAll(deliveryservice) :
             serviceTypeList1.addAll(texiservice);
           },
           onError: (ErrorType errorType, String? msg) {
@@ -1447,6 +1413,8 @@ class UserController extends BaseController {
       // showError(msg: e.toString());
     }
   }
+
+
 
   Future<void> getDocument() async {
     try {
