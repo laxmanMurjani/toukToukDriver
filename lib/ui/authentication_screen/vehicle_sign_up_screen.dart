@@ -32,7 +32,7 @@ class _VehicleSignUpScreenState extends State<VehicleSignUpScreen> {
 
     // _userController.clearFormData();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _userController.getServiceType();
+      _userController.getServiceType(widget.isDriver);
     });
     print("sdsdn==>${widget.isDriver}");
   }
@@ -107,46 +107,47 @@ class _VehicleSignUpScreenState extends State<VehicleSignUpScreen> {
                             ),
                           ],
                         ),
-                        widget.isDriver ? DropdownButton<ServiceType>(
-                          hint: Text(
-                            'please_choose_a_service_type'.tr,
-                            style: TextStyle(
-                              fontSize: 10.sp,
-                              color: Colors.grey[600],
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          // Not necessary for Option 1
-                          value: cont.taxiServiceType,
-                          isExpanded: true,
-                          isDense: true,
-                          focusColor: AppColors.primaryColor,
-                          style: TextStyle(
-                              fontSize: 12.sp, fontWeight: FontWeight.w600),
-                          underline: Container(
-                            height: 1.h,
-                            width: double.infinity,
-                            decoration:
-                                BoxDecoration(color: AppColors.underLineColor),
-                          ),
-                          onChanged: (newValue) {
-                            setState(() {
-                              cont.taxiServiceType = newValue;
-                            });
-                          },
-                          items: cont.serviceTypeList1.map((location) {
-                            return DropdownMenuItem(
-                              child: Text(
-                                location.name ?? "",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12.sp,
-                                ),
-                              ),
-                              value: location,
-                            );
-                          }).toList(),
-                        ): DropdownButton<ServiceType>(
+                        // widget.isDriver ? DropdownButton<ServiceType>(
+                        //   hint: Text(
+                        //     'please_choose_a_service_type'.tr,
+                        //     style: TextStyle(
+                        //       fontSize: 10.sp,
+                        //       color: Colors.grey[600],
+                        //       fontWeight: FontWeight.w600,
+                        //     ),
+                        //   ),
+                        //   // Not necessary for Option 1
+                        //   value: cont.taxiServiceType,
+                        //   isExpanded: true,
+                        //   isDense: true,
+                        //   focusColor: AppColors.primaryColor,
+                        //   style: TextStyle(
+                        //       fontSize: 12.sp, fontWeight: FontWeight.w600),
+                        //   underline: Container(
+                        //     height: 1.h,
+                        //     width: double.infinity,
+                        //     decoration:
+                        //         BoxDecoration(color: AppColors.underLineColor),
+                        //   ),
+                        //   onChanged: (newValue) {
+                        //     setState(() {
+                        //       cont.taxiServiceType = newValue;
+                        //     });
+                        //   },
+                        //   items: cont.serviceTypeList1.map((location) {
+                        //     return DropdownMenuItem(
+                        //       child: Text(
+                        //         location.name ?? "",
+                        //         style: TextStyle(
+                        //           color: Colors.black,
+                        //           fontSize: 12.sp,
+                        //         ),
+                        //       ),
+                        //       value: location,
+                        //     );
+                        //   }).toList(),
+                        // ):
+                        DropdownButton<ServiceType>(
                           hint: Text(
                             'please_choose_a_service_type'.tr,
                             style: TextStyle(
@@ -173,7 +174,7 @@ class _VehicleSignUpScreenState extends State<VehicleSignUpScreen> {
                               cont.deliveryServiceType = newValue;
                             });
                           },
-                          items: cont.serviceTypeList.map((location) {
+                          items: cont.serviceTypeList1.map((location) {
                             return DropdownMenuItem(
                               child: Text(
                                 location.name ?? "",

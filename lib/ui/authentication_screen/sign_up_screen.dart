@@ -38,7 +38,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     _userController.clearFormData();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _userController.getServiceType();
+      _userController.getServiceType(widget.isDriver!);
     });
   }
 

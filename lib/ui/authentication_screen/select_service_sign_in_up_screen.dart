@@ -149,7 +149,7 @@ class _SelectServiceSignInUpScreenState extends State<SelectServiceSignInUpScree
                                 children: [
 
                                   CustomButton(
-                                      text: "To Driver".tr,
+                                      text: "Taxi Driver".tr,
                                       bgColor: Colors.white,
                                       textColor: Colors.black,
                                       onTap: () {
@@ -166,7 +166,7 @@ class _SelectServiceSignInUpScreenState extends State<SelectServiceSignInUpScree
                                     onTap: () {
                                       Get.to(() => SignUpScreen(isDriver: false,));
                                     },
-                                    text: "Road Side Servicemen".tr,
+                                    text: "Delivery rider".tr,
                                   ),
                                   SizedBox(height: 40.h),
                                 ],

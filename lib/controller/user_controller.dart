@@ -715,14 +715,19 @@ class UserController extends BaseController {
   Future<void> registerUser( String activeModuleStatus) async {
     removeUnFocusManager();
     try {
-      // if (taxiServiceType == null) {
-      //   showError(msg: "Please select service type..");
-      //   return;
-      // }
-      // if (deliveryServiceType == null) {
-      //   showError(msg: "Please select service type..");
-      //   return;
-      // }
+      if(activeModuleStatus == "Taxi"){
+        if (taxiServiceType == null) {
+          showError(msg: "Please select service type..");
+          return;
+        }
+      } else {
+        if (deliveryServiceType == null) {
+          showError(msg: "Please select service type..");
+          return;
+        }
+      }
+
+
       // if (emailController.text.isEmpty) {
       //   showError(msg: "Please enter your Email address");
       //   return;
@@ -1374,7 +1379,7 @@ class UserController extends BaseController {
     }
   }
 
-  Future<void> getServiceType() async {
+  Future<void> getServiceType(bool isTaxi) async {
     try {
       showLoader();
 
@@ -1398,11 +1403,10 @@ class UserController extends BaseController {
                 .toList();
             // print("deliveryserviceList     $deliveryserviceList");
             // print("texiserviceList     $texiserviceList");
-            selectedUserModuleType
-                .value ==
-                UserModuleType.DELIVERY ?
-            serviceTypeList.addAll(deliveryservice) :
+
+            !isTaxi ? serviceTypeList1.addAll(deliveryservice) :
             serviceTypeList1.addAll(texiservice);
+            print("jhdsjsnd===>${serviceTypeList1.value.first.name}");
           },
           onError: (ErrorType errorType, String? msg) {
             showError(msg: msg);

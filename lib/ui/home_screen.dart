@@ -765,26 +765,26 @@ class _HomeScreenState extends State<HomeScreen>
                                       width: 30),
                                 ),
                               ),
-                              InkWell(
-                                onTap: () {
-                                  print("dfd");
-                                  print("ddgfdgd==>${int.parse(AppString.detectAndroidBuildNumber!)}");
-                                  print("ddgfdgd==>${int.parse(AppString.firebaseAndroidBuildNumber!)}");
-                                  print("ddgfdgd==>${int.parse(AppString.detectAndroidBuildNumber!) < int.parse(AppString.firebaseAndroidBuildNumber!)}");
-                                  _homeController.stopRingtone();
-
-
-                                },
-                                child: Padding(
-                                  padding:
-                                  const EdgeInsets.symmetric(
-                                      horizontal: 12.0),
-                                  child: Image.asset(
-                                      AppImage.bell,color: AppColors.white,
-                                      height: 30,
-                                      width: 30),
-                                ),
-                              ),
+                              // InkWell(
+                              //   onTap: () {
+                              //     print("dfd");
+                              //     print("ddgfdgd==>${int.parse(AppString.detectAndroidBuildNumber!)}");
+                              //     print("ddgfdgd==>${int.parse(AppString.firebaseAndroidBuildNumber!)}");
+                              //     print("ddgfdgd==>${int.parse(AppString.detectAndroidBuildNumber!) < int.parse(AppString.firebaseAndroidBuildNumber!)}");
+                              //     _homeController.stopRingtone();
+                              //
+                              //
+                              //   },
+                              //   child: Padding(
+                              //     padding:
+                              //     const EdgeInsets.symmetric(
+                              //         horizontal: 12.0),
+                              //     child: Image.asset(
+                              //         AppImage.bell,color: AppColors.white,
+                              //         height: 30,
+                              //         width: 30),
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),
