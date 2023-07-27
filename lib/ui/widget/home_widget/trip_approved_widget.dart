@@ -226,7 +226,7 @@ class _TripApprovedWidgetState extends State<TripApprovedWidget> {
                     ProviderUiSelectionType.pickedUpRequest
                 ? (cont.homeActiveTripModel.value.is_instant_ride_check != 1)
                     ?  cont.homeActiveTripModel.value.requests.first.request!.bkd_for_reqid == null ?
-            InkWell(
+            cont.homeActiveTripModel.value.active_driver_module == "TAXI"  ?  InkWell(
                         onTap: () {
                           _showBreakDownDialog();
                         },
@@ -242,7 +242,7 @@ class _TripApprovedWidgetState extends State<TripApprovedWidget> {
                           padding: EdgeInsets.all(5),
                           child: Image.asset(AppImage.breakDown),
                         ),
-                      )
+                      ) : SizedBox()
                     // ? SizedBox()
                     : SizedBox()
                 : SizedBox():SizedBox(),
