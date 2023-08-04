@@ -316,6 +316,7 @@ class Service {
     this.car_color,
     this.serviceModel,
     this.serviceType,
+    this.active_module,
   });
 
   dynamic  id;
@@ -326,6 +327,7 @@ class Service {
   String? car_camp_name;
   String? car_color;
   String? serviceModel;
+  String? active_module;
   ServiceType? serviceType;
 
 
@@ -337,6 +339,7 @@ class Service {
         serviceNumber: json["service_number"],
     car_color: json["car_color"],
     car_camp_name: json["car_camp_name"],
+    active_module: json["active_module"],
         serviceModel: json["service_model"],
         serviceType: json["service_type"] == null? null:ServiceType.fromJson(json["service_type"]),
       );
@@ -347,6 +350,7 @@ class Service {
         "service_type_id": serviceTypeId,
         "status": status,
         "service_number": serviceNumber,
+        "active_module": active_module,
         "car_camp_name": car_camp_name,
         "car_color": car_color,
         "service_model": serviceModel,

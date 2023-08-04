@@ -1406,7 +1406,7 @@ class UserController extends BaseController {
 
             !isTaxi ? serviceTypeList1.addAll(deliveryservice) :
             serviceTypeList1.addAll(texiservice);
-            print("jhdsjsnd===>${serviceTypeList1.value.first.name}");
+            // print("jhdsjsnd===>${serviceTypeList1.value.first.name}");
           },
           onError: (ErrorType errorType, String? msg) {
             showError(msg: msg);

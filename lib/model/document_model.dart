@@ -27,18 +27,21 @@ class Document {
     this.type,
     this.imagePath,
     this.providerDocuments,
+    this.doc_module,
   });
 
   int? id;
   String? name;
   String? type;
   String? imagePath;
+  String? doc_module;
   Providerdocuments? providerDocuments;
 
   factory Document.fromJson(Map<String, dynamic> json) => Document(
     id: json["id"],
     name: json["name"],
     type: json["type"],
+    doc_module: json["doc_module"],
     imagePath: json["image_path"],
     providerDocuments: json["providerdocuments"] == null?null:Providerdocuments.fromJson(json["providerdocuments"]),
   );
@@ -47,6 +50,7 @@ class Document {
     "id": id,
     "name": name,
     "type": type,
+    "doc_module": doc_module,
     "image_path": imagePath,
     "providerdocuments": providerDocuments?.toJson(),
   };

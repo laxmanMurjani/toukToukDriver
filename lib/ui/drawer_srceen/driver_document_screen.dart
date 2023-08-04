@@ -43,6 +43,11 @@ class _DriverDocumentScreenState extends State<DriverDocumentScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+
+    print("skjsak==>${_userController.userData.value.service!.active_module}");
+
+
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     return WillPopScope(
       onWillPop: () {
@@ -245,7 +250,8 @@ class _DriverDocumentScreenState extends State<DriverDocumentScreen> {
                     onTap: () {
                       Get.to(()=>DriverDocumentChangeScreen(document: document),preventDuplicates:false);
                     },
-                    child: Container(
+                    child: cont.documentList[index].doc_module != _userController.userData.value.service!.active_module
+                        ? SizedBox():  Container(
                       margin:
                           EdgeInsets.symmetric(vertical: 7.h, horizontal: 15.w),
                       padding: EdgeInsets.symmetric(horizontal: 15.w),
@@ -264,11 +270,21 @@ class _DriverDocumentScreenState extends State<DriverDocumentScreen> {
                           Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 0, vertical: 10),
-                            child: Text("${document.name ?? ""}",
-                                style: TextStyle(
-                                    fontSize: 17,
-                                    color: AppColors.primaryColor,
-                                    fontWeight: FontWeight.bold)),
+                            child:  Column(
+                              children: [
+                                Text("${document.name!.split("-").first ?? ""}",
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        color: AppColors.primaryColor,
+                                        fontWeight: FontWeight.bold)),
+                                SizedBox(height: 3,),
+                                Text("${document.name!.split("-").last ?? ""}",
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        color: AppColors.primaryColor,
+                                        fontWeight: FontWeight.bold)),
+                              ],
+                            ),
                           ),
                           Icon(
                             Icons.arrow_forward_ios,

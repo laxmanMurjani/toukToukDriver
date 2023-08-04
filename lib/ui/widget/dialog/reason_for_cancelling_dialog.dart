@@ -132,13 +132,20 @@ class _ReasonForCancellingState extends State<ReasonForCancelling> {
                   Expanded(
                     child: InkWell(
                       onTap: () async {
-                        String? msg = await cont.cancelRequest(
-                            reason: _selectedReason, cancelId: widget.cancelId.toString());
-                        if (msg != null) {
-                          Get.back();
-                          if (widget.cancelId == null)
-                            _baseController.showSnack(msg: msg);
+
+                        String? msg;
+                        if(_selectedReason != null){
+                          msg  = await cont.cancelRequest(reason: _selectedReason, cancelId: widget.cancelId);
+                          if (msg != null) {
+                            Get.back();
+                            if (widget.cancelId == null)
+                              _baseController.showSnack(msg: msg);
+                          }
+                         } else {
+                          _baseController.showError(msg: "Please select any one valid reason");
                         }
+
+
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 10.h),

@@ -149,7 +149,7 @@ class HomeController extends BaseController {
 
 
         if(userCurrentLocation != null){
-          print("checkin location ==> ${event.latitude} ${event.longitude}");
+          // print("checkin location ==> ${event.latitude} ${event.longitude}");
           if (userCurrentLocation?.longitude == 0 &&
               userCurrentLocation?.latitude == 0) {
             showMarker(
@@ -171,7 +171,7 @@ class HomeController extends BaseController {
       }
 
     homeActiveTripModel.listen((HomeActiveTripModel p0) {
-      print("object  ==>  ${p0.accountStatus}");
+      // print("object  ==>  ${p0.accountStatus}");
       if (p0.accountStatus == "document") {
         Get.to(() => SignUpDriverDocumentScreen(isForceFullyAdd: true));
         // Get.to(() => DriverDocumentScreen(isForceFullyAdd: true));
@@ -195,7 +195,7 @@ class HomeController extends BaseController {
         //   responseUserModuleType.value = UserModuleType.BOTH;
         // }
         if (requestElement.request?.status == CheckStatus.SEARCHING) {
-          print("checkRequest1111");
+          // print("checkRequest1111");
           if (providerUiSelectionType.value !=
               ProviderUiSelectionType.searchingRequest) {
             timeLeftToRespond.value = requestElement.timeLeftToRespond ?? 60;
@@ -457,8 +457,7 @@ class HomeController extends BaseController {
             _userController.serviceTypeList1.clear();
             _userController.taxiServiceType = null;
             _userController.deliveryServiceType = null;
-            ServiceTypeModel serviceTypeModel =
-            serviceTypeModelFromJson(jsonEncode(data["response"]));
+            ServiceTypeModel serviceTypeModel = serviceTypeModelFromJson(jsonEncode(data["response"]));
             //serviceTypeList.addAll(serviceTypeModel.serviceTypes);
             var deliveryservice = serviceTypeModel.serviceTypes
                 .where((o) => o.moduletype == "DELIVERY")
@@ -466,8 +465,8 @@ class HomeController extends BaseController {
             var texiservice = serviceTypeModel.serviceTypes
                 .where((o) => o.moduletype == "TAXI")
                 .toList();
-            print("deliveryserviceList     $deliveryservice");
-            print("texiserviceList     $texiservice");
+            // print("deliveryserviceList     $deliveryservice");
+            // print("texiserviceList     $texiservice");
             if(homeActiveTripModel.value.active_driver_module == "TAXI"){
               _userController.serviceTypeList1.addAll(texiservice);
             } else{

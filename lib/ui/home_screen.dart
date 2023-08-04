@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen>
 
 
         if(_homeController.userCurrentLocation != null){
-          print("checkin location");
+          // print("checkin location");
           if (_homeController.userCurrentLocation?.longitude == 0 &&
               _homeController.userCurrentLocation?.latitude == 0) {
             _homeController.showMarker(
@@ -123,15 +123,15 @@ class _HomeScreenState extends State<HomeScreen>
               0) {
             await _homeController.getTrip();
           } else {
-            print("ghare ja");
+            // print("ghare ja");
           }
         }
 
         if (_homeController.homeActiveTripModel.value.provider_id != null) {
           if (_homeController.homeActiveTripModel.value.breakdown_count_check !=
               0) {
-            print("checkREsss");
-            print("checkRE");
+            // print("checkREsss");
+            // print("checkRE");
             _homeController.breakDownSendNewRide();
           }
         }
@@ -140,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen>
       Future.delayed(
         Duration(seconds: 7),
         () async {
-          print("deleyed");
+          // print("deleyed");
           await _homeController.getTrip();
         },
       );
@@ -1069,7 +1069,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     scrollDirection: Axis.horizontal,
                                     itemCount: userCont.serviceTypeList1.length,
                                     itemBuilder: (context, index) {
-                                      print("dksjd===>${userCont.serviceTypeList1.length}");
+                                      // print("dksjd===>${userCont.serviceTypeList1.length}");
                                       return allServiceTypeWidget(userCont,index,cont);
                                     },
                                   ),
