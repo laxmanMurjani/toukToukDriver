@@ -106,10 +106,10 @@
             </intent-filter>
         </service>
 
-<!--        <service-->
-<!--            android:name=".FloatingWidgetService"-->
-<!--            android:enabled="true"-->
-<!--            android:exported="false"/>-->
+        <service
+            android:name=".FloatingAppService"
+            android:enabled="true"
+            android:exported="false"/>
 
         <meta-data
             android:name="flutterEmbedding"

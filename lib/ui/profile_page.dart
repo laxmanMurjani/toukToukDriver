@@ -52,6 +52,52 @@ class _ProfilePageState extends State<ProfilePage> {
   //final HomeController _homeController = Get.find();
   // late Razorpay _razorpay;
 
+  static const platform = const MethodChannel('com.example.my_flutter_app/native');
+  String message = 'Press the button to get a message from Java!';
+
+  Future<void> _getNativeMessage() async {
+    try {
+      final String result = await platform.invokeMethod('sayHello');
+      setState(() {
+        message = result;
+      });
+    } on PlatformException catch (e) {
+      setState(() {
+        message = "Failed to get message: ${e.message}";
+      });
+    }
+  }
+
+  Future<void> _getNativeMessage2() async {
+
+      try {
+        final String result2 = await platform.invokeMethod('second');
+        setState(() {
+          message = result2;
+        });
+      } on PlatformException catch (e) {
+        setState(() {
+          message = "Failed to get message: ${e.message}";
+        });
+
+    }
+
+  }
+
+  Future<void> closeNativeMessage3() async {
+    try {
+      final String result3 = await platform.invokeMethod('closeMethod');
+      setState(() {
+        message = result3;
+
+      });
+    } on PlatformException catch (e) {
+      setState(() {
+        message = "Failed to get message: ${e.message}";
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -493,51 +539,51 @@ class _ProfilePageState extends State<ProfilePage> {
                           ],
                         ),
                       ),
-                   //    SizedBox(
-                   //      height:Platform.isAndroid ? 15 : 0,
-                   //    ),
-                   //
-                   // Platform.isAndroid ?   InkWell(
-                   //      onTap: () {
-                   //        homeCont.isCloseOverlay.value = true;
-                   //        FlutterOverlayWindow.closeOverlay()
-                   //            .then((value) => log('STOPPED: alue: $value'));
-                   //        // _showLogoutDialog();
-                   //      },
-                   //      child: Row(
-                   //        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                   //        children: [
-                   //          Text(
-                   //            'Overlay'.tr,
-                   //            style: TextStyle(
-                   //                fontSize: 14,
-                   //                color: AppColors.primaryColor),
-                   //          ),
-                   //          Switch(
-                   //            value: homeCont.isOverlayOn.value,
-                   //            activeColor: AppColors.primaryColor,
-                   //
-                   //            onChanged: (value) {
-                   //              homeCont.isOverlayOn.value = value;
-                   //              Future.delayed(Duration.zero,() async{
-                   //                final prefs = await SharedPreferences.getInstance();
-                   //                homeCont.isOverlayPermissionCheck.value = await FlutterOverlayWindow.isPermissionGranted();
-                   //                if(!homeCont.isOverlayPermissionCheck.value){
-                   //                  await FlutterOverlayWindow.requestPermission();
-                   //                }
-                   //
-                   //              },);
-                   //              if(homeCont.isOverlayOn.value){
-                   //                homeCont.isCloseOverlay.value = false;
-                   //
-                   //              } else {
-                   //                homeCont.isCloseOverlay.value = true;
-                   //              }
-                   //            },
-                   //          ),
-                   //        ],
-                   //      ),
-                   //    ) : SizedBox(),
+                      SizedBox(
+                        height:Platform.isAndroid ? 15 : 0,
+                      ),
+
+                   Platform.isAndroid ?   InkWell(
+                        onTap: () {
+                          homeCont.isCloseOverlay.value = true;
+                          FlutterOverlayWindow.closeOverlay()
+                              .then((value) => log('STOPPED: alue: $value'));
+                          // _showLogoutDialog();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Overlay'.tr,
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: AppColors.primaryColor),
+                            ),
+                            Switch(
+                              value: homeCont.isOverlayOn.value,
+                              activeColor: AppColors.primaryColor,
+
+                              onChanged: (value) {
+                                homeCont.isOverlayOn.value = value;
+
+                                if(homeCont.isOverlayOn.value){
+                                  homeCont.isCloseOverlay.value = false;
+                                  _getNativeMessage();
+                                  print("oskdnks===>${_getNativeMessage.isNull}");
+                                  if(!_getNativeMessage.isNull){
+                                 _getNativeMessage2();
+                                  }
+
+
+                                } else {
+                                  homeCont.isCloseOverlay.value = true;
+                                  // closeNativeMessage3();
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                      ) : SizedBox(),
 
                       SizedBox(
                         height: 15,
