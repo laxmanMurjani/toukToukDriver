@@ -445,6 +445,36 @@ class HomeController extends BaseController {
 
   // String ringtoneUrl = 'https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3';
 
+
+  Future<void> updateLocation(String lat, String long) async {
+    try {
+      // showLoader();
+      Map<String, dynamic> params = Map();
+
+      params["latitude"] =lat;
+      params["longitude"] = long;
+      params["driver_id"] = homeActiveTripModel.value.provider_id;
+      print("ajksn===>${lat} === ${long}");
+      await apiService.postRequest(
+        // url: "${ApiUrl.request}?${queryString}",
+        url: "${ApiUrl.updateLocation}",
+        params: params,
+        onSuccess: (Map<String, dynamic> data) {
+          // dismissLoader();
+          // paymentModeModel.value = paymentModeModelFromJson(jsonEncode(data["response"]));
+          print("ssssss.value====>${jsonEncode(data["response"])}");
+        },
+        onError: (ErrorType errorType, String msg) {
+          // showError(msg: msg);
+          print("ssssss.value====>${msg}");
+        },
+      );
+    } catch (e) {
+      // showError(msg: e.toString());
+    }
+
+  }
+
   Future<void> getChangeServiceType() async {
     try {
       // showLoader();

@@ -1,3 +1,6 @@
+// import 'package:flutter_callkit_incoming/entities/entities.dart';
+// import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
@@ -766,7 +769,7 @@ class _HomeScreenState extends State<HomeScreen>
                                 ),
                               ),
                               // InkWell(
-                              //   onTap: () {
+                              //   onTap: () async {
                               //     print("dfd");
                               //     print("ddgfdgd==>${int.parse(AppString.detectAndroidBuildNumber!)}");
                               //     print("ddgfdgd==>${int.parse(AppString.firebaseAndroidBuildNumber!)}");
@@ -774,6 +777,54 @@ class _HomeScreenState extends State<HomeScreen>
                               //     _homeController.stopRingtone();
                               //
                               //
+                              //
+                              //     // this._currentUuid = _uuid.v4();
+                              //     CallKitParams callKitParams = CallKitParams(
+                              //       id: "12",
+                              //       nameCaller: 'Hien Nguyen',
+                              //       appName: 'Callkit',
+                              //       avatar: 'https://i.pravatar.cc/100',
+                              //       handle: '0123456789',
+                              //       type: 0,
+                              //       textAccept: 'Accept',
+                              //       textDecline: 'Decline',
+                              //       missedCallNotification: NotificationParams(
+                              //         showNotification: true,
+                              //         isShowCallback: true,
+                              //         subtitle: 'Missed call',
+                              //         callbackText: 'Call back',
+                              //       ),
+                              //       duration: 30000,
+                              //       extra: <String, dynamic>{'userId': '1a2b3c4d'},
+                              //       headers: <String, dynamic>{'apiKey': 'Abc@123!', 'platform': 'flutter'},
+                              //       android: const AndroidParams(
+                              //           isCustomNotification: true,
+                              //           isShowLogo: false,
+                              //           ringtonePath: 'system_ringtone_default',
+                              //           backgroundColor: '#0955fa',
+                              //           backgroundUrl: 'https://i.pravatar.cc/500',
+                              //           actionColor: '#4CAF50',
+                              //           incomingCallNotificationChannelName: "Incoming Call",
+                              //           missedCallNotificationChannelName: "Missed Call"
+                              //       ),
+                              //       ios: IOSParams(
+                              //         iconName: 'CallKitLogo',
+                              //         handleType: 'generic',
+                              //         supportsVideo: true,
+                              //         maximumCallGroups: 2,
+                              //         maximumCallsPerCallGroup: 1,
+                              //         audioSessionMode: 'default',
+                              //         audioSessionActive: true,
+                              //         audioSessionPreferredSampleRate: 44100.0,
+                              //         audioSessionPreferredIOBufferDuration: 0.005,
+                              //         supportsDTMF: true,
+                              //         supportsHolding: true,
+                              //         supportsGrouping: false,
+                              //         supportsUngrouping: false,
+                              //         ringtonePath: 'system_ringtone_default',
+                              //       ),
+                              //     );
+                              //     await FlutterCallkitIncoming.showCallkitIncoming(callKitParams);
                               //   },
                               //   child: Padding(
                               //     padding:
@@ -1538,6 +1589,7 @@ class _HomeScreenState extends State<HomeScreen>
     }
     if (position != null) {
       LatLng latLng = LatLng(position.latitude, position.longitude);
+      _homeController.updateLocation(position.latitude.toString(), position.longitude.toString());
       _homeController.userCurrentLocation = latLng;
       CameraPosition cameraPosition = CameraPosition(
         target: LatLng(latLng.latitude, latLng.longitude),
@@ -1607,6 +1659,14 @@ class _HomeScreenState extends State<HomeScreen>
         // _homeController.homeActiveTripModel.close();
         break;
       case AppLifecycleState.inactive:
+
+        _getTripTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+          determinePosition();
+        });
+        print("sajhsdjjj===>${_homeController.userCurrentLocation!.latitude.toString()} ${_homeController.userCurrentLocation!.longitude.toString()}");
+        _homeController.updateLocation(_homeController.userCurrentLocation!.latitude.toString(), _homeController.userCurrentLocation!.longitude.toString());
+
+
         // print('statusIsInactive');
         // if(_homeController.isOverlayPermissionCheck.value){
         //   if(!_homeController.isCloseOverlay.value){

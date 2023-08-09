@@ -5,9 +5,8 @@
         <package android:name="com.touktouktaxi.driver" />
     </queries>
 
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <!-- <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/> -->
+     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -15,6 +14,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.hardware.location.gps" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="TASKS"/>
 
     <queries>
         <!-- If your app opens https URLs -->
@@ -104,6 +105,12 @@
                 <action android:name="com.android.gps.services.LocationService" />
             </intent-filter>
         </service>
+
+<!--        <service-->
+<!--            android:name=".FloatingWidgetService"-->
+<!--            android:enabled="true"-->
+<!--            android:exported="false"/>-->
+
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
@@ -120,5 +127,9 @@
             </intent-filter>
             <meta-data android:name="android.accessibilityservice" android:resource="@xml/accessibilityservice" />
         </service>
+        <service
+            android:name=".FloatingWidgetService"
+            android:enabled="true"
+            android:exported="false"/>
     </application>
 </manifest>

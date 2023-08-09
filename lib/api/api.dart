@@ -27,6 +27,7 @@ class ApiUrl {
       //"Jh7SzC3gpIyByyHgJ3liNp24RAfWjzNx2L4EdbKb";
 
   static String deviceType = Platform.isAndroid ? "android" : "ios";
+  static String updateLocation = "$_apiBaseUrl/update-provider-location";
   static String disputeList = "$_apiBaseUrl/dispute-list";
   static String sendOTPProfile = "$_apiBaseUrl/sendotp_profile";
   static String verifyOTPProfile = "$_apiBaseUrl/otp_verified_for_profile_update";
