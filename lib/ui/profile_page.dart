@@ -5,7 +5,6 @@ import 'package:mozlit_driver/preference/preference.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -566,8 +565,6 @@ class _ProfilePageState extends State<ProfilePage> {
                              if(!_getNativeMessage.isNull){
                             _getNativeMessage2();
                              }
-
-
                            } else {
                              homeCont.isCloseOverlay.value = true;
                              closeNativeMessage3();
@@ -678,10 +675,5 @@ class _ProfilePageState extends State<ProfilePage> {
       },
     );
   }
-  checkOverlayPermission()async{
-    bool? permissionStatus;
-    permissionStatus = await FlutterOverlayWindow.isPermissionGranted();
-    permissionStatus = await FlutterOverlayWindow.isActive();
-    print("objecsssst===>$permissionStatus");
-  }
+
 }

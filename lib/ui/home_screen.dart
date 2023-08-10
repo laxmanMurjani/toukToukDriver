@@ -14,7 +14,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -112,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen>
 
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      // await FlutterOverlayWindow.requestPermission();
+
 
 
 
@@ -148,17 +147,6 @@ class _HomeScreenState extends State<HomeScreen>
         },
       );
     });
-
-    // FlutterOverlayWindow.overlayListener.listen((event) {
-    //   log("Current Event: $event");
-    // });
-    //
-
-
-    // BackgroundLocation.startLocationService(forceAndroidLocationManager: true);
-
-        // _userController.updateUserModuleType(
-        //             userModuleType: UserModuleType.TAXI);
   }
 
 
@@ -1652,11 +1640,7 @@ class _HomeScreenState extends State<HomeScreen>
           _homeController.googleMapController?.setMapStyle("[]");
         }
         print("gdshghsgdhsgd");
-        // if(_homeController.isOverlayPermissionCheck.value){
-        //   await FlutterOverlayWindow.closeOverlay();
-        // }
 
-        // _homeController.homeActiveTripModel.close();
         break;
       case AppLifecycleState.inactive:
 
@@ -1665,29 +1649,8 @@ class _HomeScreenState extends State<HomeScreen>
         });
         print("sajhsdjjj===>${_homeController.userCurrentLocation!.latitude.toString()} ${_homeController.userCurrentLocation!.longitude.toString()}");
         _homeController.updateLocation(_homeController.userCurrentLocation!.latitude.toString(), _homeController.userCurrentLocation!.longitude.toString());
-
-
-        // print('statusIsInactive');
-        // if(_homeController.isOverlayPermissionCheck.value){
-        //   if(!_homeController.isCloseOverlay.value){
-        //     if (await FlutterOverlayWindow.isActive()) return;
-        //     await FlutterOverlayWindow.showOverlay(
-        //       enableDrag: true,
-        //       overlayTitle: "Touk Touk Driver",
-        //       overlayContent: 'Background Mode',
-        //       flag: OverlayFlag.defaultFlag,
-        //       visibility: NotificationVisibility.visibilityPublic,
-        //       positionGravity: PositionGravity.auto,
-        //       height: 200,
-        //       width: WindowSize.matchParent,
-        //     );
-        //   }
-        // }
-
         break;
       case AppLifecycleState.paused:
-        // print("state s paused");
-        // print("dsdjhjhsssss00===>${_homeController.isOverlay.value}");
         break;
       case AppLifecycleState.detached:
         break;

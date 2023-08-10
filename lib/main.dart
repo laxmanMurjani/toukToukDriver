@@ -18,7 +18,6 @@ import 'package:mozlit_driver/api/api_service.dart';
 import 'package:mozlit_driver/controller/home_controller.dart';
 import 'package:mozlit_driver/controller/user_controller.dart';
 import 'package:mozlit_driver/enum/error_type.dart';
-import 'package:mozlit_driver/overlays/messanger_chathead.dart';
 import 'package:mozlit_driver/ui/splash_screen.dart';
 import 'package:mozlit_driver/util/app_constant.dart';
 import 'package:mozlit_driver/util/firebase_service.dart';
@@ -178,19 +177,6 @@ Future<void> main() async {
   //     });
 
   runApp(MyApp());
-}
-
-@pragma("vm:entry-point")
-void overlayMain() {
-  WidgetsFlutterBinding.ensureInitialized();
-  final HomeController _homeController = Get.put(HomeController());
-  final UserController _userController = Get.put(UserController());
-  runApp(
-    const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MessangerChatHead(),
-    ),
-  );
 }
 
 class MyApp extends StatefulWidget {
