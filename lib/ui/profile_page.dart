@@ -543,47 +543,39 @@ class _ProfilePageState extends State<ProfilePage> {
                         height:Platform.isAndroid ? 15 : 0,
                       ),
 
-                   Platform.isAndroid ?   InkWell(
-                        onTap: () {
-                          homeCont.isCloseOverlay.value = true;
-                          FlutterOverlayWindow.closeOverlay()
-                              .then((value) => log('STOPPED: alue: $value'));
-                          // _showLogoutDialog();
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Overlay'.tr,
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: AppColors.primaryColor),
-                            ),
-                            Switch(
-                              value: homeCont.isOverlayOn.value,
-                              activeColor: AppColors.primaryColor,
+                   Platform.isAndroid ?   Row(
+                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                     children: [
+                       Text(
+                         'Overlay'.tr,
+                         style: TextStyle(
+                             fontSize: 14,
+                             color: AppColors.primaryColor),
+                       ),
+                       Switch(
+                         value: homeCont.isOverlayOn.value,
+                         activeColor: AppColors.primaryColor,
 
-                              onChanged: (value) {
-                                homeCont.isOverlayOn.value = value;
+                         onChanged: (value) {
+                           homeCont.isOverlayOn.value = value;
 
-                                if(homeCont.isOverlayOn.value){
-                                  homeCont.isCloseOverlay.value = false;
-                                  _getNativeMessage();
-                                  print("oskdnks===>${_getNativeMessage.isNull}");
-                                  if(!_getNativeMessage.isNull){
-                                 _getNativeMessage2();
-                                  }
+                           if(homeCont.isOverlayOn.value){
+                             homeCont.isCloseOverlay.value = false;
+                              _getNativeMessage();
+                             print("oskdnks===>${_getNativeMessage.isNull}");
+                             if(!_getNativeMessage.isNull){
+                            _getNativeMessage2();
+                             }
 
 
-                                } else {
-                                  homeCont.isCloseOverlay.value = true;
-                                  // closeNativeMessage3();
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                      ) : SizedBox(),
+                           } else {
+                             homeCont.isCloseOverlay.value = true;
+                             closeNativeMessage3();
+                           }
+                         },
+                       ),
+                     ],
+                   ) : SizedBox(),
 
                       SizedBox(
                         height: 15,

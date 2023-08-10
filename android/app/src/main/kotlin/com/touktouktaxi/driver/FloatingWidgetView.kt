@@ -62,7 +62,7 @@ class FloatingWidgetView : ConstraintLayout, View.OnTouchListener {
 
 
                     val pm = context.packageManager
-                    val appStartIntent = pm.getLaunchIntentForPackage("com.test.floatdemo.floating_demo")
+                    val appStartIntent = pm.getLaunchIntentForPackage("com.touktouktaxi.driver")
                     if (null != appStartIntent) {
                         context.startActivity(appStartIntent)
                     }

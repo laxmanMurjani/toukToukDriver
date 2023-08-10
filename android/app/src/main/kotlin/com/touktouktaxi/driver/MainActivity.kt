@@ -28,12 +28,12 @@ class MainActivity: FlutterActivity() {
                             this@MainActivity
                         )
                     ) {
-                        startService(Intent(this@MainActivity, FloatingAppService::class.java))
+                        startService(Intent(this@MainActivity, FloatingWidgetService::class.java))
                     } else {
                         errorToast()
                     }
                 } else if (call.method.equals("closeMethod")) {
-                    stopService(Intent(this@MainActivity, FloatingAppService::class.java))
+                    stopService(Intent(this@MainActivity, FloatingWidgetService::class.java))
                 } else {
                     result.notImplemented()
                 }

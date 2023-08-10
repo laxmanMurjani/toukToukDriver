@@ -4,15 +4,35 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/floatingIcon"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:src="@mipmap/ic_launcher"
-        android:scaleType="centerCrop"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardhead"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:cardCornerRadius="100dp"
+        app:cardBackgroundColor="#000"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+        <ImageView
+            android:id="@+id/floatingIcon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="centerCrop"/>
+
+    </androidx.cardview.widget.CardView>
+
+<!--    <ImageView-->
+<!--        android:id="@+id/floatingIcon"-->
+<!--        android:layout_width="64dp"-->
+<!--        android:layout_height="64dp"-->
+<!--        android:src="@mipmap/ic_launcher"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"/>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
