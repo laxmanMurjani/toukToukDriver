@@ -8,6 +8,7 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 // import 'package:audioplayers/audioplayers.dart';
 import 'package:dio/dio.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_place/google_place.dart';
 import 'package:location/location.dart' as location;
@@ -22,12 +23,14 @@ import 'package:mozlit_driver/model/service_type_model.dart';
 import 'package:mozlit_driver/model/summery_model.dart';
 import 'package:mozlit_driver/model/trip_history_details_model.dart';
 import 'package:mozlit_driver/model/trip_history_model.dart';
+import 'package:mozlit_driver/preference/preference.dart';
 import 'package:mozlit_driver/ui/drawer_srceen/driver_document_screen.dart';
 import 'package:mozlit_driver/ui/drawer_srceen/signup_driver_document_screen.dart';
 import 'package:mozlit_driver/ui/splash_screen.dart';
 import 'package:mozlit_driver/ui/widget/dialog/instant_ride_confirm_dialog.dart';
 import 'package:mozlit_driver/ui/widget/dialog/ride_update_dialog.dart';
 import 'package:mozlit_driver/ui/widget/home_widget/trip_approved_widget.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vector_math/vector_math.dart' as vectorMath;
 
@@ -124,52 +127,29 @@ class HomeController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    // getTrip();
-    // BackgroundLocation.getLocationUpdates((location) {
-    //   print("location  ==>  $location");
-    // });
-    // _location.changeSettings(distanceFilter: 10);
-    // _location.onLocationChanged.listen((event) {
-    //   if (userCurrentLocation?.longitude == 0 &&
-    //       userCurrentLocation?.latitude == 0) {
-    //     showMarker(
-    //         latLng: LatLng(event.latitude ?? 0, event.longitude ?? 0),
-    //         oldLatLng: LatLng(event.latitude ?? 0, event.longitude ?? 0));
-    //   } else {
-    //     showMarker(
-    //         latLng: LatLng(event.latitude ?? 0, event.longitude ?? 0),
-    //         oldLatLng: userCurrentLocation ?? LatLng(0, 0));
-    //   }
-    //   userCurrentLocation = LatLng(event.latitude ?? 0, event.longitude ?? 0);
-    // });
-
-
-      _location.changeSettings(distanceFilter: 10);
-      _location.onLocationChanged.listen((event) {
-
-
-        if(userCurrentLocation != null){
-          // print("checkin location ==> ${event.latitude} ${event.longitude}");
-          if (userCurrentLocation?.longitude == 0 &&
-              userCurrentLocation?.latitude == 0) {
-            showMarker(
-                latLng: LatLng(event.latitude ?? 0, event.longitude ?? 0),
-                oldLatLng: LatLng(event.latitude ?? 0, event.longitude ?? 0));
-          } else {
-            showMarker(
-                latLng: LatLng(event.latitude ?? 0, event.longitude ?? 0),
-                oldLatLng: userCurrentLocation ?? LatLng(0, 0));
-          }
-          userCurrentLocation = LatLng(event.latitude ?? 0, event.longitude ?? 0);
-        }
-
-      });
-
-      showOverlayRequestUpdate(Function update){
-        showOverlyRequest = true;
-        update.call();
-      }
-
+    // Get.dialog(
+    //     Column(
+    //   mainAxisSize: MainAxisSize.min,
+    //   children: [
+    //     Text(
+    //       "Touk Touk Driver would like to collect location data to enable your current location to provide you the service for taxi booking and navigation even when the app is closed or not in use.",
+    //       style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+    //     ),
+    //     SizedBox(height: 12,),
+    //     TextButton(
+    //         onPressed: () {
+    //           Database.setSeenLocationAlertDialog();
+    //           Get.back();
+    //         },
+    //         child: Text(
+    //           "Ok",
+    //           style: TextStyle(
+    //               color: AppColors.primaryColor,
+    //               fontSize: 17,
+    //               fontWeight: FontWeight.w600),
+    //         ))
+    //   ],
+    // ),barrierDismissible: false,);
     homeActiveTripModel.listen((HomeActiveTripModel p0) {
       // print("object  ==>  ${p0.accountStatus}");
       if (p0.accountStatus == "document") {
@@ -209,16 +189,16 @@ class HomeController extends BaseController {
           stopRingtone();
           //FlutterRingtonePlayer.stop();
           if (providerUiSelectionType.value !=
-                  ProviderUiSelectionType.startedRequest &&
+              ProviderUiSelectionType.startedRequest &&
               googleMapController != null) {
             providerDrawPolyLine(
               s_lat: double.tryParse(p0.providerDetails?.latitude ?? "0") ?? 0,
               s_lng: double.tryParse(p0.providerDetails?.longitude ?? "0") ?? 0,
               d_lat: double.tryParse(
-                      requestElement.request?.sLatitude.toString() ?? "0") ??
+                  requestElement.request?.sLatitude.toString() ?? "0") ??
                   0,
               d_lng: double.tryParse(
-                      requestElement.request?.sLongitude.toString() ?? "0") ??
+                  requestElement.request?.sLongitude.toString() ?? "0") ??
                   0,
             );
             providerUiSelectionType.value =
@@ -228,25 +208,25 @@ class HomeController extends BaseController {
           homeAddress.value = requestElement.request?.sAddress ?? "";
           googleMapLatLng = LatLng(
               double.tryParse(
-                      requestElement.request?.sLatitude.toString() ?? "0") ??
+                  requestElement.request?.sLatitude.toString() ?? "0") ??
                   0,
               double.tryParse(
-                      requestElement.request?.sLongitude.toString() ?? "0") ??
+                  requestElement.request?.sLongitude.toString() ?? "0") ??
                   0);
         }
         if (requestElement.request?.status == CheckStatus.ACCEPTED) {
           print('bam');
           if (providerUiSelectionType.value !=
-                  ProviderUiSelectionType.acceptedRequest &&
+              ProviderUiSelectionType.acceptedRequest &&
               googleMapController != null) {
             providerDrawPolyLine(
               s_lat: double.tryParse(p0.providerDetails?.latitude ?? "0") ?? 0,
               s_lng: double.tryParse(p0.providerDetails?.longitude ?? "0") ?? 0,
               d_lat: double.tryParse(
-                      requestElement.request?.sLatitude.toString() ?? "0") ??
+                  requestElement.request?.sLatitude.toString() ?? "0") ??
                   0,
               d_lng: double.tryParse(
-                      requestElement.request?.sLongitude.toString() ?? "0") ??
+                  requestElement.request?.sLongitude.toString() ?? "0") ??
                   0,
             );
             providerUiSelectionType.value =
@@ -256,24 +236,24 @@ class HomeController extends BaseController {
           homeAddress.value = requestElement.request?.sAddress ?? "";
           googleMapLatLng = LatLng(
               double.tryParse(
-                      requestElement.request?.sLatitude.toString() ?? "0") ??
+                  requestElement.request?.sLatitude.toString() ?? "0") ??
                   0,
               double.tryParse(
-                      requestElement.request?.sLongitude.toString() ?? "0") ??
+                  requestElement.request?.sLongitude.toString() ?? "0") ??
                   0);
         }
         if (requestElement.request?.status == CheckStatus.ARRIVED) {
           if (providerUiSelectionType.value !=
-                  ProviderUiSelectionType.arrivedRequest &&
+              ProviderUiSelectionType.arrivedRequest &&
               googleMapController != null) {
             providerDrawPolyLine(
               s_lat: double.tryParse(p0.providerDetails?.latitude ?? "0") ?? 0,
               s_lng: double.tryParse(p0.providerDetails?.longitude ?? "0") ?? 0,
               d_lat: double.tryParse(
-                      requestElement.request?.sLatitude.toString() ?? "0") ??
+                  requestElement.request?.sLatitude.toString() ?? "0") ??
                   0,
               d_lng: double.tryParse(
-                      requestElement.request?.sLongitude.toString() ?? "0") ??
+                  requestElement.request?.sLongitude.toString() ?? "0") ??
                   0,
             );
             // providerDrawPolyLine(
@@ -292,10 +272,10 @@ class HomeController extends BaseController {
           homeAddress.value = requestElement.request?.sAddress ?? "";
           googleMapLatLng = LatLng(
               double.tryParse(
-                      requestElement.request?.sLatitude.toString() ?? "0") ??
+                  requestElement.request?.sLatitude.toString() ?? "0") ??
                   0,
               double.tryParse(
-                      requestElement.request?.sLongitude.toString() ?? "0") ??
+                  requestElement.request?.sLongitude.toString() ?? "0") ??
                   0);
         }
         if (requestElement.request?.status == CheckStatus.PICKEDUP) {
@@ -314,7 +294,7 @@ class HomeController extends BaseController {
                         multiDestination.longitude ?? 0);
                     if (i != 0) {
                       MultiDestination sourceDestination =
-                          p0.multiDestination[i - 1];
+                      p0.multiDestination[i - 1];
                       providerDrawPolyLine(
                         s_lat: sourceDestination.latitude,
                         s_lng: sourceDestination.longitude,
@@ -335,7 +315,7 @@ class HomeController extends BaseController {
                   } else {
                     if (_rideCurrentDestinationLatLng != null) {
                       if (_rideCurrentDestinationLatLng?.latitude !=
-                              multiDestination.latitude ||
+                          multiDestination.latitude ||
                           _rideCurrentDestinationLatLng?.longitude !=
                               multiDestination.longitude) {
                         _rideCurrentDestinationLatLng = LatLng(
@@ -347,7 +327,7 @@ class HomeController extends BaseController {
                             barrierDismissible: false);
                         if (i != 0) {
                           MultiDestination sourceDestination =
-                              p0.multiDestination[i - 1];
+                          p0.multiDestination[i - 1];
                           providerDrawPolyLine(
                             s_lat: sourceDestination.latitude,
                             s_lng: sourceDestination.longitude,
@@ -441,7 +421,10 @@ class HomeController extends BaseController {
         providerUiSelectionType.value = ProviderUiSelectionType.none;
       }
     });
+    // checkPermissionStatus();
   }
+
+
 
   // String ringtoneUrl = 'https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3';
 

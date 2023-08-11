@@ -69,7 +69,7 @@ class FloatingWidgetView : ConstraintLayout, View.OnTouchListener {
 
 
 
-                    Toast.makeText(context, "clicked floating widget", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(context, "clicked floating widget", Toast.LENGTH_SHORT).show()
                 }
             }
             MotionEvent.ACTION_MOVE -> {

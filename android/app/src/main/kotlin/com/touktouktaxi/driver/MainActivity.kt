@@ -30,7 +30,7 @@ class MainActivity: FlutterActivity() {
                     ) {
                         startService(Intent(this@MainActivity, FloatingWidgetService::class.java))
                     } else {
-                        errorToast()
+//                        errorToast()
                     }
                 } else if (call.method.equals("closeMethod")) {
                     stopService(Intent(this@MainActivity, FloatingWidgetService::class.java))
@@ -69,7 +69,7 @@ class MainActivity: FlutterActivity() {
         ) {
             startService(Intent(this@MainActivity, FloatingWidgetService::class.java))
         } else {
-            errorToast()
+//            errorToast()
         }
     }
 
@@ -79,7 +79,7 @@ class MainActivity: FlutterActivity() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (!android.provider.Settings.canDrawOverlays(this)) {
                     //Permission is not available. Display error text.
-                    errorToast()
+//                    errorToast()
                     finish()
                 }
             }

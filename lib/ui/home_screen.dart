@@ -78,9 +78,13 @@ class _HomeScreenState extends State<HomeScreen>
   location.Location _location = location.Location.instance;
   String? _mapStyle;
 
+
+
   @override
   void initState() {
 
+    _location.enableBackgroundMode(enable: true);
+    print("jsdhjshd====>${_location.isBackgroundModeEnabled()}");
     rootBundle.loadString('assets/map_style.txt').then((string) {
       _mapStyle = string;
     });
@@ -111,10 +115,6 @@ class _HomeScreenState extends State<HomeScreen>
 
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-
-
-
-
 
       _getTripTimer = Timer.periodic(Duration(seconds: 3), (timer) async {
 
@@ -1647,8 +1647,7 @@ class _HomeScreenState extends State<HomeScreen>
         _getTripTimer = Timer.periodic(Duration(seconds: 1), (timer) {
           determinePosition();
         });
-        print("sajhsdjjj===>${_homeController.userCurrentLocation!.latitude.toString()} ${_homeController.userCurrentLocation!.longitude.toString()}");
-        _homeController.updateLocation(_homeController.userCurrentLocation!.latitude.toString(), _homeController.userCurrentLocation!.longitude.toString());
+              // _homeController.updateLocation(_homeController.userCurrentLocation!.latitude.toString(), _homeController.userCurrentLocation!.longitude.toString());
         break;
       case AppLifecycleState.paused:
         break;
