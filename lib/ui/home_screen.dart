@@ -113,6 +113,7 @@ class _HomeScreenState extends State<HomeScreen>
 
       });
 
+      _homeController.callListenerEvent();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
 

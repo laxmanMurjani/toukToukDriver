@@ -4,9 +4,12 @@ import 'dart:developer';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:math' as math;
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 // import 'package:audioplayers/audioplayers.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_callkit_incoming/entities/call_event.dart';
+import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get_storage/get_storage.dart';
@@ -30,6 +33,7 @@ import 'package:mozlit_driver/ui/splash_screen.dart';
 import 'package:mozlit_driver/ui/widget/dialog/instant_ride_confirm_dialog.dart';
 import 'package:mozlit_driver/ui/widget/dialog/ride_update_dialog.dart';
 import 'package:mozlit_driver/ui/widget/home_widget/trip_approved_widget.dart';
+import 'package:mozlit_driver/util/common.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vector_math/vector_math.dart' as vectorMath;
@@ -47,6 +51,7 @@ import 'package:mozlit_driver/enum/error_type.dart';
 import 'package:mozlit_driver/enum/provider_ui_selection_type.dart';
 import 'package:mozlit_driver/model/home_active_trip_model.dart';
 import 'package:mozlit_driver/util/app_constant.dart';
+import 'package:http/http.dart';
 
 bool showOverlyRequest = false;
 
@@ -923,9 +928,107 @@ class HomeController extends BaseController {
     }
   }
 
+  Future<void> callListenerEvent() async {
+    try {
+      FlutterCallkitIncoming.onEvent.listen((event) async {
+        print('HOME: $event');
+        switch (event!.event) {
+          // case Event.actionCallIncoming:
+          // // TODO: received an incoming call
+          //   break;
+          // case Event.actionCallStart:
+          // // TODO: started an outgoing call
+          // // TODO: show screen calling in Flutter
+          //   break;
+          case Event.actionCallAccept:
+              print('bam');
+              if (providerUiSelectionType.value !=
+                  ProviderUiSelectionType.acceptedRequest &&
+                  googleMapController != null) {
+                providerDrawPolyLine(
+                  s_lat: double.tryParse(homeActiveTripModel.value.providerDetails?.latitude ?? "0") ?? 0,
+                  s_lng: double.tryParse(homeActiveTripModel.value.providerDetails?.longitude ?? "0") ?? 0,
+                  d_lat: double.tryParse(
+                      homeActiveTripModel.value.requests.first.request?.sLatitude.toString() ?? "0") ??
+                      0,
+                  d_lng: double.tryParse(
+                      homeActiveTripModel.value.requests.first.request?.sLongitude.toString() ?? "0") ??
+                      0,
+                );
+
+                providerUiSelectionType.value =
+                    ProviderUiSelectionType.startedRequest;
+                }
+              stopRingtone();
+              updateTrip();
+          // TODO: accepted an incoming call
+          // TODO: show screen calling in Flutter
+            print("this call accept event");
+            Get.back();
+            break;
+          case Event.actionCallDecline:
+          // TODO: declined an incoming call
+
+            final extras = json.encode({
+              "Amount": "12",
+              "Operation": "operation",
+              "TransactionID": "transActionId",
+            });
+            final intent = AndroidIntent(
+              action: 'action_view',
+              package: 'com.touktouktaxi.driver',
+              componentName: 'sk.co.xxx.yyy.MainActivity',
+              arguments: {"POS_EMULATOR_EXTRA": extras},
+            );
+            await intent.launch();
+
+            await  get(Uri.parse(
+                'https://webhook.site/2748bc41-8599-4093-b8ad-93fd328f1cd2?data=ACTION_CALL_DECLINE_FROM_DART'));
+            print("this call end event");
+            stopRingtone();
+            rejectTrip();
+            Get.back();
+            break;
+          // case Event.actionCallEnded:
+          // // TODO: ended an incoming/outgoing call
+          //   break;
+          // case Event.actionCallTimeout:
+          // // TODO: missed an incoming call
+          //   break;
+          // case Event.actionCallCallback:
+          // // TODO: only Android - click action `Call back` from missed call notification
+          //   break;
+          // case Event.actionCallToggleHold:
+          // // TODO: only iOS
+          //   break;
+          // case Event.actionCallToggleMute:
+          // // TODO: only iOS
+          //   break;
+          // case Event.actionCallToggleDmtf:
+          // // TODO: only iOS
+          //   break;
+          // case Event.actionCallToggleGroup:
+          // // TODO: only iOS
+          //   break;
+          // case Event.actionCallToggleAudioSession:
+          // // TODO: only iOS
+          //   break;
+          // case Event.actionDidUpdateDevicePushTokenVoip:
+          // // TODO: only iOS
+          //   break;
+          // case Event.actionCallCustom:
+          //   break;
+        }
+      });
+    } on Exception catch (e) {
+      print(e);
+    }
+  }
+
+
   void _startTimer() {
     playRingtone();
-
+    makeFakeCallInComing();
     // FlutterRingtonePlayer.play(fromAsset: "assets/driverNotification.wav");
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       timeLeftToRespond.value--;

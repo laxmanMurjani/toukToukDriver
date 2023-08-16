@@ -28,6 +28,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mozlit_driver/ui/widget/dialog/chooseLang.dart';
 import 'package:mozlit_driver/ui/widget/no_internet_widget.dart';
 import 'package:mozlit_driver/util/app_constant.dart';
+import 'package:mozlit_driver/util/common.dart';
 import 'package:mozlit_driver/util/razor_pay.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -72,59 +73,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
-  Future<void> makeFakeCallInComing() async {
-    await Future.delayed(const Duration(seconds: 10), () async {
-      // _currentUuid = _uuid.v4();
-
-      final params = CallKitParams(
-        id: '12',
-        nameCaller: 'Hien Nguyen',
-        appName: 'Callkit',
-        avatar: 'https://i.pravatar.cc/100',
-        handle: '0123456789',
-        type: 1,
-        duration: 30000,
-        textAccept: 'Accept',
-        textDecline: 'Decline',
-        missedCallNotification: const NotificationParams(
-          showNotification: true,
-          isShowCallback: true,
-          subtitle: 'Missed call',
-          callbackText: 'Call back',
-        ),
-        extra: <String, dynamic>{'userId': '1a2b3c4d'},
-        headers: <String, dynamic>{'apiKey': 'Abc@123!', 'platform': 'flutter'},
-        android: const AndroidParams(
-          isCustomNotification: true,
-          isShowLogo: false,
-          ringtonePath: 'system_ringtone_default',
-          backgroundColor: '#0955fa',
-          backgroundUrl: 'assets/test.png',
-          actionColor: '#4CAF50',
-          incomingCallNotificationChannelName: 'Incoming Call',
-          missedCallNotificationChannelName: 'Missed Call',
-        ),
-        ios: const IOSParams(
-          iconName: 'CallKitLogo',
-          handleType: '',
-          supportsVideo: true,
-          maximumCallGroups: 2,
-          maximumCallsPerCallGroup: 1,
-          audioSessionMode: 'default',
-          audioSessionActive: true,
-          audioSessionPreferredSampleRate: 44100.0,
-          audioSessionPreferredIOBufferDuration: 0.005,
-          supportsDTMF: true,
-          supportsHolding: true,
-          supportsGrouping: false,
-          supportsUngrouping: false,
-          ringtonePath: 'system_ringtone_default',
-        ),
-      );
-      await FlutterCallkitIncoming.showCallkitIncoming(params);
-    });
-  }
-
+  /// overlay stop or run function
   Future<void> _getNativeMessage2() async {
 
       try {
