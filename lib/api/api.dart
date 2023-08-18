@@ -1,20 +1,16 @@
 import 'dart:io';
 
 class ApiUrl {
-  static const String _baseUrl =
-      // 'http://165.22.218.247/public';
-      //'http://165.22.218.247/touk_touktaxi/public';
-      'https://demo.mozilit.com/superAdminLogin/touk_touktaxi/public';
-      //'https://demo.mozilit.com/superAdminLogin/mozilit_official/public';
-      //'https://etoride.etomotors.com';
-  // static const String _baseUrl = 'https://demo.mozilit.com/superAdminLogin/eto_taxi/public';
-  static const String baseImageUrl = _baseUrl+"/";
-  // static const String baseImageUrl = "https://demo.mozilit.com/superAdminLogin/eto_taxi/public/";
-  static const String BASE_URL = _baseUrl;
-  static const String termsCondition = "$BASE_URL/terms";
-  static const String privacyPolicy = "$BASE_URL/terms";
+  static  String? baseUrl;
+      // 'https://demo.mozilit.com/superAdminLogin/touk_touktaxi/public';
 
-  static const String _apiBaseUrl = '$_baseUrl/api/provider';
+  static  String baseImageUrl = baseUrl!+"/";
+  // static const String baseImageUrl = "https://demo.mozilit.com/superAdminLogin/eto_taxi/public/";
+  static  String BASE_URL = baseUrl!;
+  static  String termsCondition = "$BASE_URL/terms";
+  static  String privacyPolicy = "$BASE_URL/terms";
+
+  static  String _apiBaseUrl = '${baseUrl!}/api/provider';
 
   // static const String clientId = "5";
   // static const String clientSecret = "Fg7SAg4540H9dQ0WagKh49Lg9QL1q2JLPowN4bfe";
@@ -68,7 +64,7 @@ class ApiUrl {
   static String summary = "$_apiBaseUrl/statement/range";
   static String help = "$_apiBaseUrl/help";
   static String fareWithOutAuth =
-      "$_baseUrl/api/user/estimated/fare_without_auth";
+      "$baseUrl/api/user/estimated/fare_without_auth";
   static String logout = "$_apiBaseUrl/logout";
   static String settings = "$_apiBaseUrl/settings";
   static String available = "$_apiBaseUrl/profile/available";

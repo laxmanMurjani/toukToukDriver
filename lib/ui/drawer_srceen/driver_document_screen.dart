@@ -48,6 +48,7 @@ class _DriverDocumentScreenState extends State<DriverDocumentScreen> {
     print("skjsak==>${_userController.userData.value.service!.active_module}");
 
 
+
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     return WillPopScope(
       onWillPop: () {
@@ -250,8 +251,10 @@ class _DriverDocumentScreenState extends State<DriverDocumentScreen> {
                     onTap: () {
                       Get.to(()=>DriverDocumentChangeScreen(document: document),preventDuplicates:false);
                     },
-                    child: cont.documentList[index].doc_module != _userController.userData.value.service!.active_module
-                        ? SizedBox():  Container(
+                    child:
+                    // cont.documentList[index].doc_module != _userController.userData.value.service!.active_module
+                    //     ? SizedBox():
+                    Container(
                       margin:
                           EdgeInsets.symmetric(vertical: 7.h, horizontal: 15.w),
                       padding: EdgeInsets.symmetric(horizontal: 15.w),

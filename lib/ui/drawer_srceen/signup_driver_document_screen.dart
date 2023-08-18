@@ -78,8 +78,10 @@ class _SignUpDriverDocumentScreenState extends State<SignUpDriverDocumentScreen>
                 padding: EdgeInsets.only(top: 15.h, bottom: 60.h),
                 itemBuilder: (BuildContext context, int index) {
                   Document document = cont.documentList[index];
-                  return cont.documentList[index].doc_module != _userController.userData.value.service!.active_module
-                      ? SizedBox(): Container(
+                  return
+                    // cont.documentList[index].doc_module != _userController.userData.value.service!.active_module
+                    //   ? SizedBox():
+                    Container(
                     margin:
                         EdgeInsets.symmetric(vertical: 7.h, horizontal: 15.w),
                     width: MediaQuery.of(context).size.width,

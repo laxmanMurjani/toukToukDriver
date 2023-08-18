@@ -142,7 +142,7 @@ class _InviteFriendScreenState extends State<InviteFriendScreen> {
                                 InkWell(
                                   onTap: () {
                                     String s =
-                                        "Hey Checkout this app, Mozilit \nUser - https://play.google.com/store/apps/details?id=com.touktouktaxi.user\nProvider - https://play.google.com/store/apps/details?id=com.touktouktaxi.driver.\nInstall this app with referral code ${cont.userData.value.referralUniqueId ?? ""}";
+                                        "Hey Checkout this app, Touk Touk \nUser - https://play.google.com/store/apps/details?id=com.touktouktaxi.user\nProvider - https://play.google.com/store/apps/details?id=com.touktouktaxi.driver.\nInstall this app with referral code ${cont.userData.value.referralUniqueId ?? ""}";
                                     FlutterShare.share(
                                         title: "choose_one", text: s);
                                   },
@@ -230,7 +230,7 @@ class _InviteFriendScreenState extends State<InviteFriendScreen> {
                               onTap: () {
                                 print("smdh");
                                 String s =
-                                    "Hey Checkout this app, Mozilit - https://play.google.com/store/apps/details?id=com.touktouktaxi.user Provider - https://play.google.com/store/apps/details?id=com.touktouktaxi.driver.\nInstall this app with referral code ${cont.userData.value.referralUniqueId ?? ""}";
+                                    "Hey Checkout this app, Touk Touk - https://play.google.com/store/apps/details?id=com.touktouktaxi.user Provider - https://play.google.com/store/apps/details?id=com.touktouktaxi.driver.\nInstall this app with referral code ${cont.userData.value.referralUniqueId ?? ""}";
 
                                 openWhatsapp(
                                     context: context,
@@ -270,7 +270,7 @@ class _InviteFriendScreenState extends State<InviteFriendScreen> {
                           width: 290,
                           // color: Colors.black45,
                           child: Text(
-                            "get ${cont.userData.value.currency} 100 in your Mozilit wallet for every friend you refer".tr,
+                            "get ${cont.userData.value.currency} 100 in your Touk Touk wallet for every friend you refer".tr,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.black,
