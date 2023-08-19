@@ -145,9 +145,6 @@ class _ProfilePageState extends State<ProfilePage> {
           padding: const EdgeInsets.only(top: 45, left: 30, right: 30),
           child: Column(
             children: [
-              TextButton(onPressed: (){
-                makeFakeCallInComing();
-              }, child: Text('Krunal')),
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(

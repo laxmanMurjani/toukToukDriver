@@ -1028,7 +1028,8 @@ class HomeController extends BaseController {
 
   void _startTimer() {
     playRingtone();
-    makeFakeCallInComing();
+    // makeFakeCallInComing();
+
     // FlutterRingtonePlayer.play(fromAsset: "assets/driverNotification.wav");
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       timeLeftToRespond.value--;
