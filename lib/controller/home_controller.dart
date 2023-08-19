@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:math' as math;
@@ -1028,7 +1029,9 @@ class HomeController extends BaseController {
 
   void _startTimer() {
     playRingtone();
-    // makeFakeCallInComing();
+    if(Platform.isIOS && AppString.testCallIos!){
+      makeFakeCallInComing();
+    }
 
     // FlutterRingtonePlayer.play(fromAsset: "assets/driverNotification.wav");
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
