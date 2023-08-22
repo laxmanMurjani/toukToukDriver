@@ -755,6 +755,7 @@ class HomeController extends BaseController {
         onSuccess: (Map<String, dynamic> data) {
           showSnack(msg: data["response"]["message"]);
           _timer?.cancel();
+          stopRingtone();
           getTrip();
         },
         onError: (ErrorType? errorType, String? msg) {
@@ -970,25 +971,21 @@ class HomeController extends BaseController {
           case Event.actionCallDecline:
           // TODO: declined an incoming call
 
-            final extras = json.encode({
-              "Amount": "12",
-              "Operation": "operation",
-              "TransactionID": "transActionId",
-            });
-            final intent = AndroidIntent(
-              action: 'action_view',
-              package: 'com.touktouktaxi.driver',
-              componentName: 'sk.co.xxx.yyy.MainActivity',
-              arguments: {"POS_EMULATOR_EXTRA": extras},
-            );
-            await intent.launch();
-
-            await  get(Uri.parse(
-                'https://webhook.site/2748bc41-8599-4093-b8ad-93fd328f1cd2?data=ACTION_CALL_DECLINE_FROM_DART'));
-            print("this call end event");
-            stopRingtone();
+            // final extras = json.encode({
+            //   "Amount": "12",
+            //   "Operation": "operation",
+            //   "TransactionID": "transActionId",
+            // });
+            // final intent = AndroidIntent(
+            //   action: 'action_view',
+            //   package: 'com.touktouktaxi.driver',
+            //   componentName: 'sk.co.xxx.yyy.MainActivity',
+            //   arguments: {"POS_EMULATOR_EXTRA": extras},
+            // );
+            // await intent.launch();
+            await FlutterCallkitIncoming.endCall("12");
             rejectTrip();
-            Get.back();
+            // Get.back();
             break;
           // case Event.actionCallEnded:
           // // TODO: ended an incoming/outgoing call
@@ -1029,10 +1026,10 @@ class HomeController extends BaseController {
 
   void _startTimer() {
     playRingtone();
-    if(Platform.isIOS && AppString.testCallIos!){
-      makeFakeCallInComing();
-    }
-
+      makeFakeCallInComing(callerName: "  From: ${homeActiveTripModel.value.requests[0].request!.sAddress}",
+      mobileNumber: "To: ${homeActiveTripModel.value.requests[0].request!.dAddress}",
+        imageUser: "${ApiUrl.baseImageUrl}${homeActiveTripModel.value.requests[0].request!.user!.picture}",
+      );
     // FlutterRingtonePlayer.play(fromAsset: "assets/driverNotification.wav");
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       timeLeftToRespond.value--;

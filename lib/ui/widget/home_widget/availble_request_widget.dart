@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -329,11 +330,12 @@ class _AvailableRequestWidgetState extends State<AvailableRequestWidget> {
                   Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       InkWell(
-                        onTap: () {
+                        onTap: () async {
                           print('request rejected');
                           cont.stopRingtone();
                           // FlutterRingtonePlayer.stop();
                           cont.rejectTrip();
+                          await FlutterCallkitIncoming.endCall("12");
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width * 0.4,
@@ -355,11 +357,13 @@ class _AvailableRequestWidgetState extends State<AvailableRequestWidget> {
                       ),
                       // SizedBox(width: MediaQuery.of(context).size.width * 0.2),
                       InkWell(
-                        onTap: () {
+                        onTap: () async {
                           print('request accepted');
                           cont.stopRingtone();
                           //FlutterRingtonePlayer.stop();
                           cont.updateTrip();
+                          await FlutterCallkitIncoming.endCall("12");
+                          // await FlutterCallkitIncoming.endAllCalls();
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width * 0.4,
