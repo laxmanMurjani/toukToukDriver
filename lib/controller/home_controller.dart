@@ -5,7 +5,6 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:math' as math;
-import 'package:android_intent_plus/android_intent.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 // import 'package:audioplayers/audioplayers.dart';
 import 'package:dio/dio.dart';
@@ -520,6 +519,10 @@ class HomeController extends BaseController {
 
   void stopRingtone() async {
     assetsAudioPlayer.stop();
+    if(Platform.isAndroid){
+      await FlutterCallkitIncoming.endCall("12");
+    }
+
     // await player.stop();
     // Audio.
   }
@@ -983,7 +986,9 @@ class HomeController extends BaseController {
             //   arguments: {"POS_EMULATOR_EXTRA": extras},
             // );
             // await intent.launch();
+          if(Platform.isAndroid){
             await FlutterCallkitIncoming.endCall("12");
+          }
             rejectTrip();
             // Get.back();
             break;
@@ -1026,10 +1031,12 @@ class HomeController extends BaseController {
 
   void _startTimer() {
     playRingtone();
+    if(Platform.isAndroid){
       makeFakeCallInComing(callerName: "  From: ${homeActiveTripModel.value.requests[0].request!.sAddress}",
-      mobileNumber: "To: ${homeActiveTripModel.value.requests[0].request!.dAddress}",
+        mobileNumber: "To: ${homeActiveTripModel.value.requests[0].request!.dAddress}",
         imageUser: "${ApiUrl.baseImageUrl}${homeActiveTripModel.value.requests[0].request!.user!.picture}",
       );
+    }
     // FlutterRingtonePlayer.play(fromAsset: "assets/driverNotification.wav");
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       timeLeftToRespond.value--;

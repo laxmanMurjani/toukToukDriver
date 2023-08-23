@@ -549,37 +549,58 @@ class _ProfilePageState extends State<ProfilePage> {
                         height:Platform.isAndroid ? 15 : 0,
                       ),
 
-                   Platform.isAndroid ?   Row(
-                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                     children: [
-                       Text(
-                         'Overlay'.tr,
-                         style: TextStyle(
-                             fontSize: 14,
-                             color: AppColors.primaryColor),
-                       ),
-                       Switch(
-                         value: homeCont.isOverlayOn.value,
-                         activeColor: AppColors.primaryColor,
+                   // Platform.isAndroid ?   Row(
+                   //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                   //   children: [
+                   //     Text(
+                   //       'Overlay'.tr,
+                   //       style: TextStyle(
+                   //           fontSize: 14,
+                   //           color: AppColors.primaryColor),
+                   //     ),
+                   //     Switch(
+                   //       value: homeCont.isOverlayOn.value,
+                   //       activeColor: AppColors.primaryColor,
+                   //
+                   //       onChanged: (value) {
+                   //         homeCont.isOverlayOn.value = value;
+                   //         if(homeCont.isOverlayOn.value){
+                   //
+                   //         } else {
+                   //           homeCont.isCloseOverlay.value = true;
+                   //           closeNativeMessage3();
+                   //         }
+                   //       },
+                   //     ),
+                   //   ],
+                   // ) : SizedBox(),
 
-                         onChanged: (value) {
-                           homeCont.isOverlayOn.value = value;
-
-                           if(homeCont.isOverlayOn.value){
-                             homeCont.isCloseOverlay.value = false;
-                              _getNativeMessage();
-                             print("oskdnks===>${_getNativeMessage.isNull}");
-                             if(!_getNativeMessage.isNull){
+                      SizedBox(
+                        height: 15,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          homeCont.isCloseOverlay.value = false;
+                          _getNativeMessage();
+                          print("oskdnks===>${_getNativeMessage.isNull}");
+                          if(!_getNativeMessage.isNull){
                             _getNativeMessage2();
-                             }
-                           } else {
-                             homeCont.isCloseOverlay.value = true;
-                             closeNativeMessage3();
-                           }
-                         },
-                       ),
-                     ],
-                   ) : SizedBox(),
+                          }
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Overlay'.tr,
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: AppColors.primaryColor),
+                            ),
+                        Icon(Icons.remove_red_eye)
+                          ],
+                        ),
+                      ),
+
 
                       SizedBox(
                         height: 15,

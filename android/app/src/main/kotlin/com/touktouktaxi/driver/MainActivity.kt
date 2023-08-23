@@ -20,7 +20,7 @@ class MainActivity: FlutterActivity() {
             .setMethodCallHandler { call, result ->
                 if (call.method.equals("sayHello")) {
                     val message = "Hello from Java!"
-                    Toast.makeText(this, "Method Sucess", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Opening setting, please hold on", Toast.LENGTH_SHORT).show()
                     askForSystemOverlayPermission()
                     result.success(message)
                 } else if (call.method.equals("second")) {
