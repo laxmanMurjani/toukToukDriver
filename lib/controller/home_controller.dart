@@ -429,6 +429,12 @@ class HomeController extends BaseController {
     // checkPermissionStatus();
   }
 
+  @override
+  void onClose(){
+    Get.delete<HomeController>();
+    Get.delete<UserController>();
+  }
+
 
 
   // String ringtoneUrl = 'https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3';
@@ -445,7 +451,7 @@ class HomeController extends BaseController {
       print("ajksn===>${lat} === ${long}");
       await apiService.postRequest(
         // url: "${ApiUrl.request}?${queryString}",
-        url: "${ApiUrl.updateLocation}",
+        url: "${ApiUrl.baseUrl}${ApiUrl.updateLocation}",
         params: params,
         onSuccess: (Map<String, dynamic> data) {
           // dismissLoader();
@@ -468,7 +474,7 @@ class HomeController extends BaseController {
       // showLoader();
 
       await apiService.getRequest(
-          url: ApiUrl.settings,
+          url: "${ApiUrl.baseUrl}${ApiUrl.settings}",
           onSuccess: (Map<String, dynamic> data) async {
             // dismissLoader();
             _userController.serviceTypeList.clear();
@@ -552,7 +558,7 @@ class HomeController extends BaseController {
     try {
       await apiService.getRequest(
         url:
-            "${ApiUrl.getTrip}?latitude=${userCurrentLocation?.latitude}&longitude=${userCurrentLocation?.longitude}",
+            "${ApiUrl.baseUrl}${ApiUrl.getTrip}?latitude=${userCurrentLocation?.latitude}&longitude=${userCurrentLocation?.longitude}",
         onSuccess: (Map<String, dynamic> data) {
           homeActiveTripModel.value =
               homeActiveTripModelFromJson(jsonEncode(data["response"]));
@@ -583,7 +589,7 @@ class HomeController extends BaseController {
       }
 
       await apiService.postRequest(
-        url: "${ApiUrl.getTrip}/${requestElement.request?.id ?? ""}",
+        url: "${ApiUrl.baseUrl}${ApiUrl.getTrip}/${requestElement.request?.id ?? ""}",
         params: params,
         onSuccess: (Map<String, dynamic> data) {
           getTrip();
@@ -606,7 +612,7 @@ class HomeController extends BaseController {
      params['request_id'] = breakdownNewRideModel.value.userReqDetails!.first.id.toString();
 
       await apiService.postRequest(
-        url: "${ApiUrl.endBreakDown}",
+        url: "${ApiUrl.baseUrl}${ApiUrl.endBreakDown}",
         params: params,
         onSuccess: (Map<String, dynamic> data) {
           // getTrip();
@@ -642,7 +648,7 @@ class HomeController extends BaseController {
       }
 
       await apiService.postRequest(
-        url: "${ApiUrl.getTrip}/${requestElement.request?.id ?? ""}",
+        url: "${ApiUrl.baseUrl}${ApiUrl.getTrip}/${requestElement.request?.id ?? ""}",
         params: params,
         onSuccess: (Map<String, dynamic> data) {
           print("payment complete cccc");
@@ -675,7 +681,7 @@ class HomeController extends BaseController {
       }
 
       await apiService.postRequest(
-        url: "${ApiUrl.getTrip}/${requestElement.request?.id ?? ""}",
+        url: "${ApiUrl.baseUrl}${ApiUrl.getTrip}/${requestElement.request?.id ?? ""}",
         params: params,
         onSuccess: (Map<String, dynamic> data) {
           getTrip();
@@ -718,7 +724,7 @@ class HomeController extends BaseController {
       }
 
       await apiService.postRequest(
-        url: "${ApiUrl.getTrip}/${breakdownNewRideModel.value.userReqDetails!.first.id ?? ""}",
+        url: "${ApiUrl.baseUrl}${ApiUrl.getTrip}/${breakdownNewRideModel.value.userReqDetails!.first.id ?? ""}",
         params: params,
         onSuccess: (Map<String, dynamic> data) {
           // getTrip();
@@ -754,7 +760,7 @@ class HomeController extends BaseController {
       requestElement = homeActiveTripModel.value.requests[0];
 
       await apiService.deleteRequest(
-        url: "${ApiUrl.getTrip}/${requestElement.request?.id ?? ""}",
+        url: "${ApiUrl.baseUrl}${ApiUrl.getTrip}/${requestElement.request?.id ?? ""}",
         onSuccess: (Map<String, dynamic> data) {
           showSnack(msg: data["response"]["message"]);
           _timer?.cancel();
@@ -782,7 +788,7 @@ class HomeController extends BaseController {
       params["id"] = "${requestElement.requestId ?? ""}";
       params["status"] = "${_timer == null ? 1 : 0}";
       await apiService.postRequest(
-        url: "${ApiUrl.waiting}",
+        url: "${ApiUrl.baseUrl}${ApiUrl.waiting}",
         params: params,
         onSuccess: (Map<String, dynamic> data) {
           dismissLoader();
@@ -816,7 +822,7 @@ class HomeController extends BaseController {
   //     params["id"] = "${requestElement.requestId ?? ""}";
   //     params["status"] = "${_timer == null ? 1 : 0}";
   //     await apiService.postRequest(
-  //       url: "${ApiUrl.waiting}",
+  //       url: "${ApiUrl.baseUrl}${ApiUrl.waiting}",
   //       params: params,
   //       onSuccess: (Map<String, dynamic> data) {
   //         dismissLoader();
@@ -847,7 +853,7 @@ class HomeController extends BaseController {
       showLoader();
 
       await apiService.postRequest(
-        url: "${ApiUrl.multiDestination}",
+        url: "${ApiUrl.baseUrl}${ApiUrl.multiDestination}",
         params: params,
         onSuccess: (Map<String, dynamic> data) {
           dismissLoader();
@@ -918,7 +924,7 @@ class HomeController extends BaseController {
       params["active_module"] = homeActiveTripModel.value.active_driver_module;
 
       await apiService.postRequest(
-        url: ApiUrl.chooseServiceType,
+        url: "${ApiUrl.baseUrl}${ApiUrl.chooseServiceType}",
         params: params,
         onSuccess: (Map<String, dynamic> data) async {
           print("providerRate  ==>  ${jsonEncode(data)}");
@@ -1034,7 +1040,7 @@ class HomeController extends BaseController {
     if(Platform.isAndroid){
       makeFakeCallInComing(callerName: "  From: ${homeActiveTripModel.value.requests[0].request!.sAddress}",
         mobileNumber: "To: ${homeActiveTripModel.value.requests[0].request!.dAddress}",
-        imageUser: "${ApiUrl.baseImageUrl}${homeActiveTripModel.value.requests[0].request!.user!.picture}",
+        imageUser: "${ApiUrl.baseUrl}/${homeActiveTripModel.value.requests[0].request!.user!.picture}",
       );
     }
     // FlutterRingtonePlayer.play(fromAsset: "assets/driverNotification.wav");
@@ -1332,7 +1338,7 @@ class HomeController extends BaseController {
     try {
       showLoader();
       await apiService.getRequest(
-        url: ApiUrl.history,
+        url: "${ApiUrl.baseUrl}${ApiUrl.history}",
         onSuccess: (Map<String, dynamic> data) {
           dismissLoader();
           tripHistoryModelList.clear();
@@ -1353,7 +1359,7 @@ class HomeController extends BaseController {
     try {
       showLoader();
       await apiService.getRequest(
-        url: ApiUrl.ringTone,
+        url: "${ApiUrl.baseUrl}${ApiUrl.ringTone}",
         onSuccess: (Map<String, dynamic> data) {
           print('daataa: ${data['response']}');
           dismissLoader();
@@ -1375,7 +1381,7 @@ class HomeController extends BaseController {
     try {
       showLoader();
       await apiService.getRequest(
-        url: "${ApiUrl.details}?request_id=$id",
+        url: "${ApiUrl.baseUrl}${ApiUrl.details}?request_id=$id",
         onSuccess: (Map<String, dynamic> data) {
           dismissLoader();
           tripHistoryDetailModel.value =
@@ -1528,7 +1534,7 @@ class HomeController extends BaseController {
 
       String query = Uri(queryParameters: params).query;
       await apiService.getRequest(
-        url: "${ApiUrl.fareWithOutAuth}?$query",
+        url: "${ApiUrl.baseUrl}${ApiUrl.fareWithOutAuth}?$query",
         onSuccess: (Map<String, dynamic> data) {
           dismissLoader();
           fareWithOutAuthModel.value =
@@ -1568,7 +1574,7 @@ class HomeController extends BaseController {
       String query = Uri(queryParameters: params).query;
       print("instatnt====>${jsonEncode(params)}");
       await apiService.postRequest(
-        url: "${ApiUrl.instantRide}",
+        url: "${ApiUrl.baseUrl}${ApiUrl.instantRide}",
         params: params,
         onSuccess: (Map<String, dynamic> data) {
           dismissLoader();
@@ -1615,7 +1621,7 @@ class HomeController extends BaseController {
       params["service_status"] = "offline";
     }
     await apiService.postRequest(
-      url: ApiUrl.available,
+      url: "${ApiUrl.baseUrl}${ApiUrl.available}",
       params: params,
       onSuccess: (Map<String, dynamic> data) {
         _userController.userData.value.service?.status =
@@ -1647,7 +1653,7 @@ class HomeController extends BaseController {
 
       showLoader();
       await apiService.postRequest(
-        url: ApiUrl.requestCancel,
+        url: "${ApiUrl.baseUrl}${ApiUrl.requestCancel}",
         params: params,
         onSuccess: (Map<String, dynamic> data) {
           print("cancelRequest  ==>  ${jsonEncode(data)}");
@@ -1689,7 +1695,7 @@ class HomeController extends BaseController {
 
       showLoader();
       await apiService.postRequest(
-        url: ApiUrl.requestCancel,
+        url: "${ApiUrl.baseUrl}${ApiUrl.requestCancel}",
         params: params,
         onSuccess: (Map<String, dynamic> data) {
           print("cancelRequest  ==>  ${jsonEncode(data)}");
@@ -1712,7 +1718,7 @@ class HomeController extends BaseController {
     try {
       showLoader();
       await apiService.getRequest(
-        url: "${ApiUrl.reasons}",
+        url: "${ApiUrl.baseUrl}${ApiUrl.reasons}",
         onSuccess: (Map<String, dynamic> data) {
           dismissLoader();
           List<Reason> tempReasonList = List<Reason>.from(
@@ -1750,7 +1756,7 @@ class HomeController extends BaseController {
         "X-Requested-With": "XMLHttpRequest"
       };
       _dio.options.headers.addAll(headers);
-      var response = await _dio.post(ApiUrl.disputeList, data: params);
+      var response = await _dio.post("${ApiUrl.baseUrl}${ApiUrl.disputeList}", data: params);
       print("responsedd===>${response.data}");
       if(response.data != null){
         List<DisputeModel> tempDisputeList =
@@ -1760,7 +1766,7 @@ class HomeController extends BaseController {
       }
 
       // await apiService.postRequest(
-      //   url: ApiUrl.disputeList,
+      //   url: "${ApiUrl.baseUrl}${ApiUrl.disputeList}",
       //   params: params,
       //   onSuccess: (Map<String, dynamic> data) async {
       //     dismissLoader();
@@ -1806,7 +1812,7 @@ class HomeController extends BaseController {
       params["comments"] = "";
 
       await apiService.postRequest(
-          url: ApiUrl.dispute,
+          url: "${ApiUrl.baseUrl}${ApiUrl.dispute}",
           params: params,
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
@@ -1839,7 +1845,7 @@ class HomeController extends BaseController {
       params["service_type"] = "1";
       print("estimatedParam===>${jsonEncode(params)}");
       await apiService.postRequest(
-          url: ApiUrl.estimatedFare,
+          url: "${ApiUrl.baseUrl}${ApiUrl.estimatedFare}",
           params: params,
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
@@ -1877,7 +1883,7 @@ class HomeController extends BaseController {
       params["service_type"] = "1";
       print("estimatedParam===>${jsonEncode(params)}");
       await apiService.postRequest(
-          url: ApiUrl.estimatedFare,
+          url: "${ApiUrl.baseUrl}${ApiUrl.estimatedFare}",
           params: params,
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
@@ -1933,7 +1939,7 @@ class HomeController extends BaseController {
       params["service_type"] = "1";
       print("newrequesssstcheck===>${jsonEncode(params)}");
       await apiService.postRequest(
-          url: ApiUrl.sendUSerNewRequest,
+          url: "${ApiUrl.baseUrl}${ApiUrl.sendUSerNewRequest}",
           params: params,
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();
@@ -1983,7 +1989,7 @@ class HomeController extends BaseController {
   //     params["service_type"] = "1";
   //     print("newRepetReq===>${jsonEncode(params)}");
   //     await apiService.postRequest(
-  //         url: ApiUrl.sendUSerNewRequest,
+  //         url: "${ApiUrl.baseUrl}${ApiUrl.sendUSerNewRequest}",
   //         params: params,
   //         onSuccess: (Map<String, dynamic> data) async {
   //           dismissLoader();
@@ -2016,7 +2022,7 @@ class HomeController extends BaseController {
       params["provider_id"] = homeActiveTripModel.value.provider_id.toString();
       print("newrequest===>${jsonEncode(params)}");
       await apiService.postRequest(
-          url: ApiUrl.breakdownUSerNewRide,
+          url: "${ApiUrl.baseUrl}${ApiUrl.breakdownUSerNewRide}",
           params: params,
           onSuccess: (Map<String, dynamic> data) async {
             dismissLoader();

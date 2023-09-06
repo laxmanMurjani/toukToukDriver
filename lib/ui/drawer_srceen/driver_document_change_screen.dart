@@ -99,7 +99,7 @@ class _DriverDocumentChangeScreenState
                         // Get.to(DocumentImageShow(),arguments: ["${ApiUrl.baseImageUrl}/storage/${widget.document!.providerDocuments?.url ?? ""}"]);
                       },
                       child:widget.document!.providerDocuments == null ? Image.network("https://etoride.etomotors.com/storage/provider/documents/DrivingLicense.jpg") : Image.network(
-                         "${ApiUrl.baseImageUrl}/storage/${widget.document!.providerDocuments?.url ?? ""}",
+                         "${ApiUrl.baseUrl}//storage/${widget.document!.providerDocuments?.url ?? ""}",
                         fit: BoxFit.fitHeight,
                         // height: 200,
                       ),

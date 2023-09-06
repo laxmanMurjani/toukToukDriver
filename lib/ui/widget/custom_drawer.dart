@@ -126,7 +126,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             // color: Colors.grey[200],
                             borderRadius: BorderRadius.circular(10.h)),
                         child: CustomFadeInImage(
-                          url:cont.userData.value.avatar != null ? "${ApiUrl.baseImageUrl}${cont.userData.value.avatar}" : "https://p.kindpng.com/picc/s/668-6689202_avatar-profile-hd-png-download.png",
+                          url:cont.userData.value.avatar != null ? "${ApiUrl.baseUrl}/${cont.userData.value.avatar}" : "https://p.kindpng.com/picc/s/668-6689202_avatar-profile-hd-png-download.png",
                               //"${ApiUrl.baseImageUrl}${cont.userData.value.avatar ?? "https://p.kindpng.com/picc/s/668-6689202_avatar-profile-hd-png-download.png"}",
                           fit: BoxFit.cover,
                           // placeHolderWidget: Center(

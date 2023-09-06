@@ -78,7 +78,8 @@ Future<void> main() async {
   await RemoteConfigService.setupRemoteConfig();
   AppString.googleMapKey =firebaseRemoteConfig.getString("map_key");
   AppString.testCallIos =firebaseRemoteConfig.getBool("test_call_ios");
-  ApiUrl.baseUrl =firebaseRemoteConfig.getString("base_url");
+  ApiUrl.baseUrlLebanon =firebaseRemoteConfig.getString("second_base_url");
+  ApiUrl.baseUrlNigeria =firebaseRemoteConfig.getString("base_url_nigeria");
   AppString.isForceCancleButtonShow = Platform.isAndroid ? firebaseRemoteConfig.getBool("isForceUpdateAndroid") : firebaseRemoteConfig.getBool("isForceUpdateIos");
   AppString.firebaseAndroidBuildNumber =firebaseRemoteConfig.getString("androidBuildNumber");
   AppString.firebaseAndroidVersionCode =firebaseRemoteConfig.getString("androidVersionCode");

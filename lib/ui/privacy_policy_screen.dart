@@ -38,7 +38,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
         //   text: "terms_and_Condition".tr,
         // ),
         body: WebView(
-          initialUrl: ApiUrl.privacyPolicy,
+          initialUrl: "${ApiUrl.baseUrl}${ApiUrl.privacyPolicy}",
           onPageFinished: (s) {
             _baseController.dismissLoader();
           },

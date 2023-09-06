@@ -141,7 +141,7 @@ class _SignUpDriverDocumentScreenState extends State<SignUpDriverDocumentScreen>
                                         ),
                                         child: CustomFadeInImage(
                                           url: document.imagePath ??
-                                              "${ApiUrl.baseImageUrl}storage/${document.providerDocuments?.url ?? ""}",
+                                              "${ApiUrl.baseUrl}/storage/${document.providerDocuments?.url ?? ""}",
                                           fit: BoxFit.contain,
                                           height: 200,
                                           width: 250,

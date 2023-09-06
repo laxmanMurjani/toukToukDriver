@@ -66,6 +66,7 @@ class _HomeScreenState extends State<HomeScreen>
   int selected = 0;
   GlobalKey _repaintBoundaryKey = new GlobalKey();
   Timer? _getTripTimer;
+  Timer? _getTripTimer1;
 
   final CameraPosition _kGooglePlex = const CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
@@ -233,9 +234,9 @@ class _HomeScreenState extends State<HomeScreen>
                         ),
                         child: CustomFadeInImage(
                           url: userCont.userData.value.avatar != null
-                              ? "${ApiUrl.baseImageUrl}${userCont.userData.value.avatar}"
+                              ? "${ApiUrl.baseUrl}/${userCont.userData.value.avatar}"
                               : "https://www.kindpng.com/picc/m/52-526237_avatar-profile-hd-png-download.png",
-                          //"${ApiUrl.baseImageUrl}${userCont.userData.value.avatar ?? "https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG.png"}",
+                          //"${ApiUrl.baseUrl}/${userCont.userData.value.avatar ?? "https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG.png"}",
                           fit: BoxFit.cover,
                           placeHolder: AppImage.icUserPlaceholder,
                           imageLoaded: () async {
@@ -669,14 +670,14 @@ class _HomeScreenState extends State<HomeScreen>
                                               radius: 25,
                                               backgroundImage:
                                               NetworkImage(
-                                                '${ApiUrl.baseImageUrl}${userCont.userData.value.avatar}',
+                                                '${ApiUrl.baseUrl}/${userCont.userData.value.avatar}',
                                               ),
                                               backgroundColor:
                                               AppColors
                                                   .white,
                                               // child: CustomFadeInImage(
                                               //     url:
-                                              //         '${ApiUrl.baseImageUrl}${_userController.userData.value.picture}',
+                                              //         '${ApiUrl.baseUrl}/${_userController.userData.value.picture}',
                                               //     fit: BoxFit
                                               //         .contain,
                                               //     placeHolder:
@@ -1604,7 +1605,9 @@ class _HomeScreenState extends State<HomeScreen>
     super.dispose();
     // BackgroundLocation.stopLocationService();
     WidgetsBinding.instance.removeObserver(this);
-    _getTripTimer?.cancel();
+    _getTripTimer!.cancel();
+    _getTripTimer1!.cancel();
+
   }
 
   Future<Uint8List?> _capturePng() async {
@@ -1647,7 +1650,7 @@ class _HomeScreenState extends State<HomeScreen>
         break;
       case AppLifecycleState.inactive:
 
-        _getTripTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+        _getTripTimer1 = Timer.periodic(Duration(seconds: 1), (timer) {
           determinePosition();
         });
               // _homeController.updateLocation(_homeController.userCurrentLocation!.latitude.toString(), _homeController.userCurrentLocation!.longitude.toString());

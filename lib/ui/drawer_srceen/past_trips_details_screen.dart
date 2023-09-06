@@ -149,7 +149,7 @@ class _PastTripDetailsScreenState extends State<PastTripDetailsScreen> {
                               height: 50.w,
                               width: 50.w,
                               url:
-                                  "${ApiUrl.baseImageUrl}${tripDataModel.user?.picture ?? ""}",
+                                  "${ApiUrl.baseUrl}/${tripDataModel.user?.picture ?? ""}",
                               placeHolder: AppImage.icUserPlaceholder,
                               fit: BoxFit.cover,
                             ),

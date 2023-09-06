@@ -218,7 +218,7 @@ class _AvailableRequestWidgetState extends State<AvailableRequestWidget> {
                           borderRadius: BorderRadius.circular(85),
                           child: CustomFadeInImage(
                             url: requestElement.request?.user?.picture != null
-                                ? "${ApiUrl.baseImageUrl}/${requestElement.request?.user?.picture}"
+                                ? "${ApiUrl.baseUrl}//${requestElement.request?.user?.picture}"
                                 : "https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG.png",
                             fit: BoxFit.cover,
                             height: 55.w,

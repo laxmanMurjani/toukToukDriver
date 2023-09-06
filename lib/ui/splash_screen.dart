@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:mozlit_driver/api/api.dart';
 import 'package:mozlit_driver/controller/user_controller.dart';
 import 'package:mozlit_driver/main.dart';
 import 'package:mozlit_driver/preference/preference.dart';
@@ -191,6 +192,11 @@ class _SplashScreenState extends State<SplashScreen> {
                 if (_userController.userToken.value.accessToken != null) {
                   // _userController.currentUserApi();
                   // Get.off(()=> HomeScreen());
+                  if(prefs.containsKey("base_url")){
+                    setState(() {
+                      ApiUrl.baseUrl = prefs.getString("base_url");
+                    });
+                  }
                   _userController.getUserProfileData();
                   log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${_userController.selectedLanguage}");
                 } else {
@@ -208,6 +214,11 @@ class _SplashScreenState extends State<SplashScreen> {
                 if (_userController.userToken.value.accessToken != null) {
                   // _userController.currentUserApi();
                   // Get.off(()=> HomeScreen());
+                  if(prefs.containsKey("base_url")){
+                    setState(() {
+                      ApiUrl.baseUrl = prefs.getString("base_url");
+                    });
+                  }
                   _userController.getUserProfileData();
                   log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${_userController.selectedLanguage}");
                 } else {
@@ -240,7 +251,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             actions: [
               TextButton(
-                  onPressed: () {
+                  onPressed: () async{
                     Database.setSeenLocationAlertDialog();
                     Get.back();
 
@@ -248,7 +259,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
 
                     _userController.setLanguage();
-
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
                     if(!AppString.testing_version_code_check_dialog!){
                       if(Platform.isAndroid){
                         if(int.parse(AppString.detectAndroidBuildNumber!) < int.parse(AppString.firebaseAndroidBuildNumber!) ||
@@ -260,6 +271,11 @@ class _SplashScreenState extends State<SplashScreen> {
                             if (_userController.userToken.value.accessToken != null) {
                               // _userController.currentUserApi();
                               // Get.off(()=> HomeScreen());
+                              if(prefs.containsKey("base_url")){
+                                setState(() {
+                                  ApiUrl.baseUrl = prefs.getString("base_url");
+                                });
+                              }
                               _userController.getUserProfileData();
                               log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${_userController.selectedLanguage}");
                             } else {
@@ -277,6 +293,11 @@ class _SplashScreenState extends State<SplashScreen> {
                             if (_userController.userToken.value.accessToken != null) {
                               // _userController.currentUserApi();
                               // Get.off(()=> HomeScreen());
+                              if(prefs.containsKey("base_url")){
+                                setState(() {
+                                  ApiUrl.baseUrl = prefs.getString("base_url");
+                                });
+                              }
                               _userController.getUserProfileData();
                               log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${_userController.selectedLanguage}");
                             } else {

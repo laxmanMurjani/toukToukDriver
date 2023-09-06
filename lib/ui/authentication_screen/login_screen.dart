@@ -1,12 +1,14 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:mozlit_driver/api/api.dart';
 import 'package:mozlit_driver/controller/user_controller.dart';
 import 'package:mozlit_driver/ui/authentication_screen/select_service_sign_in_up_screen.dart';
 import 'package:mozlit_driver/ui/authentication_screen/sign_up_screen.dart';
@@ -192,11 +194,51 @@ class _LoginScreenState extends State<LoginScreen> {
                     //   //readOnly: readOnly,
                     // ),
 
-                    CustomTextFiled(
-                      controller: cont.phoneNumberController,
-                      hint: "phone".tr,
-                      label: "phone".tr,
-                      inputType: TextInputType.number,
+                    Row(
+                      children: [
+                        Row(
+                          children: [
+                            CountryCodePicker(
+                              onChanged: (s) {_userController.countryCode = s.toString();
+                              setState(() {
+
+                              });},
+                              textStyle: TextStyle(
+                                color: AppColors.primaryColor,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              hideMainText: false,
+                              initialSelection:
+                              _userController.userData.value.countryCode ??
+                                  "+961",
+                              //"+91",
+                              // favorite: ['+91', 'IN'],
+                              // countryFilter: ['IT', 'FR', "IN"],
+                              showFlagDialog: true,
+                              comparator: (a, b) =>
+                                  b.name!.compareTo(a.name.toString()),
+                              //Get the country information relevant to the initial selection
+                              onInit: (code) => print(
+                                  "on init ${code!.name} ${code.dialCode} ${code.name}"),
+                            ),
+                            Image.asset(
+                              AppImage.downArrow1,
+                              height: 15,
+                              width: 15,
+                              fit: BoxFit.contain,
+                            )
+                          ],
+                        ),
+                        SizedBox(width: 15,),
+                        SizedBox(width: MediaQuery.of(context).size.width*0.56,
+                          child: CustomTextFiled(
+                            controller: cont.phoneNumberController,
+                            hint: "phone".tr,
+                            label: "phone".tr,
+                            inputType: TextInputType.number,
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(height: 15.h),
                     CustomTextFiled(
@@ -231,6 +273,24 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       text: "log_in".tr,
                       onTap: () {
+                        if(cont.countryCode == "+961" || cont.countryCode == "+91"){
+                          setState(() {
+                            ApiUrl.baseUrl = "${ApiUrl.baseUrlLebanon}/api/provider";
+                            // ApiUrl.apiBaseUrl = '${ApiUrl.baseUrl}/api/user';
+                          });
+                          print("cwdhjshd  ${ApiUrl.baseUrl}");
+                        }else if(cont.countryCode == "+234"){
+                          setState(() {
+                            ApiUrl.baseUrl = "${ApiUrl.baseUrlNigeria}/api/provider";
+                            // ApiUrl.apiBaseUrl ='${ApiUrl.baseUrl}/api/user';
+                          });
+                          print("cwdhjshd  ${ApiUrl.baseUrl}");
+                        } else{
+                          print("1111111111111");
+                          Get.snackbar("Alert", "This service not available in this country",
+                              backgroundColor: Colors.redAccent.withOpacity(0.8),
+                              colorText: Colors.white);
+                        }
                         cont.loginUser();
                         // Get.to(() => HomeScreen());
                       },

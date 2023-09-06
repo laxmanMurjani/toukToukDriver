@@ -86,7 +86,7 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
                               height: 50.w,
                               width: 50.w,
                               url: requestElement.request?.user?.picture != null
-                                  ? "${ApiUrl.baseImageUrl}${requestElement.request?.user?.picture}"
+                                  ? "${ApiUrl.baseUrl}/${requestElement.request?.user?.picture}"
                                   : "https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG.png",
 
                               //"${ApiUrl.baseImageUrl}${requestElement.request?.user?.picture ?? "https://p.kindpng.com/picc/s/668-6689202_avatar-profile-hd-png-download.png"}",

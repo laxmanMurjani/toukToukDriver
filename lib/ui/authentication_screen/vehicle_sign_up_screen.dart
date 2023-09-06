@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:mozlit_driver/api/api.dart';
 import 'package:mozlit_driver/controller/user_controller.dart';
 import 'package:mozlit_driver/model/user_detail_model.dart';
 import 'package:mozlit_driver/ui/terms_and_condition_screen.dart';
@@ -277,6 +278,25 @@ class _VehicleSignUpScreenState extends State<VehicleSignUpScreen> {
                         SizedBox(height: 10.h),
                         InkWell(
                           onTap: () {
+                            if(cont.countryCode == "+961" || cont.countryCode == "+91"){
+                              setState(() {
+                                ApiUrl.baseUrl = "${ApiUrl.baseUrlLebanon}/api/provider";
+                                // ApiUrl.apiBaseUrl = '${ApiUrl.baseUrl}/api/user';
+                              });
+                              print("cwdhjshd  ${ApiUrl.baseUrl}");
+                            }else if(cont.countryCode == "+234"){
+                              setState(() {
+                                ApiUrl.baseUrl = "${ApiUrl.baseUrlNigeria}/api/provider";
+                                // ApiUrl.apiBaseUrl ='${ApiUrl.baseUrl}/api/user';
+                              });
+                              print("cwdhjshd  ${ApiUrl.baseUrl}");
+                            } else{
+                              print("1111111111111");
+                              Get.snackbar("Alert", "This service not available in this country",
+                                  backgroundColor: Colors.redAccent.withOpacity(0.8),
+                                  colorText: Colors.white);
+                            }
+
                             // print('ll: ${cont.taxiServiceType?.id}');
                             // print('ll: ${cont.deliveryServiceType?.id}');
                             cont.registerUser(widget.isDriver ? "TAXI": "DELIVERY");

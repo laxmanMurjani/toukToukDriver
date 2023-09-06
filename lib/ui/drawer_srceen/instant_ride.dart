@@ -71,7 +71,7 @@ class _InstantRideState extends State<InstantRide> {
           String? profileUrl;
           if (userCont.userData.value.avatar != null) {
             profileUrl =
-                "${ApiUrl.baseImageUrl}${userCont.userData.value.avatar ?? ""}";
+                "${ApiUrl.baseUrl}/${userCont.userData.value.avatar ?? ""}";
           }
 
           bool isInitLatLng = cont.latLngWhereTo1 != null;

@@ -195,7 +195,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       width: 40.w,
                                       url: cont.userData.value.avatar !=
                                           null
-                                          ? "${ApiUrl.baseImageUrl}${cont
+                                          ? "${ApiUrl.baseUrl}/${cont
                                           .userData.value.avatar}"
                                           : "https://www.kindpng.com/picc/m/52-526237_avatar-profile-hd-png-download.png",
                                       //"${ApiUrl.baseImageUrl}${_userController.userData.value.avatar ?? "https://p.kindpng.com/picc/s/668-6689202_avatar-profile-hd-png-download.png"}",

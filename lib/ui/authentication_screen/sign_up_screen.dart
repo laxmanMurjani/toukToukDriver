@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:mozlit_driver/api/api.dart';
 import 'package:mozlit_driver/controller/user_controller.dart';
 import 'package:mozlit_driver/model/user_detail_model.dart';
 import 'package:mozlit_driver/ui/authentication_screen/vehicle_sign_up_screen.dart';
@@ -38,7 +39,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     _userController.clearFormData();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _userController.getServiceType(widget.isDriver!);
+      // _userController.getServiceType(widget.isDriver!);
     });
   }
 
@@ -229,6 +230,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           children: [
                             InkWell(
                               onTap: () {
+                                if(cont.countryCode == "+961" || cont.countryCode == "+91"){
+                                  setState(() {
+                                    ApiUrl.baseUrl = "${ApiUrl.baseUrlLebanon}/api/provider";
+                                    // ApiUrl.apiBaseUrl = '${ApiUrl.baseUrl}/api/user';
+                                  });
+                                  print("cwdhjshd  ${ApiUrl.baseUrl}");
+                                }else if(cont.countryCode == "+234"){
+                                  setState(() {
+                                    ApiUrl.baseUrl = "${ApiUrl.baseUrlNigeria}/api/provider";
+                                    // ApiUrl.apiBaseUrl ='${ApiUrl.baseUrl}/api/user';
+                                  });
+                                  print("cwdhjshd  ${ApiUrl.baseUrl}");
+                                } else{
+                                  print("1111111111111");
+                                  Get.snackbar("Alert", "This service not available in this country",
+                                      backgroundColor: Colors.redAccent.withOpacity(0.8),
+                                      colorText: Colors.white);
+                                }
                                 cont.signUpDetailsUser(widget.isDriver!);
                               },
                               child: Container(

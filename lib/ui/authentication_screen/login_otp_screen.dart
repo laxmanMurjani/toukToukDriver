@@ -6,6 +6,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:mozlit_driver/api/api.dart';
 import 'package:mozlit_driver/controller/user_controller.dart';
 import 'package:mozlit_driver/enum/error_type.dart';
 import 'package:mozlit_driver/ui/authentication_screen/login_screen.dart';
@@ -231,6 +232,25 @@ class _LoginOtpScreenState extends State<LoginOtpScreen> {
                       SizedBox(height: 30.h),
                       InkWell(
                         onTap: () {
+                          if(cont.countryCode == "+961" || cont.countryCode == "+91"){
+                            setState(() {
+                              ApiUrl.baseUrl = "${ApiUrl.baseUrlLebanon}/api/provider";
+                              // ApiUrl.apiBaseUrl = '${ApiUrl.baseUrl}/api/user';
+                            });
+                            print("cwdhjshd  ${ApiUrl.baseUrl}");
+                          }else if(cont.countryCode == "+234"){
+                            setState(() {
+                              ApiUrl.baseUrl = "${ApiUrl.baseUrlNigeria}/api/provider";
+                              // ApiUrl.apiBaseUrl ='${ApiUrl.baseUrl}/api/user';
+                            });
+                            print("cwdhjshd  ${ApiUrl.baseUrl}");
+                          } else{
+                            print("1111111111111");
+                            Get.snackbar("Alert", "This service not available in this country",
+                                backgroundColor: Colors.redAccent.withOpacity(0.8),
+                                colorText: Colors.white);
+                          }
+
                           print('ccode:${cont.countryCode}');
                           if (cont.phoneNumberController.text.isEmpty) {
                             // cont.showError(msg: "please_number".tr);
@@ -238,7 +258,8 @@ class _LoginOtpScreenState extends State<LoginOtpScreen> {
                                 backgroundColor: Colors.redAccent.withOpacity(0.8),
                                 colorText: Colors.white);
                             return;
-                          } else if (cont.phoneNumberController.text.length !=
+                          }
+                          else if (cont.phoneNumberController.text.length !=
                               10 &&
                               cont.countryCode == '+91') {
                             Get.snackbar("Alert", "Please enter valid 10 digit mobile number",
@@ -248,24 +269,29 @@ class _LoginOtpScreenState extends State<LoginOtpScreen> {
                             //     msg:
                             //         "Please enter valid 10 digit mobile number");
                             return;
-                          } else if (((cont.phoneNumberController.text.length ==
-                              6 || cont.phoneNumberController.text.length ==
-                              8 || cont.phoneNumberController.text.length ==
-                              7) &&
-                              cont.countryCode == '+961') || cont.phoneNumberController.text.length ==
-                              10 && cont.countryCode != '+961') {
-                            print('passed');
-                            cont.sendOtp(params: params);
-                            return;
                           }
-                          Get.snackbar("Alert", "Please enter a valid mobile number",
-                              backgroundColor: Colors.redAccent.withOpacity(0.8),
-                              colorText: Colors.white);
+          // else if (((cont.phoneNumberController.text.length ==
+                          //     6 || cont.phoneNumberController.text.length ==
+                          //     8 || cont.phoneNumberController.text.length ==
+                          //     7) &&
+                          //     cont.countryCode == '+961') || ((cont.phoneNumberController.text.length ==
+                          //     6 || cont.phoneNumberController.text.length ==
+                          //     8 || cont.phoneNumberController.text.length ==
+                          //     7) &&
+                          //     cont.countryCode == '+234') || cont.phoneNumberController.text.length ==
+                          //     10 && cont.countryCode != '+91') {
+                          //   print('passed');
+                          //
+                          //   return;
+                          // }
+                          // Get.snackbar("Alert", "Please enter a valid mobile number",
+                          //     backgroundColor: Colors.redAccent.withOpacity(0.8),
+                          //     colorText: Colors.white);
                           // if (cont.phoneNumberController.text.isEmpty) {
                           //   cont.showError(msg: "please_number".tr);
                           //   return;
                           // }
-                          // cont.sendOtp(params: params);
+                          cont.sendOtp(params: params);
                         },
                         child: Card(
                           shape: RoundedRectangleBorder(

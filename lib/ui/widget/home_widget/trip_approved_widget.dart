@@ -160,9 +160,9 @@ class _TripApprovedWidgetState extends State<TripApprovedWidget> {
                         onTap: () {
                           Get.to(ChatScreen(), arguments: [
                             requestElement.request?.user?.picture != null
-                                ? "${ApiUrl.baseImageUrl}${requestElement.request?.user?.picture}"
+                                ? "${ApiUrl.baseUrl}/${requestElement.request?.user?.picture}"
                                 : "https://www.kindpng.com/picc/m/52-526237_avatar-profile-hd-png-download.png",
-                            //"${ApiUrl.baseImageUrl}${requestElement.request?.user?.picture ?? "https://www.kindpng.com/picc/m/52-526237_avatar-profile-hd-png-download.png"}",
+                            //"${ApiUrl.baseUrl}/${requestElement.request?.user?.picture ?? "https://www.kindpng.com/picc/m/52-526237_avatar-profile-hd-png-download.png"}",
                             "${requestElement.request?.user?.firstName ?? ""} ${requestElement.request?.user?.lastName ?? ""}",
                             "${requestElement.request?.user?.countryCode ?? ""}${requestElement.request?.user?.mobile ?? ""}"
                           ]);
@@ -420,7 +420,7 @@ class _TripApprovedWidgetState extends State<TripApprovedWidget> {
                           borderRadius: BorderRadius.circular(85),
                           child: CustomFadeInImage(
                             url: requestElement.request?.user?.picture != null
-                                ? "${ApiUrl.baseImageUrl}/${requestElement.request?.user?.picture}"
+                                ? "${ApiUrl.baseUrl}//${requestElement.request?.user?.picture}"
                                 : "https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG.png",
                             fit: BoxFit.cover,
                             height: 55.w,
@@ -1703,9 +1703,9 @@ class _TripApprovedWidgetState extends State<TripApprovedWidget> {
 //                         onTap: () {
 //                           Get.to(ChatScreen(), arguments: [
 //                             requestElement.request?.user?.picture != null
-//                                 ? "${ApiUrl.baseImageUrl}${requestElement.request?.user?.picture}"
+//                                 ? "${ApiUrl.baseUrl}/${requestElement.request?.user?.picture}"
 //                                 : "https://www.kindpng.com/picc/m/52-526237_avatar-profile-hd-png-download.png",
-//                             //"${ApiUrl.baseImageUrl}${requestElement.request?.user?.picture ?? "https://www.kindpng.com/picc/m/52-526237_avatar-profile-hd-png-download.png"}",
+//                             //"${ApiUrl.baseUrl}/${requestElement.request?.user?.picture ?? "https://www.kindpng.com/picc/m/52-526237_avatar-profile-hd-png-download.png"}",
 //                             "${requestElement.request?.user?.firstName ?? ""} ${requestElement.request?.user?.lastName ?? ""}",
 //                             "${requestElement.request?.user?.countryCode ?? ""}${requestElement.request?.user?.mobile ?? ""}"
 //                           ]);
@@ -1977,9 +1977,9 @@ class _TripApprovedWidgetState extends State<TripApprovedWidget> {
 //                                             url: requestElement.request?.user
 //                                                         ?.picture !=
 //                                                     null
-//                                                 ? "${ApiUrl.baseImageUrl}${requestElement.request?.user?.picture}"
+//                                                 ? "${ApiUrl.baseUrl}/${requestElement.request?.user?.picture}"
 //                                                 : "https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG.png",
-//                                             //"${ApiUrl.baseImageUrl}/${requestElement.request?.user?.picture ?? "https://www.kindpng.com/picc/m/52-526237_avatar-profile-hd-png-download.png"}",
+//                                             //"${ApiUrl.baseUrl}//${requestElement.request?.user?.picture ?? "https://www.kindpng.com/picc/m/52-526237_avatar-profile-hd-png-download.png"}",
 //                                             fit: BoxFit.cover,
 //                                           )
 //                                         : CustomFadeInImage(
@@ -1987,7 +1987,7 @@ class _TripApprovedWidgetState extends State<TripApprovedWidget> {
 //                                             width: 50.w,
 //                                             url:
 //                                                 "https://www.elluminatiinc.com/wp-content/uploads/2020/06/txapfrsl/onlinetaxibookingappdevelopment.png",
-//                                             //"${ApiUrl.baseImageUrl}/${requestElement.request?.user?.picture ?? "https://www.kindpng.com/picc/m/52-526237_avatar-profile-hd-png-download.png"}",
+//                                             //"${ApiUrl.baseUrl}//${requestElement.request?.user?.picture ?? "https://www.kindpng.com/picc/m/52-526237_avatar-profile-hd-png-download.png"}",
 //                                             fit: BoxFit.cover,
 //                                           ),
 //                                   ),

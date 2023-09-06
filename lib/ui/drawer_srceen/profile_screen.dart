@@ -67,7 +67,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         String? profileUrl;
         if (cont.userData.value.avatar != null) {
           profileUrl =
-              "${ApiUrl.baseImageUrl}${cont.userData.value.avatar ?? ""}";
+              "${ApiUrl.baseUrl}/${cont.userData.value.avatar ?? ""}";
         }
         return Stack(
           children: [

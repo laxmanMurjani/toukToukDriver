@@ -56,7 +56,7 @@ class _VerifiedDialogueState extends State<VerifiedDialogue> {
                 Align(alignment: Alignment.center,child: ClipRRect(borderRadius: BorderRadius.circular(20),child:
                 userCont.userData.value.avatar == null?
                 Image.asset(AppImage.profilePic) :
-                  Image.network('${ApiUrl.baseImageUrl}${userCont.userData.value.avatar}',height: 38,width: 38,),
+                  Image.network('${ApiUrl.baseUrl}/${userCont.userData.value.avatar}',height: 38,width: 38,),
                 ),),),
                 //SizedBox(width: 10,),
                 Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.center,
