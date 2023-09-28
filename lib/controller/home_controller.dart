@@ -565,7 +565,7 @@ class HomeController extends BaseController {
 
         },
         onError: (ErrorType? errorType, String? msg) {
-          showError(msg: msg);
+          // showError(msg: msg);
         },
       );
     } catch (e) {
