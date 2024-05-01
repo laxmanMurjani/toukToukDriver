@@ -72,11 +72,11 @@
 	<key>NSCameraUsageDescription</key>
 	<string>to enable you to upload your picture on your profile to make it easier for driver and user to identify while starting a ride</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>This app needs access to location to find nearest service executives for on demand towing and vehicle recovery service.</string>
+	<string>This app requires location access to locate nearby executives for taxi services.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app needs access to location to find nearest service executives for on demand towing and vehicle recovery service.</string>
+	<string>This app requires location access to locate nearby executives for taxi services.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to location to find nearest service executives for on demand towing and vehicle recovery service.</string>
+	<string>This app requires location access to locate nearby executives for taxi services.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app does not require access to the microphone.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

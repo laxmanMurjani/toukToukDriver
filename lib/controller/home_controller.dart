@@ -1759,8 +1759,7 @@ class HomeController extends BaseController {
       var response = await _dio.post("${ApiUrl.baseUrl}${ApiUrl.disputeList}", data: params);
       print("responsedd===>${response.data}");
       if(response.data != null){
-        List<DisputeModel> tempDisputeList =
-        disputeModelFromJson(jsonEncode(response.data));
+        List<DisputeModel> tempDisputeList = disputeModelFromJson(jsonEncode(response.data));
         disputeList.clear();
         disputeList.addAll(tempDisputeList);
       }
